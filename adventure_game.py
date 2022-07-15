@@ -119,8 +119,9 @@ def player_command(input_string):
     return False
 
 def priority():
-    global result
+    result = None
     priority_1 = randint(1, 2)
+
     if priority_1 == 1:
         monsters_action_chance()
         result = player_command(input_string)
@@ -128,6 +129,8 @@ def priority():
     elif priority_1 == 2:
         result = player_command(input_string)
         monsters_action_chance()
+
+    return result
 
 
 #in the beginning
@@ -144,10 +147,7 @@ while(is_someone_dead() == False):
     controls()
     input_string = input("I await your command: ")
 
-    priority()
-
-
-    if(result == True):
+    if(priority() == True):
         last_command = input_string
 
 
