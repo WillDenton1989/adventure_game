@@ -4,18 +4,17 @@ from random import randint
 
 name = ""
 
-player_hitpoints = 10
-monster_hitpoints = 10
+player_hitpoints = 11
+monster_hitpoints = 11
 
 player_attack_power = 3
 monster_attack_power = 3
 
-player_defense = 1
-monster_defense = 1
+player_defense = 3
+monster_defense = 3
 
 last_command = None
 round = 0
-
 
 # game commands
 
@@ -31,12 +30,14 @@ def user_name():
         elif name == "mike":
             print("\nThe master returns!")
         elif name == "scott":
-            print("\nIt you! great...")
+            print("\nIt's you! great...")
 
 def quit():
     print(f"Farewell {name}")
     exit()
 
+def controls():
+    print("Type'attack' to try to damage the monster;\nType 'defend' to try and defend against an attack;\nType 'quit' to exit the adventure game.")
 
 #player funtions.
 def player_attack(input_string):
@@ -87,7 +88,7 @@ def monsters_action_chance():
 
     monster_action = randint(1, 10)
 
-    if(monster_action <= 7):
+    if(monster_action <= 6):
         monster_attack()
     else:
         monster_defend()
@@ -115,27 +116,36 @@ def player_command(input_string):
         return player_defend(input_string)
     else:
         print(f"{name} I don't understand your command")
-        return False
+    return False
 
+def priority():
+    global result
+    priority_1 = randint(1, 2)
+    if priority_1 == 1:
+        monsters_action_chance()
+        result = player_command(input_string)
 
+    elif priority_1 == 2:
+        result = player_command(input_string)
+        monsters_action_chance()
 
 
 #in the beginning
 
-print("Welcome intrepid adventurer! \nThis is the Adventure Game!(working title, dont laugh)")
+print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 
 user_name()
+print(f"Alright {name}. lets go!")
 
 while(is_someone_dead() == False):
     round = round + 1
 
     print(f"\n\nRound {round}: monster - {monster_hitpoints}, player - {player_hitpoints} - last command {last_command}")
-
+    controls()
     input_string = input("I await your command: ")
 
-    monsters_action_chance()
+    priority()
 
-    result = player_command(input_string)
 
     if(result == True):
         last_command = input_string
