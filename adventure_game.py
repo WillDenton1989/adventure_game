@@ -1,8 +1,8 @@
 # constants
 
-name = ""
-
 from random import randint
+
+name = ""
 
 player_hitpoints = 10
 monster_hitpoints = 10
@@ -21,8 +21,17 @@ round = 0
 
 def user_name():
     global name
+
     while not name:
-        name = input("What is your name: ").strip()
+        name = input("So tell me your name and your adventure shall begin!\n").strip()
+        if name == "quit":
+            exit()
+        elif name == "Bill":
+            print("\nWhats up homie :D")
+        elif name == "mike":
+            print("\nThe master returns!")
+        elif name == "scott":
+            print("\nIt you! great...")
 
 def quit():
     print(f"Farewell {name}")
@@ -49,12 +58,16 @@ def player_defend(input_string):
 
     return True
 
+#def player_attack_power():
+    #player_attack = randint(1, 5)
+
 
 #monster funtions
 def monster_attack():
-    global monster_attack_power, player_hitpoints
+    global player_hitpoints
 
     player_hitpoints = player_hitpoints - monster_attack_power
+
     print(f"The monster has attacked you for {monster_attack_power} damage!")
 
 def monster_defend():
@@ -67,11 +80,14 @@ def monster_defend():
 
     return True
 
+#def monster_attack_power():
+#       monster_attack = randint(2, 6)
+
 def monsters_action_chance():
 
-    monster_action = randint(1, 4)
+    monster_action = randint(1, 10)
 
-    if(monster_action <= 2):
+    if(monster_action <= 7):
         monster_attack()
     else:
         monster_defend()
@@ -82,15 +98,15 @@ def is_someone_dead():
     global monster_hitpoints, player_hitpoints
 
     if(monster_hitpoints <= 0):
-        print("You have slain the beast!")
+        print(f"{name} has slain the beast!")
         return True
     elif(player_hitpoints <= 0):
-        print("You were slain by the beast!")
+        print(f"{name} has been slain by the beast!")
         return True
     else:
         return False
 
-def parse_command(input_string):
+def player_command(input_string):
     if(input_string == "quit"):
         return quit()
     elif(input_string == "attack"):
@@ -106,6 +122,7 @@ def parse_command(input_string):
 
 #in the beginning
 
+print("Welcome intrepid adventurer! \nThis is the Adventure Game!(working title, dont laugh)")
 
 user_name()
 
@@ -118,7 +135,8 @@ while(is_someone_dead() == False):
 
     monsters_action_chance()
 
-    result = parse_command(input_string)
+    result = player_command(input_string)
+
     if(result == True):
         last_command = input_string
 
