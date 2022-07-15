@@ -2,7 +2,7 @@
 
 from random import randint
 
-name = ""
+name = None
 
 player_hitpoints = 11
 monster_hitpoints = 11
@@ -19,18 +19,18 @@ round = 0
 # game commands
 
 def user_name():
-    global name
+    name = input("So tell me your name and your adventure shall begin!\n").strip()
 
-    while not name:
-        name = input("So tell me your name and your adventure shall begin!\n").strip()
-        if name == "quit":
-            exit()
-        elif name == "Bill":
-            print("\nWhats up homie :D")
-        elif name == "mike":
-            print("\nThe master returns!")
-        elif name == "scott":
-            print("\nIt's you! great...")
+    if name == "quit":
+        exit()
+    elif name == "Bill":
+        print("\nWhats up homie :D")
+    elif name == "Mike":
+        print("\nThe master returns!")
+    elif name == "Scott":
+        print("\nIt's you! great...")
+
+    return name
 
 def quit():
     print(f"Farewell {name}")
@@ -137,7 +137,7 @@ def priority():
 
 print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 
-user_name()
+name = user_name()
 print(f"Alright {name}. lets go!")
 
 while(is_someone_dead() == False):
