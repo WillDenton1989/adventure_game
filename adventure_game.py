@@ -4,11 +4,11 @@ from random import randint
 
 name = None
 
-player_hit_points = 11
-monster_hit_points = 10
+player_hit_points = 15
+monster_hit_points = 14
 
-player_attack_power = randint(1, 5)
-monster_attack_power = randint(2, 5)
+player_attack_power = randint(1, 4)
+monster_attack_power = randint(2, 4)
 
 player_input_string = None
 round = 0
@@ -122,15 +122,15 @@ while(is_someone_dead() == False):
 
     if(monster_command() == basic_attack(player_hit_points, monster_attack_power)):
         player_hit_points = monster_command()
-        print("you have been damaged!")
+        print(f"You have taken {monster_attack_power} damage!")
 
     if(player_command(player_input_string) == basic_attack(monster_hit_points, player_attack_power)):
         monster_hit_points = player_command(player_input_string)
-        print("you have damaged the monster!")
+        print(f"You have damaged the monster for {player_attack_power}!")
 
 
 
-    player_attack_power = randint(1, 5)
+    player_attack_power = randint(1, 4)
     monster_attack_power = randint(2, 4)
 
 
