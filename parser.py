@@ -1,14 +1,15 @@
-#storage for now until i break the adventure game into modules.
 
-player_hit_points = 10
+def show_controls():
+    print("""\nType 'attack' or 'a' to try to damage the monster;
+Type 'defend' or 'd' to try to defend against an attack;
+Type 'quit' or 'q' to exit the adventure game.\n""")
 
-def do_damage(original_hp, damage):
-    print(f"original: {original_hp}")
-    new_hp = original_hp - damage
-    print(f"new hp: {new_hp}")
-    return new_hp, True
-
-player_hit_points, success = do_damage(player_hit_points, 3)
-
-print(player_hit_points)
-print(success)
+def parse_player_input(player_input_string):
+    if(player_input_string == "quit" or player_input_string == "q"):
+        return "quit"
+    elif(player_input_string == "attack" or player_input_string == "a"):
+        return "attack"
+    elif(player_input_string == "defend" or player_input_string == "d"):
+        return "defend"
+    else:
+        show_controls()

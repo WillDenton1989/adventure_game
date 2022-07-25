@@ -1,6 +1,7 @@
 # constants
 
 from random import randint
+import parser
 
 name = None
 
@@ -46,24 +47,6 @@ def quit():
     print(f"Farewell {name}")
     exit()
 
-def show_controls():
-    print("""\nType 'attack' or 'a' to try to damage the monster;
-Type 'defend' or 'd' to try to defend against an attack;
-Type 'quit' or 'q' to exit the adventure game.\n""")
-
-#player funtions.
-def parse_player_input(player_input_string):
-    if(player_input_string == "quit" or player_input_string == "q"):
-        return "quit"
-    elif(player_input_string == "attack" or player_input_string == "a"):
-        return "attack"
-    elif(player_input_string == "defend" or player_input_string == "d"):
-        return "defend"
-    else:
-        show_controls()
-
-#monster funtions
-
 def monsters_choice():
     x = randint(1, 10)
     if(x <= 6):
@@ -96,7 +79,7 @@ def attack(attack_power, hit_points, defense):
 print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 name = user_name()
 print(f"\nAlright {name}. lets go!")
-show_controls()
+parser.show_controls()
 while(is_someone_dead() == False):
     round = round + 1
 
@@ -105,7 +88,7 @@ while(is_someone_dead() == False):
 
     # 1) player input
     player_input_string = input(f"I await your command {name}: ")
-    player_decision = parse_player_input(player_input_string)
+    player_decision = parser.parse_player_input(player_input_string)
 
     # 2) gather monster input
     monster_decision = monsters_choice()
