@@ -4,16 +4,13 @@ from random import randint
 
 name = None
 
-player_hitpoints = 11
-monster_hitpoints = 11
+player_hit_points = 11
+monster_hit_points = 10
 
-player_attack_power = 3
-monster_attack_power = 3
+player_attack_power = randint(1, 5)
+monster_attack_power = randint(2, 5)
 
-player_defense = 3
-monster_defense = 3
-
-last_command = None
+player_input_string = None
 round = 0
 
 # game commands
@@ -29,7 +26,14 @@ def user_name():
         print("\nThe master returns!")
     elif name == "Scott":
         print("\nIt's you! great...")
-
+    elif name == "Gary":
+        print("\nOwO it's Gary! UwU xD")
+    elif name == "motherfucker":
+        print("\nWhat aint no country i ever heard of. they speak english in what?")
+    elif name == "boobs":
+        print("\nMmmmmmm those are nice")
+    else:
+        print("\nHeh funny name.")
     return name
 
 def quit():
@@ -37,122 +41,98 @@ def quit():
     exit()
 
 def controls():
-    print("Type'attack' to try to damage the monster;\nType 'defend' to try and defend against an attack;\nType 'quit' to exit the adventure game.")
+    print("""\nType 'attack' or 'a' to try to damage the monster;
+Type 'defend' or 'd' to try to defend against an attack;
+Type 'quit' or 'q' to exit the adventure game.\n""")
 
 #player funtions.
-def player_attack(input_string):
-    global monster_hitpoints, player_attack_power
 
-    print("you wanted to attack ... ")
-    monster_hitpoints = monster_hitpoints - player_attack_power
-    print(f"... you did {player_attack_power} points of damage")
+def player_command(player_input_string):
 
-    return True
-
-def player_defend(input_string):
-    global monster_attack_power
-
-    if(monster_attack_power >= 3):
-        monster_attack_power = monster_attack_power - player_defense
-
-    print("you defend against the incomming attack")
-
-    return True
-
-#def player_attack_power():
-    #player_attack = randint(1, 5)
-
+    if(player_input_string == "quit" or player_input_string == "q"):
+        return quit()
+    elif(player_input_string == "attack" or player_input_string == "a"):
+        return basic_attack(monster_hit_points, player_attack_power)
+    elif(player_input_string == "defend" or player_input_string == "d"):
+        return basic_defend(monster_attack_power)
+    else:
+        print(f"{name} I don't understand your command")
+    return False
 
 #monster funtions
-def monster_attack():
-    global player_hitpoints
-
-    player_hitpoints = player_hitpoints - monster_attack_power
-
-    print(f"The monster has attacked you for {monster_attack_power} damage!")
-
-def monster_defend():
-    global player_attack_power, monster_hitpoints
-
-    if(player_attack_power >= 3):
-        player_attack_power = player_attack_power - monster_defense
-
-    print("The monster defends against your attack!")
-
-    return True
-
-#def monster_attack_power():
-#       monster_attack = randint(2, 6)
 
 def monsters_action_chance():
-
-    monster_action = randint(1, 10)
-
-    if(monster_action <= 6):
-        monster_attack()
+    x = randint(1, 10)
+    if(x <= 6):
+        return 1
     else:
-        monster_defend()
+        return 2
 
+def monster_command():
+    if(monsters_action_chance() == 1):
+        return basic_attack(player_hit_points, monster_attack_power)
+    elif(monsters_action_chance() == 2):
+        return basic_defend(player_attack_power)
 
 #game functions
-def is_someone_dead():
-    global monster_hitpoints, player_hitpoints
 
-    if(monster_hitpoints <= 0):
+def is_someone_dead():
+
+    if(monster_hit_points <= 0):
         print(f"{name} has slain the beast!")
         return True
-    elif(player_hitpoints <= 0):
+    elif(player_hit_points <= 0):
         print(f"{name} has been slain by the beast!")
         return True
     else:
         return False
 
-def player_command(input_string):
-    if(input_string == "quit"):
-        return quit()
-    elif(input_string == "attack"):
-        return player_attack(input_string)
-    elif(input_string == "defend"):
-        return player_defend(input_string)
-    else:
-        print(f"{name} I don't understand your command")
-    return False
+def basic_attack(original_hp, attack_damage):
 
-def priority():
-    result = None
-    priority_1 = randint(1, 2)
+    new_hp = original_hp - attack_damage
 
-    if priority_1 == 1:
-        monsters_action_chance()
-        result = player_command(input_string)
+    return new_hp
 
-    elif priority_1 == 2:
-        result = player_command(input_string)
-        monsters_action_chance()
+def basic_defend(attack_damage):
 
-    return result
+    new_attack_damage = attack_damage % 2
+
+    return new_attack_damage
 
 
-#in the beginning
+
+#the actual code begins here. good luck
 
 print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
-
 name = user_name()
-print(f"Alright {name}. lets go!")
+print(f"\nAlright {name}. lets go!")
 
 while(is_someone_dead() == False):
+
     round = round + 1
-
-    print(f"\n\nRound {round}: monster - {monster_hitpoints}, player - {player_hitpoints} - last command {last_command}")
+    #gather human input
+    print(f"\n\nRound {round}: monster - {monster_hit_points}, player - {player_hit_points} - last command {player_input_string}")
     controls()
-    input_string = input("I await your command: ")
+    player_input_string = input(f"I await your command {name}: ")
 
-    if(priority() == True):
-        last_command = input_string
+    #gather ai input
+    #monsters_action_chance()
+
+    #use combined inputs
+
+    if(monster_command() == basic_attack(player_hit_points, monster_attack_power)):
+        player_hit_points = monster_command()
+        print("you have been damaged!")
+
+    if(player_command(player_input_string) == basic_attack(monster_hit_points, player_attack_power)):
+        monster_hit_points = player_command(player_input_string)
+        print("you have damaged the monster!")
 
 
-    #when monster gets updated change this to any attack power decrease gets reset.
-    if(monster_attack_power < 3):
-        monster_attack_power = monster_attack_power + player_defense
-    if(player_attack_power < 3):
-        player_attack_power = player_attack_power + monster_defense
+
+    player_attack_power = randint(1, 5)
+    monster_attack_power = randint(2, 4)
+
+
+print(f"\n\n{name} has finished the Adventure! So far...")
+#this may or may not be the end?
