@@ -1,35 +1,25 @@
-# constants
+#constants
 
 from random import randint
 import parser
 
-player_values = {
-    "player_hit_points": 11,
-    "player_attack_power": 5,
-    "player_defense": 1,
-    "player_decision": None
+player = {
+    "name": None,
+    "hit_points": 9,
+    "attack_power": 5,
+    "defense": 1,
+    "decision": None
     }
-monster_values = {
-    "monster_hit_points": 10,
-    "monster_attack_power": 5,
-    "monster_defense": 1,
-    "monster_decision": None,
+
+monster = {
+    "hit_points": 8,
+    "attack_power": 5,
+    "defense": 1,
+    "decision": None
     }
 
 name = None
 round = -1
-
-player_hit_points = 11
-monster_hit_points = 10
-
-player_defense = 1
-monster_defense = 1
-
-player_attack_power = 5
-monster_attack_power = 5
-
-player_decision = None
-monster_decision = None
 
 # game commands
 
@@ -71,11 +61,11 @@ def monsters_choice():
 
 #game functions
 
-def is_someone_dead():
-    if(monster_hit_points <= 0):
+def is_someone_dead(player, monster, name):
+    if(monster["hit_points"] <= 0):
         print(f"\n{name} has slain the beast!")
         return True
-    elif(player_hit_points <= 0):
+    elif(player["hit_points"] <= 0):
         print(f"\n{name} has been slain by the beast!")
         return True
     else:
@@ -99,37 +89,38 @@ print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working titl
 name = user_name()
 print(f"\nAlright {name}. lets go!")
 parser.show_controls()
-while(is_someone_dead() == False):
+
+while(is_someone_dead(player, monster, name) == False):
     round = round_counter(round)
 
-    print(f"\n\nRound {round_counter(round)}: monster - {monster_hit_points}, player - {player_hit_points}")
-    print(f"\nplayer defense: {player_defense}, monster defense {monster_defense}")
+    print(f"\n\nRound {round_counter(round)}: monster - {monster['hit_points']}, player - {player['hit_points']}")
+    print(f"\nplayer defense: {player['defense']}, monster defense {monster['defense']}")
 
     # 1) player input
     player_input_string = input(f"I await your command {name}: ")
-    player_decision = parser.parse_player_input(player_input_string)
+    player["decision"] = parser.parse_player_input(player_input_string)
 
     # 2) gather monster input
-    monster_decision = monsters_choice()
+    monster["decision"] = monsters_choice()
 
     # 3) execute defends
-    if(player_decision == "defend"):
-        player_defense = defend(player_defense, round)
+    if(player["decision"] == "defend"):
+        player["defense"] = defend(player["defense"], round)
 
-    if(monster_decision == "defend"):
-        monster_defense = defend(monster_defense, round)
+    if(monster["decision"] == "defend"):
+        monster["defense"] = defend(monster["defense"], round)
 
     # 4) execute attacks
-    if(player_decision == "attack"):
-        monster_hit_points = attack(player_attack_power, monster_hit_points, monster_defense)
+    if(player["decision"] == "attack"):
+        monster["hit_points"] = attack(player["attack_power"], monster["hit_points"], monster["defense"])
 
-    if(monster_decision == "attack"):
-        player_hit_points = attack(monster_attack_power, player_hit_points, player_defense)
+    if(monster["decision"] == "attack"):
+        player["hit_points"] = attack(monster["attack_power"], player["hit_points"], player["defense"])
 
     # 5) quit out
-    if(player_decision == "quit"):
+    if(player["decision"] == "quit"):
         quit()
 
-    print(f"\nThe player chooses to {player_decision}, The Monster choses to {monster_decision}")
+    print(f"\nThe player chooses to {player['decision']}, The Monster choses to {monster['decision']}")
 
 print(f"\n\n{name} has finished the Adventure! So far...")
