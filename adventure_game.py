@@ -3,22 +3,33 @@
 from random import randint
 import parser
 
-name = None
+player_values = {
+    "player_hit_points": 11,
+    "player_attack_power": 5,
+    "player_defense": 1,
+    "player_decision": None
+    }
+monster_values = {
+    "monster_hit_points": 10,
+    "monster_attack_power": 5,
+    "monster_defense": 1,
+    "monster_decision": None,
+    }
 
-player_hit_points = 15
-monster_hit_points = 14
+name = None
+round = -1
+
+player_hit_points = 11
+monster_hit_points = 10
 
 player_defense = 1
 monster_defense = 1
 
-# player_attack_power = randint(1, 4)
 player_attack_power = 5
-monster_attack_power = 4
+monster_attack_power = 5
 
 player_decision = None
 monster_decision = None
-
-round = 0
 
 # game commands
 
@@ -44,8 +55,12 @@ def user_name():
     return name
 
 def quit():
+    print(f"You are a pussy ass bitch")
     print(f"Farewell {name}")
     exit()
+
+def round_counter(round):
+    return round + 1
 
 def monsters_choice():
     x = randint(1, 10)
@@ -58,16 +73,20 @@ def monsters_choice():
 
 def is_someone_dead():
     if(monster_hit_points <= 0):
-        print(f"{name} has slain the beast!")
+        print(f"\n{name} has slain the beast!")
         return True
     elif(player_hit_points <= 0):
-        print(f"{name} has been slain by the beast!")
+        print(f"\n{name} has been slain by the beast!")
         return True
     else:
         return False
 
-def defend(original_defense):
-    return original_defense + 1
+def defend(original_defense, round):
+    new_defense = original_defense + 1
+    if(new_defense == 4):
+        return original_defense
+    else:
+        return new_defense
 
 def attack(attack_power, hit_points, defense):
     attack_roll = randint(1, attack_power)
@@ -81,9 +100,9 @@ name = user_name()
 print(f"\nAlright {name}. lets go!")
 parser.show_controls()
 while(is_someone_dead() == False):
-    round = round + 1
+    round = round_counter(round)
 
-    print(f"\n\nRound {round}: monster - {monster_hit_points}, player - {player_hit_points}")
+    print(f"\n\nRound {round_counter(round)}: monster - {monster_hit_points}, player - {player_hit_points}")
     print(f"\nplayer defense: {player_defense}, monster defense {monster_defense}")
 
     # 1) player input
@@ -95,10 +114,10 @@ while(is_someone_dead() == False):
 
     # 3) execute defends
     if(player_decision == "defend"):
-        player_defense = defend(player_defense)
+        player_defense = defend(player_defense, round)
 
     if(monster_decision == "defend"):
-        monster_defense = defend(monster_defense)
+        monster_defense = defend(monster_defense, round)
 
     # 4) execute attacks
     if(player_decision == "attack"):
@@ -107,7 +126,10 @@ while(is_someone_dead() == False):
     if(monster_decision == "attack"):
         player_hit_points = attack(monster_attack_power, player_hit_points, player_defense)
 
-    print(player_decision, monster_decision)
+    # 5) quit out
+    if(player_decision == "quit"):
+        quit()
 
+    print(f"\nThe player chooses to {player_decision}, The Monster choses to {monster_decision}")
 
 print(f"\n\n{name} has finished the Adventure! So far...")
