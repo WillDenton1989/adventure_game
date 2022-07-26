@@ -18,35 +18,34 @@ monster = {
     "decision": None
     }
 
-name = None
 round = -1
 
 # game commands
 
 def user_name():
-    name = input("So tell me your name and your adventure shall begin!\n").strip()
+    player["name"] = input("So tell me your name and your adventure shall begin!\n").strip()
 
-    if name == "quit":
+    if player["name"] == "quit":
         exit()
-    elif name == "Bill":
+    elif player["name"] == "Bill":
         print("\nWhats up homie :D")
-    elif name == "Mike":
+    elif player["name"] == "Mike":
         print("\nThe master returns!")
-    elif name == "Scott":
+    elif player["name"] == "Scott":
         print("\nIt's you! great...")
-    elif name == "Gary":
+    elif player["name"] == "Gary":
         print("\nOwO it's Gary! UwU xD")
-    elif name == "motherfucker":
+    elif player["name"] == "motherfucker":
         print("\nWhat aint no country i ever heard of. they speak english in what?")
-    elif name == "boobs":
+    elif player["name"] == "boobs":
         print("\nMmmmmmm those are nice")
     else:
         print("\nHeh funny name.")
-    return name
+    return player["name"]
 
 def quit():
     print(f"You are a pussy ass bitch")
-    print(f"Farewell {name}")
+    print(f"Farewell {player['name']}")
     exit()
 
 def round_counter(round):
@@ -61,12 +60,12 @@ def monsters_choice():
 
 #game functions
 
-def is_someone_dead(player, monster, name):
+def is_someone_dead(player, monster,):
     if(monster["hit_points"] <= 0):
-        print(f"\n{name} has slain the beast!")
+        print(f"\n{player['name']} has slain the beast!")
         return True
     elif(player["hit_points"] <= 0):
-        print(f"\n{name} has been slain by the beast!")
+        print(f"\n{player['name']} has been slain by the beast!")
         return True
     else:
         return False
@@ -86,18 +85,18 @@ def attack(attack_power, hit_points, defense):
 # Main
 
 print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
-name = user_name()
-print(f"\nAlright {name}. lets go!")
+player["name"] = user_name()
+print(f"\nAlright {player['name']}. lets go!")
 parser.show_controls()
 
-while(is_someone_dead(player, monster, name) == False):
+while(is_someone_dead(player, monster,) == False):
     round = round_counter(round)
 
-    print(f"\n\nRound {round_counter(round)}: monster - {monster['hit_points']}, player - {player['hit_points']}")
+    print(f"\n\nRound {round}: monster - {monster['hit_points']}, player - {player['hit_points']}")
     print(f"\nplayer defense: {player['defense']}, monster defense {monster['defense']}")
 
     # 1) player input
-    player_input_string = input(f"I await your command {name}: ")
+    player_input_string = input(f"I await your command {player['name']}: ")
     player["decision"] = parser.parse_player_input(player_input_string)
 
     # 2) gather monster input
@@ -123,4 +122,4 @@ while(is_someone_dead(player, monster, name) == False):
 
     print(f"\nThe player chooses to {player['decision']}, The Monster choses to {monster['decision']}")
 
-print(f"\n\n{name} has finished the Adventure! So far...")
+print(f"\n\n{player['name']} has finished the Adventure! So far...")
