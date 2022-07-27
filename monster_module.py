@@ -1,6 +1,13 @@
 #where the monsters are
 from random import randint
 
+def enemy_npc_choice():
+    x = randint(1, 10)
+    if(x <= 7):
+        return "attack"
+    else:
+        return "defend"
+
 def monster_generator():
     x = randint(1, 6)
     npc_orc = {
