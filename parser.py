@@ -1,3 +1,4 @@
+#parser.
 
 def show_controls():
     print("""\nType 'attack' or 'a' to try to damage the monster;
@@ -13,3 +14,7 @@ def parse_player_input(player_input_string):
         return "defend"
     else:
         show_controls()
+
+def parse_continue_menu(player_input_string):
+    if(player_input_string == "yes" or player_input_string == "y"):
+        return
