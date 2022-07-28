@@ -6,7 +6,7 @@ import parser
 
 player = {
     "name": None,
-    "hit_points": 9,
+    "hit_points": 10,
     "attack_power": 5,
     "defense": 1,
     "defense_scalar": 1,
@@ -42,13 +42,13 @@ def continue_menu(player):
     player_input_string = input(f"Do you wish to continue battling monsters {player['name']}?\nyes/no\n")
     if(player_input_string == "yes" or player_input_string == "y"):
         monster = monster_module.monster_generator()
-        player["hit_points"] = 9
-        player["defense"] = 1
+        player.update({"hit_points": 10})
+        player.update({"defense": 1})
         return game_functions.battle(game_commands.player, game_commands.monster, game_functions.attack, game_functions.defend, game_functions.round_counter, parser.parse_player_input, monster_module.enemy_npc_choice, quit)
     elif(player_input_string == "no" or player_input_string == "n"):
         return game_end()
     else:
-        return exit()
+        return continue_menu(player)
 
 def quit():
     print(f"You are a pussy ass bitch")

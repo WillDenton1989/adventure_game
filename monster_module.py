@@ -30,7 +30,7 @@ def monster_generator():
         "name": "Lurtz the Uruk",
         "hit_points": 20,
         "attack_power": 7,
-        "defense": -1,
+        "defense": -3,
         "defense_scalar": 1,
         "decision": None
     }
@@ -38,7 +38,7 @@ def monster_generator():
         "name": "Bob the cave Troll",
         "hit_points": 50,
         "attack_power": 9,
-        "defense": -10,
+        "defense": -15,
         "defense_scalar": 0,
         "decision": None
     }
@@ -62,15 +62,16 @@ def monster_generator():
         return npc_bandit
 
 def monster_catchphrase_generator(monster, monster_generator):
-    if(monster == npc_orc):
-        print("Looks like meats back on the menu boys!")
-    elif(monster == npc_uruk):
-        print("Is your name Boromir by any chance?")
-    elif(monster == npc_troll):
+    print("\nAs your foe engages you in glorious combat they cry out...")
+    if(monster["name"] == "Ugluk the Orc"):
+        print("Looks like meat's back on the menu boys!")
+    elif(monster["name"] == "Lurtz the Uruk"):
+        print("Have you seen a pair of Hobbits nearby? They belong to the White Wizard.")
+    elif(monster["name"] == "Bob the cave Troll"):
         print("Ugh. its a cave Troll")
-    elif(monster == npc_goblin):
-        print("where'd I find 'em? Found 'em on the front porch!")
-    elif(monster == npc_bandit):
+    elif(monster["name"] == "Gilbert the Goblin"):
+        print("Where'd I find 'em? Found 'em on the front porch!")
+    elif(monster["name"] == "Bandit Fred the Dadfucker"):
         print("You're not a dad by any chance?")
     else:
         print("We battle to the death!!")
