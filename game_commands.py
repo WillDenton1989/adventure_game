@@ -1,7 +1,6 @@
 #game commands or whatever i shall inevitably change this file to.
 import monster_module
 import game_functions
-#import game_commands
 import parser
 
 player = {
