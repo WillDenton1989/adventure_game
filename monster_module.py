@@ -61,7 +61,7 @@ def monster_generator():
     else:
         return npc_bandit
 
-def monster_catchphrase_generator(monster, monster_generator):
+def monster_catchphrase_generator(monster):
     print("\nAs your foe engages you in glorious combat they cry out...")
     if(monster["name"] == "Ugluk the Orc"):
         print("Looks like meat's back on the menu boys!")

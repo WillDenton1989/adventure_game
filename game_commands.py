@@ -1,7 +1,7 @@
 #game commands or whatever i shall inevitably change this file to.
 import monster_module
 import game_functions
-import game_commands
+#import game_commands
 import parser
 
 player = {
@@ -38,17 +38,17 @@ def user_name():
         print("\nHeh funny name.")
     return player["name"]
 
-def continue_menu(player):
+def continue_menu(player, monster):
     player_input_string = input(f"Do you wish to continue battling monsters {player['name']}?\nyes/no\n")
     if(player_input_string == "yes" or player_input_string == "y"):
         monster = monster_module.monster_generator()
         player.update({"hit_points": 10})
         player.update({"defense": 1})
-        return game_functions.battle(game_commands.player, game_commands.monster, game_functions.attack, game_functions.defend, game_functions.round_counter, parser.parse_player_input, monster_module.enemy_npc_choice, quit)
+        return game_functions.battle(player, monster, game_functions.attack, game_functions.defend, parser.parse_player_input, monster_module.enemy_npc_choice, quit)
     elif(player_input_string == "no" or player_input_string == "n"):
         return game_end()
     else:
-        return continue_menu(player)
+        return continue_menu(player, monster)
 
 def quit():
     print(f"You are a pussy ass bitch")

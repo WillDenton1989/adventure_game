@@ -1,7 +1,7 @@
 #parser.
 
 def show_controls():
-    print("""\nType 'attack' or 'a' to try to damage the monster;
+    print("""\nType 'attack' or 'a' to try to damage your foe;
 Type 'defend' or 'd' to try to defend against an attack;
 Type 'quit' or 'q' to exit the adventure game.\n""")
 
@@ -14,7 +14,3 @@ def parse_player_input(player_input_string):
         return "defend"
     else:
         show_controls()
-
-def parse_continue_menu(player_input_string):
-    if(player_input_string == "yes" or player_input_string == "y"):
-        return

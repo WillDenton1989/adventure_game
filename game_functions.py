@@ -1,4 +1,4 @@
-#technically battle functions but oh well
+#technically battle functions but oh whale
 import game_commands
 import monster_module
 import parser
@@ -29,17 +29,17 @@ def attack(attack_power, hit_points, defense):
     attack_value =  max(0, attack_roll - defense)
     return hit_points - attack_value
 
-def battle(player, monster, attack, defend, round_counter, parse_player_input, enemy_npc_choice, quit):
+def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
     print(f"\nAlright {player['name']}. lets go!")
     print(f"\n{player['name']} is fighting a monstrous {monster['name']}")
-    monster_module.monster_catchphrase_generator(monster, monster_module.monster_generator)
+    monster_module.monster_catchphrase_generator(monster)
     parser.show_controls()
+    round = -1
     while(is_someone_dead(player, monster,) == False):
-        round = -1
-        round = round_counter(round)
+        round = round + 1
 
         print(f"\n\nRound {round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
-        print(f"\nplayer defense: {player['defense']}, enemy defense {monster['defense']}")
+        print(f"\n{player['name']} defense: {player['defense']}, {monster['name']} defense {monster['defense']}")
 
         # 1) player input
         player_input_string = input(f"I await your command {player['name']}: ")
