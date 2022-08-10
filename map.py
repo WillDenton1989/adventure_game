@@ -25,7 +25,12 @@ map_1 = [
         [TL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, TR],
         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, PL, EE, EE, EE, EE, EE, EE, EE, VV],
+        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
         [BL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, BR]
@@ -58,9 +63,9 @@ def draw_map(map, objects):
             object = object_at_coordinate(objects, col_index, row_index)
 
             if(object == None):
-                print(column, end = " ")
+                print(chr(column), end = "")
             else:
-                print(object["symbol"], end = " ")
+                print(object["symbol"], end = "")
             col_index += 1
 
         print("\r")
@@ -97,9 +102,9 @@ def execute_user_move(user, new_column, new_row):
     user["row"] = new_row
 
 def is_coordinate_passible(map, column, row):
-    if(map[column][row] == x):
+    if(map[column][row] == HH or map[column][row] == VV):
         return False
-    elif(map[column][row] == o):
+    elif(map[column][row] == EE):
         return True
 
 def can_player_move_to_coordinate(map, column, row):
@@ -108,19 +113,37 @@ def can_player_move_to_coordinate(map, column, row):
 
     return True
 
+def game_board():
+    while(True):
+        print(user)
+        draw_map(map_1, objects)
+
+        user_input = input("Use the 'w' and 's' keys to move up and down.\nUse the 'a' and 'd' keys to move left and right.\n")
+        user["decision"] = map_parser.parse_user_move(user_input)
+        if(user["decision"] == "quit"): game_commands.quit()
+        if(user["decision"] == "cont"):
+            map_parser.show_controls()
+            continue
+
+        new_column, new_row = determine_new_coordinates(map_1, user["decision"], user["column"], user["row"])
+        can_move = can_player_move_to_coordinate(map_1, new_column, new_row)
+        if(can_move == True):
+            execute_user_move(user, new_column, new_row)
+
 #code start.
-while(True):
-    print(user)
-    draw_map(map_0, objects)
-
-    user_input = input("Use the 'w' and 's' keys to move up and down.\nUse the 'a' and 'd' keys to move left and right.\n")
-    user["decision"] = map_parser.parse_user_move(user_input)
-    if(user["decision"] == "quit"): game_commands.quit()
-    if(user["decision"] == "cont"):
-        map_parser.show_controls()
-        continue
-
-    new_column, new_row = determine_new_coordinates(map_0, user["decision"], user["column"], user["row"])
-    can_move = can_player_move_to_coordinate(map_0, new_column, new_row)
-    if(can_move == True):
-        execute_user_move(user, new_column, new_row)
+game_board()
+# while(True):
+#     print(user)
+#     draw_map(map_1, objects)
+#
+#     user_input = input("Use the 'w' and 's' keys to move up and down.\nUse the 'a' and 'd' keys to move left and right.\n")
+#     user["decision"] = map_parser.parse_user_move(user_input)
+#     if(user["decision"] == "quit"): game_commands.quit()
+#     if(user["decision"] == "cont"):
+#         map_parser.show_controls()
+#         continue
+#
+#     new_column, new_row = determine_new_coordinates(map_1, user["decision"], user["column"], user["row"])
+#     can_move = can_player_move_to_coordinate(map_1, new_column, new_row)
+#     if(can_move == True):
+#         execute_user_move(user, new_column, new_row)

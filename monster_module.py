@@ -16,7 +16,7 @@ def monster_generator():
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": .5,
-        "decision": None
+        "battle_decision": None
     }
     npc_goblin = {
         "name": "Gilbert the Goblin",
@@ -24,7 +24,7 @@ def monster_generator():
         "attack_power": 4,
         "defense": -5,
         "defense_scalar": .5,
-        "decision": None
+        "battle_decision": None
     }
     npc_uruk = {
         "name": "Lurtz the Uruk",
@@ -32,7 +32,7 @@ def monster_generator():
         "attack_power": 7,
         "defense": -3,
         "defense_scalar": 1,
-        "decision": None
+        "battle_decision": None
     }
     npc_troll = {
         "name": "Bob the cave Troll",
@@ -40,7 +40,7 @@ def monster_generator():
         "attack_power": 9,
         "defense": -15,
         "defense_scalar": 0,
-        "decision": None
+        "battle_decision": None
     }
     npc_bandit = {
         "name": "Bandit Fred the Dadfucker",
@@ -48,7 +48,7 @@ def monster_generator():
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": 1,
-        "decision": None
+        "battle_decision": None
     }
     if(x == 1):
         return npc_orc
@@ -83,7 +83,7 @@ enemies_dict = {
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": .5,
-        "decision": None
+        "battle_decision": None
     },
     "npc_goblin": {
         "name": "Gilbert the Goblin",
@@ -91,7 +91,7 @@ enemies_dict = {
         "attack_power": 4,
         "defense": -5,
         "defense_scalar": .5,
-        "decision": None
+        "battle_decision": None
     },
     "npc_uruk": {
         "name": "Lurtz the Uruk",
@@ -99,7 +99,7 @@ enemies_dict = {
         "attack_power": 7,
         "defense": -1,
         "defense_scalar": 1,
-        "decision": None
+        "battle_decision": None
     },
     "npc_troll": {
         "name": "Bob the cave Troll",
@@ -107,7 +107,7 @@ enemies_dict = {
         "attack_power": 9,
         "defense": -10,
         "defense_scalar": 0,
-        "decision": None
+        "battle_decision": None
     },
     "npc_bandit": {
         "name": "Bandit Fred the Dadfucker",
@@ -115,6 +115,6 @@ enemies_dict = {
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": 1,
-        "decision": None
+        "battle_decision": None
     }
 }

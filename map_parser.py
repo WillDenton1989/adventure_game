@@ -1,5 +1,4 @@
 #this is the map parser
-#import map
 
 def show_controls():
     print("""Use the 'w' and 's' keys to move up and down;

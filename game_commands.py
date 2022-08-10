@@ -9,7 +9,7 @@ player = {
     "attack_power": 5,
     "defense": 1,
     "defense_scalar": 1,
-    "decision": None
+    "battle_decision": None
     }
 
 monster = monster_module.monster_generator()

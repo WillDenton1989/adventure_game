@@ -27,7 +27,6 @@ def attack(attack_power, hit_points, defense):
     return hit_points - attack_value
 
 def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
-    print(f"\nAlright {player['name']}. lets go!")
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!")
     monster_module.monster_catchphrase_generator(monster)
     game_parser.show_controls()
@@ -41,31 +40,31 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
 
         # 1) player input
         player_input_string = input(f"I await your command {player['name']}: ")
-        player["decision"] = game_parser.parse_player_input(player_input_string)
-        while(player["decision"] == "cont"):
+        player["battle_decision"] = game_parser.parse_player_input(player_input_string)
+        while(player["battle_decision"] == "cont"):
             game_parser.show_controls()
             player_input_string = input(f"\nI await a real command {player['name']}: ")
-            player["decision"] = game_parser.parse_player_input(player_input_string)
+            player["battle_decision"] = game_parser.parse_player_input(player_input_string)
 
         # 2) gather monster input
-        monster["decision"] = enemy_npc_choice()
+        monster["battle_decision"] = enemy_npc_choice()
 
         # 3) execute defends
-        if(player["decision"] == "defend"):
+        if(player["battle_decision"] == "defend"):
             player["defense"] = defend(player["defense"], player["defense_scalar"])
 
-        if(monster["decision"] == "defend"):
+        if(monster["battle_decision"] == "defend"):
             monster["defense"] = defend(monster["defense"], monster["defense_scalar"])
 
         # 4) execute attacks
-        if(player["decision"] == "attack"):
+        if(player["battle_decision"] == "attack"):
             monster["hit_points"] = attack(player["attack_power"], monster["hit_points"], monster["defense"])
 
-        if(monster["decision"] == "attack"):
+        if(monster["battle_decision"] == "attack"):
             player["hit_points"] = attack(monster["attack_power"], player["hit_points"], player["defense"])
 
         # 5) quit out
-        if(player["decision"] == "quit"):
+        if(player["battle_decision"] == "quit"):
             quit()
 
-        print(f"\n{player['name']} chooses to {player['decision']}, {monster['name']} choses to {monster['decision']}")
+        print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} choses to {monster['battle_decision']}")
