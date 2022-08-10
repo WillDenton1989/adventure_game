@@ -2,16 +2,6 @@ import time
 import game_commands
 import map_parser
 
-x = "#"
-o = " "
-p = "*"
-map_0 = [
-        [x, x, x, x],
-        [x, o, o, x],
-        [x, o, o, x],
-        [x, x, x, x]
-        ]
-
 TL = 9484
 BL = 9492
 TR = 9488
@@ -115,10 +105,9 @@ def can_player_move_to_coordinate(map, column, row):
 
 def game_board():
     while(True):
-        print(user)
         draw_map(map_1, objects)
 
-        user_input = input("Use the 'w' and 's' keys to move up and down.\nUse the 'a' and 'd' keys to move left and right.\n")
+        user_input = input("Use the 'k' and 'j' keys to move up and down.\nUse the 'h' and 'l' keys to move left and right.\n")
         user["decision"] = map_parser.parse_user_move(user_input)
         if(user["decision"] == "quit"): game_commands.quit()
         if(user["decision"] == "cont"):
@@ -129,21 +118,3 @@ def game_board():
         can_move = can_player_move_to_coordinate(map_1, new_column, new_row)
         if(can_move == True):
             execute_user_move(user, new_column, new_row)
-
-#code start.
-game_board()
-# while(True):
-#     print(user)
-#     draw_map(map_1, objects)
-#
-#     user_input = input("Use the 'w' and 's' keys to move up and down.\nUse the 'a' and 'd' keys to move left and right.\n")
-#     user["decision"] = map_parser.parse_user_move(user_input)
-#     if(user["decision"] == "quit"): game_commands.quit()
-#     if(user["decision"] == "cont"):
-#         map_parser.show_controls()
-#         continue
-#
-#     new_column, new_row = determine_new_coordinates(map_1, user["decision"], user["column"], user["row"])
-#     can_move = can_player_move_to_coordinate(map_1, new_column, new_row)
-#     if(can_move == True):
-#         execute_user_move(user, new_column, new_row)
