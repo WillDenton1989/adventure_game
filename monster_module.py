@@ -66,11 +66,11 @@ def monster_catchphrase_generator(monster):
     if(monster["name"] == "Ugluk the Orc"):
         print("Looks like meat's back on the menu boys!")
     elif(monster["name"] == "Lurtz the Uruk"):
-        print("Have you seen a pair of Hobbits nearby? They belong to the White Wizard.")
+        print("Have you seen a pair of Hobbits nearby?")
     elif(monster["name"] == "Bob the cave Troll"):
         print("Ugh. its a cave Troll")
     elif(monster["name"] == "Gilbert the Goblin"):
-        print("Where'd I find 'em? Found 'em on the front porch!")
+        print("Reeeeeeee!")
     elif(monster["name"] == "Bandit Fred the Dadfucker"):
         print("You're not a dad by any chance?")
     else:

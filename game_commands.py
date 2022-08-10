@@ -33,6 +33,8 @@ def user_name():
         print("\nMmmmmmm Boobs")
     elif player["name"] == "dood":
         print("\nSup dood :)")
+    elif player["name"] == "dad":
+        print("Oh no. I hope you dont encounter... him...")
     else:
         print("\nHeh funny name.")
     return player["name"]
@@ -50,10 +52,13 @@ def continue_menu(player, monster):
         return continue_menu(player, monster)
 
 def quit():
-    print(f"You are a pussy ass bitch")
     print(f"Farewell {player['name']}")
     exit()
 
 def game_end():
     print(f"\n\n{player['name']} has finished their Adventure! So far...")
     exit()
+
+def dad_fred_paradox(player, monster):
+    if(player["name"] == "dad" and monster["name"] == "Bandit Fred the Dadfucker"):
+        monster["attack_power"] = 10

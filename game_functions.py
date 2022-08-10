@@ -4,9 +4,6 @@ import monster_module
 import parser
 from random import randint
 
-def round_counter(round):
-    return + 1
-
 def is_someone_dead(player, monster):
     if(monster["hit_points"] <= 0):
         print(f"\n{player['name']} has slain {monster['name']}!")
@@ -31,19 +28,24 @@ def attack(attack_power, hit_points, defense):
 
 def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
     print(f"\nAlright {player['name']}. lets go!")
-    print(f"\n{player['name']} is fighting a monstrous {monster['name']}")
+    print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!")
     monster_module.monster_catchphrase_generator(monster)
     parser.show_controls()
     round = -1
     while(is_someone_dead(player, monster,) == False):
         round = round + 1
 
+        game_commands.dad_fred_paradox(game_commands.player, game_commands.monster)
         print(f"\n\nRound {round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
-        print(f"\n{player['name']} defense: {player['defense']}, {monster['name']} defense {monster['defense']}")
+        print(f"\n{player['name']} defense: {player['defense']} attack: {player['attack_power']}, {monster['name']} defense: {monster['defense']} attack: {monster['attack_power']}")
 
         # 1) player input
         player_input_string = input(f"I await your command {player['name']}: ")
         player["decision"] = parser.parse_player_input(player_input_string)
+        while(player["decision"] == "cont"):
+            parser.show_controls()
+            player_input_string = input(f"\nI await a real command {player['name']}: ")
+            player["decision"] = parser.parse_player_input(player_input_string)
 
         # 2) gather monster input
         monster["decision"] = enemy_npc_choice()
@@ -66,4 +68,4 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
         if(player["decision"] == "quit"):
             quit()
 
-        print(f"\n{player['name']} chooses to {player['decision']}, The {monster['name']} choses to {monster['decision']}")
+        print(f"\n{player['name']} chooses to {player['decision']}, {monster['name']} choses to {monster['decision']}")
