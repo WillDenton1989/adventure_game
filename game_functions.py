@@ -1,7 +1,7 @@
 #technically battle functions but oh whale
 import game_commands
 import monster_module
-import parser
+import game_parser
 from random import randint
 
 def is_someone_dead(player, monster):
@@ -30,7 +30,7 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
     print(f"\nAlright {player['name']}. lets go!")
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!")
     monster_module.monster_catchphrase_generator(monster)
-    parser.show_controls()
+    game_parser.show_controls()
     round = -1
     while(is_someone_dead(player, monster,) == False):
         round = round + 1
@@ -41,11 +41,11 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
 
         # 1) player input
         player_input_string = input(f"I await your command {player['name']}: ")
-        player["decision"] = parser.parse_player_input(player_input_string)
+        player["decision"] = game_parser.parse_player_input(player_input_string)
         while(player["decision"] == "cont"):
-            parser.show_controls()
+            game_parser.show_controls()
             player_input_string = input(f"\nI await a real command {player['name']}: ")
-            player["decision"] = parser.parse_player_input(player_input_string)
+            player["decision"] = game_parser.parse_player_input(player_input_string)
 
         # 2) gather monster input
         monster["decision"] = enemy_npc_choice()

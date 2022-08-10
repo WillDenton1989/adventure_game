@@ -1,4 +1,4 @@
-#parser.
+#game_parser.
 
 def show_controls():
     print("""\nType 'attack' or 'a' to try to damage your foe;

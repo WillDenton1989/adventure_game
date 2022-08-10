@@ -1,7 +1,7 @@
 #game commands or whatever i shall inevitably change this file to.
 import monster_module
 import game_functions
-import parser
+import game_parser
 
 player = {
     "name": None,
@@ -45,7 +45,7 @@ def continue_menu(player, monster):
         monster = monster_module.monster_generator()
         player.update({"hit_points": 10})
         player.update({"defense": 1})
-        return game_functions.battle(player, monster, game_functions.attack, game_functions.defend, parser.parse_player_input, monster_module.enemy_npc_choice, quit)
+        return game_functions.battle(player, monster, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, quit)
     elif(player_input_string == "no" or player_input_string == "n"):
         return game_end()
     else:

@@ -1,4 +1,6 @@
 import time
+import game_commands
+import map_parser
 
 x = "#"
 o = " "
@@ -65,28 +67,6 @@ def draw_map(map, objects):
         row_index += 1
         col_index = 0
 
-def quit():
-    print("Goodbye!")
-    exit()
-
-def show_controls():
-    print("""Use the 'w' and 's' keys to move up and down;
-Use the 'a' and 'd' keys to move left and right.""")
-
-def parse_user_move(user_input):
-    if(user_input == "w"):
-        return "up"
-    elif(user_input == "s"):
-        return "down"
-    elif(user_input == "a"):
-        return "left"
-    elif(user_input == "d"):
-        return "right"
-    elif(user_input == "quit" or user_input == "q"):
-        return "quit"
-    else:
-        return "cont"
-
 def determine_new_coordinates(map, direction, column, row):
     if(direction == "right"):
         return column + 1, row
@@ -134,10 +114,10 @@ while(True):
     draw_map(map_0, objects)
 
     user_input = input("Use the 'w' and 's' keys to move up and down.\nUse the 'a' and 'd' keys to move left and right.\n")
-    user["decision"] = parse_user_move(user_input)
-    if(user["decision"] == "quit"): break
+    user["decision"] = map_parser.parse_user_move(user_input)
+    if(user["decision"] == "quit"): game_commands.quit()
     if(user["decision"] == "cont"):
-        show_controls()
+        map_parser.show_controls()
         continue
 
     new_column, new_row = determine_new_coordinates(map_0, user["decision"], user["column"], user["row"])
