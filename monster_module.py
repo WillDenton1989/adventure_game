@@ -14,7 +14,7 @@ npc_goblin = {
 }
 
 npc_bandit = {
-    "name": "Bandit Fred the Dadfucker",
+    "name": "Fred the Bandit",
     "hit_points": 10,
     "attack_power": 5,
     "defense": 1,
@@ -79,7 +79,7 @@ def monster_generator():
         "symbol": "T"
     }
     npc_bandit = {
-        "name": "Bandit Fred the Dadfucker",
+        "name": "Fred the Bandit",
         "hit_points": 10,
         "attack_power": 5,
         "defense": 1,
@@ -110,7 +110,7 @@ def monster_catchphrase_generator(monster):
         print("Ugh. its a cave Troll")
     elif(monster["name"] == "Gilbert the Goblin"):
         print("Reeeeeeee!")
-    elif(monster["name"] == "Bandit Fred the Dadfucker"):
+    elif(monster["name"] == "Fred the Bandit"):
         print("You're not a dad by any chance?")
     else:
         print("We battle to the death!!")
@@ -161,7 +161,7 @@ enemies_dict = {
         "symbol": "T"
     },
     "npc_bandit": {
-        "name": "Bandit Fred the Dadfucker",
+        "name": "Fred the Bandit",
         "hit_points": 10,
         "attack_power": 5,
         "defense": 1,

@@ -31,18 +31,10 @@ map_1 = [
         [BL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, BR]
 ]
 
-user = game_commands.player
-#monster = monster_module.monster_generator
-
-goblin = monster_module.npc_goblin
-bandit = monster_module.npc_bandit
-# rand_monster_selection = monster_module.monster_generator()
-# rand_monster = rand_monster_selection
-
 objects = [
-    user,
-    goblin,
-    bandit
+    game_commands.player,
+    monster_module.npc_goblin,
+    monster_module.npc_bandit
 ]
 
 def npc_coordinates(monster):
@@ -82,7 +74,7 @@ def determine_new_coordinates(map, direction, column, row):
     elif(direction == "down"):
         return column, row + 1
     else:
-        pass # should blow up here!
+        pass
 
 def is_coordinate_on_map(map, column, row):
     num_rows = len(map)
@@ -97,9 +89,9 @@ def is_coordinate_on_map(map, column, row):
         return False
     return True
 
-def execute_user_move(user, new_column, new_row):
-    user["column"] = new_column
-    user["row"] = new_row
+def execute_player_move(player, new_column, new_row):
+    player["column"] = new_column
+    player["row"] = new_row
 
 def is_coordinate_passable(map, column, row):
     if(map[row][column] == EE):
@@ -113,26 +105,35 @@ def can_player_move_to_coordinate(map, column, row):
 
     return True
 
-def game_board():
-    while(True):
-        draw_map(map_1, objects)
+# def game_board(player):
+#     while(game_functions.is_player_dead(player) == False):
+#         draw_map(map_1, objects)
+#
+#         player_input = input("Use the 'k' and 'j' keys to move up and down.\nUse the 'h' and 'l' keys to move left and right.\nType 'quit' or 'q' to quit out of the game.\n")
+#         player["m_decision"] = map_parser.parse_player_move(player_input)
+#         if(player["m_decision"] == "quit"): game_commands.quit()
+#         if(player["m_decision"] == "cont"):
+#             map_parser.show_controls()
+#             continue
+#
+#         new_column, new_row = determine_new_coordinates(map_1, player["m_decision"], player["column"], player["row"])
+#         can_move = can_player_move_to_coordinate(map_1, new_column, new_row)
+#         if(can_move == True):
+#             execute_player_move(player, new_column, new_row)
+#
+#         goblin_location = npc_coordinates(goblin)
+#         bandit_location = npc_coordinates(bandit)
+#
+#         player_location = new_column, new_row
+#         print(goblin_location, player_location)
+#         goblin_trigger = game_functions.battle_trigger(player_location, goblin_location)
+#         bandit_trigger = game_functions.battle_trigger(player_location, bandit_location)
+#
+#         if(goblin_trigger == True):
+#             game_functions.battle(game_commands.player, goblin, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+#         if(bandit_trigger == True):
+#             game_functions.battle(game_commands.player, bandit, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+#
+#     print(f"\n{game_commands.player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
 
-        user_input = input("Use the 'k' and 'j' keys to move up and down.\nUse the 'h' and 'l' keys to move left and right.\nType 'quit' or 'q' to quit out of the game.\n")
-        user["m_decision"] = map_parser.parse_user_move(user_input)
-        if(user["m_decision"] == "quit"): game_commands.quit()
-        if(user["m_decision"] == "cont"):
-            map_parser.show_controls()
-            continue
-
-        new_column, new_row = determine_new_coordinates(map_1, user["m_decision"], user["column"], user["row"])
-        can_move = can_player_move_to_coordinate(map_1, new_column, new_row)
-        if(can_move == True):
-            execute_user_move(user, new_column, new_row)
-
-        npc_location = npc_coordinates(goblin)
-        player_location = new_column, new_row
-        print(npc_location, player_location)
-        trigger = game_functions.battle_trigger(player_location, npc_location)
-
-        if(trigger == True):
-            game_functions.battle(game_commands.player, game_commands.monster, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+#is this the end?

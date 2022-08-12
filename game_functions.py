@@ -4,6 +4,14 @@ import game_commands
 import monster_module
 import game_parser
 
+def is_player_dead(player):
+    if(player["hit_points"] <= 0):
+        return True
+    else:
+        return False
+
+# def game_over_screen():
+
 
 def is_someone_dead(player, monster):
     if(monster["hit_points"] <= 0):
@@ -28,7 +36,7 @@ def attack(attack_power, hit_points, defense):
     return hit_points - attack_value
 
 def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
-    print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!")
+    print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     monster_module.monster_catchphrase_generator(monster)
     game_parser.show_controls()
     round = -1

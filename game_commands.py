@@ -19,9 +19,8 @@ player = {
     }
 
 monster = monster_module.npc_goblin
-#monster = monster_module.monster_generator()
 
-def user_name():
+def player_name():
     player["name"] = input("So tell me your name and your adventure shall begin!\n").strip()
 
     if player["name"] == "quit":
@@ -67,5 +66,5 @@ def game_end():
     exit()
 
 def dad_fred_paradox(player, monster):
-    if(player["name"] == "dad" and monster["name"] == "Bandit Fred the Dadfucker"):
+    if(player["name"] == "dad" and monster["name"] == "Fred the Bandit"):
         monster["attack_power"] = 10

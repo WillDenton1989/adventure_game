@@ -5,16 +5,16 @@ def show_controls():
 Use the 'h' and 'l' keys to move left and right.
 Type 'quit' or 'q' to quit out of the game.""")
 
-def parse_user_move(user_input):
-    if(user_input == "k"):
+def parse_player_move(player_input):
+    if(player_input == "k"):
         return "up"
-    elif(user_input == "j"):
+    elif(player_input == "j"):
         return "down"
-    elif(user_input == "h"):
+    elif(player_input == "h"):
         return "left"
-    elif(user_input == "l"):
+    elif(player_input == "l"):
         return "right"
-    elif(user_input == "quit" or user_input == "q"):
+    elif(player_input == "quit" or player_input == "q"):
         return "quit"
     else:
         return "cont"
