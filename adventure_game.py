@@ -8,9 +8,6 @@ import game_commands
 import map_parser
 import map
 
-# goblin = monster_module.npc_goblin
-# bandit = monster_module.npc_bandit
-
 def game_board(player, game_map, objects):
     while(game_functions.is_player_dead(player) == False):
         map.draw_map(game_map, objects)
