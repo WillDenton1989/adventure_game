@@ -1,8 +1,9 @@
 #technically battle functions but oh whale
+from random import randint
 import game_commands
 import monster_module
 import game_parser
-from random import randint
+
 
 def is_someone_dead(player, monster):
     if(monster["hit_points"] <= 0):
@@ -67,4 +68,10 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
         if(player["battle_decision"] == "quit"):
             quit()
 
-        print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} choses to {monster['battle_decision']}")
+        print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
+
+def battle_trigger(player_location, npc_location):
+    if(player_location == npc_location):
+        return True
+    else:
+        return False

@@ -3,16 +3,23 @@ import monster_module
 import game_functions
 import game_parser
 
+PL = 9791
+
 player = {
     "name": None,
     "hit_points": 10,
     "attack_power": 5,
     "defense": 1,
     "defense_scalar": 1,
-    "battle_decision": None
+    "battle_decision": None,
+    "m_decision": None,
+    "column": 1,
+    "row": 1,
+    "symbol": chr(PL)
     }
 
-monster = monster_module.monster_generator()
+monster = monster_module.npc_goblin
+#monster = monster_module.monster_generator()
 
 def user_name():
     player["name"] = input("So tell me your name and your adventure shall begin!\n").strip()

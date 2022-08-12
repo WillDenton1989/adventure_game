@@ -2,7 +2,8 @@
 
 def show_controls():
     print("""Use the 'k' and 'j' keys to move up and down;
-Use the 'h' and 'l' keys to move left and right.""")
+Use the 'h' and 'l' keys to move left and right.
+Type 'quit' or 'q' to quit out of the game.""")
 
 def parse_user_move(user_input):
     if(user_input == "k"):

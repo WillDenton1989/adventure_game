@@ -1,6 +1,30 @@
 #where the monsters are
 from random import randint
 
+npc_goblin = {
+    "name": "Gilbert the Goblin",
+    "hit_points": 10,
+    "attack_power": 4,
+    "defense": -5,
+    "defense_scalar": .5,
+    "battle_decision": None,
+    "column": 2,
+    "row": 2,
+    "symbol": "G"
+}
+
+npc_bandit = {
+    "name": "Bandit Fred the Dadfucker",
+    "hit_points": 10,
+    "attack_power": 5,
+    "defense": 1,
+    "defense_scalar": 1,
+    "battle_decision": None,
+    "column": 5,
+    "row": 5,
+    "symbol": "B"
+}
+
 def enemy_npc_choice():
     x = randint(1, 10)
     if(x <= 7):
@@ -16,7 +40,10 @@ def monster_generator():
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": .5,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 8,
+        "row": 8,
+        "symbol": "O"
     }
     npc_goblin = {
         "name": "Gilbert the Goblin",
@@ -24,7 +51,10 @@ def monster_generator():
         "attack_power": 4,
         "defense": -5,
         "defense_scalar": .5,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 4,
+        "row": 2,
+        "symbol": "G"
     }
     npc_uruk = {
         "name": "Lurtz the Uruk",
@@ -32,7 +62,10 @@ def monster_generator():
         "attack_power": 7,
         "defense": -3,
         "defense_scalar": 1,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 8,
+        "row": 1,
+        "symbol": "U"
     }
     npc_troll = {
         "name": "Bob the cave Troll",
@@ -40,7 +73,10 @@ def monster_generator():
         "attack_power": 9,
         "defense": -15,
         "defense_scalar": 0,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 1,
+        "row": 8,
+        "symbol": "T"
     }
     npc_bandit = {
         "name": "Bandit Fred the Dadfucker",
@@ -48,7 +84,10 @@ def monster_generator():
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": 1,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 6,
+        "row": 6,
+        "symbol": "B"
     }
     if(x == 1):
         return npc_orc
@@ -83,7 +122,10 @@ enemies_dict = {
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": .5,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 8,
+        "row": 8,
+        "symbol": "O"
     },
     "npc_goblin": {
         "name": "Gilbert the Goblin",
@@ -91,7 +133,10 @@ enemies_dict = {
         "attack_power": 4,
         "defense": -5,
         "defense_scalar": .5,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 2,
+        "row": 2,
+        "symbol": "G"
     },
     "npc_uruk": {
         "name": "Lurtz the Uruk",
@@ -99,7 +144,10 @@ enemies_dict = {
         "attack_power": 7,
         "defense": -1,
         "defense_scalar": 1,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 8,
+        "row": 1,
+        "symbol": "U"
     },
     "npc_troll": {
         "name": "Bob the cave Troll",
@@ -107,7 +155,10 @@ enemies_dict = {
         "attack_power": 9,
         "defense": -10,
         "defense_scalar": 0,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 1,
+        "row": 8,
+        "symbol": "T"
     },
     "npc_bandit": {
         "name": "Bandit Fred the Dadfucker",
@@ -115,6 +166,9 @@ enemies_dict = {
         "attack_power": 5,
         "defense": 1,
         "defense_scalar": 1,
-        "battle_decision": None
+        "battle_decision": None,
+        "column": 5,
+        "row": 5,
+        "symbol": "B"
     }
 }
