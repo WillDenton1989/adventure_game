@@ -6,31 +6,33 @@ import monster_module
 import game_functions
 import game_parser
 import loot_module
+import map_reader
 
-TL = 9484
-BL = 9492
-TR = 9488
-BR = 9496
-HH = 9472
-VV = 9474
-EE = 8901
+# TL = 9484
+# BL = 9492
+# TR = 9488
+# BR = 9496
+# HH = 9472
+# VV = 9474
+# EE = 8901
+
 PL = 9791
 EN = 7777
 
-map_1 = [
-        [TL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, TR],
-        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, EE, TL, HH, HH, TR, EE, EE, EE, VV],
-        [VV, EE, EE, EE, VV, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, EE, VV, EE, EE, VV, EE, EE, EE, VV],
-        [VV, EE, EE, EE, BL, HH, HH, BR, EE, EE, EE, VV],
-        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-        [BL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, BR]
-]
+# map_1 = [
+#         [TL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, TR],
+#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, TL, HH, HH, TR, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, VV, EE, EE, EE, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, VV, EE, EE, VV, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, BL, HH, HH, BR, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
+#         [BL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, BR]
+# ]
 
 objects = [
     game_commands.player,
@@ -109,4 +111,6 @@ def can_player_move_to_coordinate(map, column, row):
 
     return True
 
+print(map_reader.usable_map)
+print(draw_map(map_reader.usable_map, objects))
 #is this the end?
