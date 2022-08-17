@@ -1,6 +1,11 @@
 #where the monsters are
 from random import randint
 
+#GL = 43961
+GL = 9785
+BN = 9792
+DW = 9786
+
 npc_goblin = {
     "name": "Gilbert the Goblin",
     "hit_points": 10,
@@ -10,7 +15,7 @@ npc_goblin = {
     "battle_decision": None,
     "column": 2,
     "row": 2,
-    "symbol": "G"
+    "symbol": chr(GL)
 }
 
 npc_bandit = {
@@ -20,9 +25,21 @@ npc_bandit = {
     "defense": 1,
     "defense_scalar": 1,
     "battle_decision": None,
-    "column": 5,
+    "column": 6,
     "row": 5,
-    "symbol": "B"
+    "symbol": chr(BN)
+}
+
+npc_dwarf = {
+    "name": "Dain the Dwarf",
+    "hit_points": 15,
+    "attack_power": 5,
+    "defense": 0,
+    "defense_scalar": 1,
+    "battle_decision": None,
+    "column": 10,
+    "row": 1,
+    "symbol": chr(DW)
 }
 
 def enemy_npc_choice():

@@ -1,30 +1,32 @@
 #technically battle functions but oh whale
+#eventually revamp cobat system including defend and eventually add weapons and armor.
 from random import randint
 import game_commands
 import monster_module
 import game_parser
 
-def is_player_dead(player):
-    if(player["hit_points"] <= 0):
+def is_someone_dead(character):
+    if(character["hit_points"] <= 0):
         return True
     else:
         return False
 
 # def game_over_screen():
 
-
-def is_someone_dead(player, monster):
-    if(monster["hit_points"] <= 0):
-        print(f"\n{player['name']} has slain {monster['name']}!")
+def are_two_someones_dead(character_1, character_2):
+    if(character_2["hit_points"] <= 0):
+        print(f"\n{character_1['name']} has slain {character_2['name']}!")
         return True
-    elif(player["hit_points"] <= 0):
-        print(f"\n{player['name']} has been slain by {monster['name']}!")
+    elif(character_1["hit_points"] <= 0):
+        print(f"\n{character_1['name']} has been slain by {character_2['name']}!")
         return True
     else:
         return False
 
 def defend(original_defense, defense_scalar):
     new_defense = original_defense + defense_scalar
+    #create a defense cap constant.
+    #
     if(new_defense == 4):
         return original_defense
     else:
@@ -36,14 +38,17 @@ def attack(attack_power, hit_points, defense):
     return hit_points - attack_value
 
 def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
+    if(is_someone_dead(monster) == True):
+        return print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
+
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     monster_module.monster_catchphrase_generator(monster)
     game_parser.show_controls()
     round = -1
-    while(is_someone_dead(player, monster,) == False):
+
+    while(are_two_someones_dead(player, monster,) == False):
         round = round + 1
 
-        game_commands.dad_fred_paradox(game_commands.player, game_commands.monster)
         print(f"\n\nRound {round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
         print(f"\n{player['name']} defense: {player['defense']} attack: {player['attack_power']}, {monster['name']} defense: {monster['defense']} attack: {monster['attack_power']}")
 
@@ -78,7 +83,7 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
 
         print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
 
-def battle_trigger(player_location, npc_location):
+def event_trigger(player_location, npc_location):
     if(player_location == npc_location):
         return True
     else:

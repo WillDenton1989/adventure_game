@@ -5,6 +5,7 @@ import map_parser
 import monster_module
 import game_functions
 import game_parser
+import loot_module
 
 TL = 9484
 BL = 9492
@@ -14,7 +15,7 @@ HH = 9472
 VV = 9474
 EE = 8901
 PL = 9791
-EN = None
+EN = 7777
 
 map_1 = [
         [TL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, TR],
@@ -33,13 +34,16 @@ map_1 = [
 
 objects = [
     game_commands.player,
+    game_commands.finish_line,
     monster_module.npc_goblin,
-    monster_module.npc_bandit
+    monster_module.npc_bandit,
+    monster_module.npc_dwarf,
+    loot_module.loot_chest
 ]
 
-def npc_coordinates(monster):
-    column = monster["column"]
-    row = monster["row"]
+def npc_coordinates(npc):
+    column = npc["column"]
+    row = npc["row"]
     return column, row
 
 def object_at_coordinate(objects, column, row):

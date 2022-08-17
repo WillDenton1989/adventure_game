@@ -1,7 +1,7 @@
 #this is the map parser
 
 def show_controls():
-    print("""Use the 'k' and 'j' keys to move up and down;
+    print(f"""Use the 'k' and 'j' keys to move up and down;
 Use the 'h' and 'l' keys to move left and right.
 Type 'quit' or 'q' to quit out of the game.""")
 

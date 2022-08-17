@@ -4,6 +4,7 @@ import game_functions
 import game_parser
 
 PL = 9791
+FL = 43359
 
 player = {
     "name": None,
@@ -18,7 +19,11 @@ player = {
     "symbol": chr(PL)
     }
 
-monster = monster_module.npc_goblin
+finish_line = {
+    "column": 10,
+    "row": 10,
+    "symbol": chr(FL)
+}
 
 def player_name():
     player["name"] = input("So tell me your name and your adventure shall begin!\n").strip()
@@ -64,7 +69,3 @@ def quit():
 def game_end():
     print(f"\n\n{player['name']} has finished their Adventure! So far...")
     exit()
-
-def dad_fred_paradox(player, monster):
-    if(player["name"] == "dad" and monster["name"] == "Fred the Bandit"):
-        monster["attack_power"] = 10
