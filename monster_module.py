@@ -8,9 +8,9 @@ DW = 9786
 
 npc_goblin = {
     "name": "Gilbert the Goblin",
-    "hit_points": 10,
+    "hit_points": 5,
     "attack_power": 4,
-    "defense": -5,
+    "defense": 0,
     "defense_scalar": .5,
     "battle_decision": None,
     "column": 2,

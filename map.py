@@ -16,8 +16,8 @@ import map_reader
 # VV = 9474
 # EE = 8901
 
-PL = 9791
-EN = 7777
+# PL = 9791
+# EN = 7777
 
 # map_1 = [
 #         [TL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, TR],
@@ -100,7 +100,7 @@ def execute_player_move(player, new_column, new_row):
     player["row"] = new_row
 
 def is_coordinate_passable(map, column, row):
-    if(map[row][column] == EE):
+    if(map[row][column] == 8901):
         return True
     else:
         return False
@@ -111,6 +111,6 @@ def can_player_move_to_coordinate(map, column, row):
 
     return True
 
-print(map_reader.usable_map)
-print(draw_map(map_reader.usable_map, objects))
-#is this the end?
+# print(map_reader.usable_map)
+# print(draw_map(map_reader.usable_map, objects))
+# #is this the end?
