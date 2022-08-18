@@ -12,6 +12,7 @@ npc_goblin = {
     "attack_power": 4,
     "defense": 0,
     "defense_scalar": .5,
+    "speed": 6,
     "battle_decision": None,
     "column": 2,
     "row": 2,
@@ -24,6 +25,7 @@ npc_bandit = {
     "attack_power": 5,
     "defense": 1,
     "defense_scalar": 1,
+    "speed": 5,
     "battle_decision": None,
     "column": 6,
     "row": 5,
@@ -36,6 +38,7 @@ npc_dwarf = {
     "attack_power": 5,
     "defense": 0,
     "defense_scalar": 1,
+    "speed": 3,
     "battle_decision": None,
     "column": 10,
     "row": 1,
@@ -48,6 +51,15 @@ def enemy_npc_choice():
         return "attack"
     else:
         return "defend"
+
+def npc_battle_choice():
+    x = randint(1, 100)
+    if(x <= 50):
+        return "normal_attack"
+    elif(x > 50 and x <= 70):
+        return "special_attack"
+    else:
+        return "guard"
 
 def monster_generator():
     x = randint(1, 6)

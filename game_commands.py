@@ -12,6 +12,7 @@ player = {
     "attack_power": 5,
     "defense": 1,
     "defense_scalar": 1,
+    "speed": 5,
     "battle_decision": None,
     "m_decision": None,
     "column": 1,
