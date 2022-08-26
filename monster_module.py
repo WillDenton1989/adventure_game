@@ -14,8 +14,6 @@ npc_goblin = {
     "defense_scalar": .5,
     "speed": 6,
     "battle_decision": None,
-    "column": 2,
-    "row": 2,
     "symbol": chr(GL)
 }
 
@@ -27,8 +25,6 @@ npc_bandit = {
     "defense_scalar": 1,
     "speed": 5,
     "battle_decision": None,
-    "column": 6,
-    "row": 5,
     "symbol": chr(BN)
 }
 
@@ -40,8 +36,6 @@ npc_dwarf = {
     "defense_scalar": 1,
     "speed": 3,
     "battle_decision": None,
-    "column": 10,
-    "row": 1,
     "symbol": chr(DW)
 }
 

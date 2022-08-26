@@ -12,6 +12,9 @@ import map
 
 def game_board(player, game_map, objects):
     moves = 0
+
+    map.load_character_locations('map_info.yaml')
+
     while(game_functions.is_someone_dead(player) == False):
         map.draw_map(game_map, objects)
 
@@ -32,7 +35,7 @@ def game_board(player, game_map, objects):
         bandit_location = map.npc_coordinates(monster_module.npc_bandit)
         chest_location = map.npc_coordinates(loot_module.loot_chest)
         finish_line_location = map.npc_coordinates(game_commands.finish_line)
-        
+
         player_location = new_column, new_row
 
         print(f"player {player_location}, goblin {goblin_location}, bandit {bandit_location}, chest {chest_location}, finish line {finish_line_location}")
@@ -61,7 +64,7 @@ game_commands.player["name"] = game_commands.player_name()
 print(f"\nAlright {game_commands.player['name']}. lets go!")
 
 #map stuffs
-game_board(game_commands.player, map_reader.usable_map, map.objects)
+game_board(game_commands.player, map_reader.dungeon_map, map.objects)
 
 #game end
 print(f"\n\n{game_commands.player['name']} has finished their Adventure! So far...")

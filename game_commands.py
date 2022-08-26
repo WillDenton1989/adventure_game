@@ -15,14 +15,10 @@ player = {
     "speed": 5,
     "battle_decision": None,
     "m_decision": None,
-    "column": 1,
-    "row": 1,
     "symbol": chr(PL)
     }
 
 finish_line = {
-    "column": 10,
-    "row": 10,
     "symbol": chr(FL)
 }
 

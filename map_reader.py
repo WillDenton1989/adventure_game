@@ -1,11 +1,5 @@
-#this is tha map reader boi
-import json
-
-def load_map_key_dictionary(filename):
-    with open(filename) as f:
-        data = f.read()
-    dict = json.loads(data)
-    return dict
+#this is tha map reader boi.
+import symbol_reader
 
 def load_map(filename):
     map_list = []
@@ -39,14 +33,17 @@ def check_map(string_map, map_key_dict):
     else:
         print("The map you provided is not square.")
         return None
-        
-#change the arg of load_map to the name of the text file you wish to use as the map.
-string_map = load_map('map.txt')
-#loads map key dictionary from a text file. make sure its actually an appropriate dictionary.
-map_key_dict = load_map_key_dictionary('map_symbol_dictionary.txt')
-#parse string map will use a symbol dictionary to parse the loaded map into a viable map.
-usable_map = check_map(string_map, map_key_dict)
 
+def build_the_map(text_file, symbol_dict,):
+    string_map = load_map(text_file)
+    map_key_dict = symbol_reader.load_dictionary_yaml(symbol_dict)
+    usable_map = check_map(string_map, map_key_dict)
+    return usable_map
+
+#code start
+dungeon_map = build_the_map('map.txt', 'symbols_dictionary.yaml')
+
+# print(dungeon_map)
 # example of keys dictionary.
 # map_key_dict = {
 #     "TL": 9484,

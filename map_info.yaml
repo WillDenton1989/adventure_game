@@ -1,0 +1,21 @@
+#where the map information shall live.
+---
+player_position:
+  column: 1
+  row: 1
+goblin_one_position:
+  column: 2
+  row: 2
+bandit_one_position:
+  column: 6
+  row: 5
+dwarf_one_position:
+  column: 10
+  row: 1
+chest_one_position:
+  column: 5
+  row: 6
+finish_line_position:
+  column: 10
+  row: 10
+...

@@ -7,6 +7,7 @@ import game_functions
 import game_parser
 import loot_module
 import map_reader
+import yaml
 
 objects = [
     game_commands.player,
@@ -16,6 +17,21 @@ objects = [
     monster_module.npc_dwarf,
     loot_module.loot_chest
 ]
+
+def load_character_locations(yaml_file):
+    info_dict = open_yaml_file(yaml_file)
+
+    game_commands.player.update(info_dict['player_position'])
+    monster_module.npc_goblin.update(info_dict['goblin_one_position'])
+    monster_module.npc_bandit.update(info_dict['bandit_one_position'])
+    monster_module.npc_dwarf.update(info_dict['dwarf_one_position'])
+    loot_module.loot_chest.update(info_dict['chest_one_position'])
+    game_commands.finish_line.update(info_dict['finish_line_position'])
+
+def open_yaml_file(filename):
+    with open(filename, 'r') as file:
+        doc = yaml.safe_load(file)
+        return doc
 
 def npc_coordinates(npc):
     column = npc["column"]
@@ -85,6 +101,6 @@ def can_player_move_to_coordinate(map, column, row):
 
     return True
 
-# print(map_reader.usable_map)
-# print(draw_map(map_reader.usable_map, objects))
+#code start
+
 #is this the end?
