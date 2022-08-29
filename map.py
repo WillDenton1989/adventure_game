@@ -22,13 +22,13 @@ objects = [
 def load_character_locations(yaml_file):
     info_dict = open_yaml_file(yaml_file)
 
-    game_commands.player.update(info_dict['player_position'])
-    monster_module.npc_goblin.update(info_dict['goblin_one_position'])
-    monster_module.npc_goblin_two.update(info_dict['goblin_two_position'])
-    monster_module.npc_bandit.update(info_dict['bandit_one_position'])
-    monster_module.npc_dwarf.update(info_dict['dwarf_one_position'])
-    loot_module.loot_chest.update(info_dict['chest_one_position'])
-    game_commands.finish_line.update(info_dict['finish_line_position'])
+    game_commands.player.update(info_dict['player'])
+    monster_module.npc_goblin.update(info_dict['goblin_one'])
+    monster_module.npc_goblin_two.update(info_dict['goblin_two'])
+    monster_module.npc_bandit.update(info_dict['bandit_one'])
+    monster_module.npc_dwarf.update(info_dict['dwarf_one'])
+    loot_module.loot_chest.update(info_dict['chest_one'])
+    game_commands.finish_line.update(info_dict['finish_line'])
 
 def open_yaml_file(filename):
     with open(filename, 'r') as file:

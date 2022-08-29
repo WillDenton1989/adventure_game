@@ -18,6 +18,8 @@ def game_board(player, game_map, objects):
     while(game_functions.is_someone_dead(player) == False):
         map.draw_map(game_map, objects)
 
+        #take and parse player input.
+        print(f"Player hit points: {player['hit_points']}")
         print(f"Moves taken: {moves}")
         player_input = input("Use the 'k' and 'j' keys to move up and down.\nUse the 'h' and 'l' keys to move left and right.\nType 'quit' or 'q' to quit out of the game.\n")
         player["m_decision"] = map_parser.parse_player_move(player_input)
@@ -26,20 +28,22 @@ def game_board(player, game_map, objects):
             map_parser.show_controls()
             continue
 
+        #takes desired direction and checks the coordinates and if valid executes them.
         new_column, new_row = map.determine_new_coordinates(game_map, player["m_decision"], player["column"], player["row"])
         can_move = map.can_player_move_to_coordinate(game_map, new_column, new_row)
         if(can_move == True):
             map.execute_player_move(player, new_column, new_row)
         moves = moves + 1
+
+        #sets the coordinate of various characters on the map.
+        player_location = new_column, new_row
         goblin_location = map.npc_coordinates(monster_module.npc_goblin)
         goblin_two_location = map.npc_coordinates(monster_module.npc_goblin_two)
         bandit_location = map.npc_coordinates(monster_module.npc_bandit)
         chest_location = map.npc_coordinates(loot_module.loot_chest)
         finish_line_location = map.npc_coordinates(game_commands.finish_line)
 
-        player_location = new_column, new_row
-
-        print(f"player {player_location}, goblin {goblin_location}, bandit {bandit_location}, chest {chest_location}, finish line {finish_line_location}")
+        #booleans for if the player occupies the same coordinate as another character. maybe turn this into a list?
         goblin_trigger = game_functions.event_trigger(player_location, goblin_location)
         goblin_two_trigger = game_functions.event_trigger(player_location, goblin_two_location)
         bandit_trigger = game_functions.event_trigger(player_location, bandit_location)
