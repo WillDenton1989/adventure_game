@@ -13,6 +13,7 @@ objects = [
     game_commands.player,
     game_commands.finish_line,
     monster_module.npc_goblin,
+    monster_module.npc_goblin_two,
     monster_module.npc_bandit,
     monster_module.npc_dwarf,
     loot_module.loot_chest
@@ -23,6 +24,7 @@ def load_character_locations(yaml_file):
 
     game_commands.player.update(info_dict['player_position'])
     monster_module.npc_goblin.update(info_dict['goblin_one_position'])
+    monster_module.npc_goblin_two.update(info_dict['goblin_two_position'])
     monster_module.npc_bandit.update(info_dict['bandit_one_position'])
     monster_module.npc_dwarf.update(info_dict['dwarf_one_position'])
     loot_module.loot_chest.update(info_dict['chest_one_position'])
@@ -31,7 +33,7 @@ def load_character_locations(yaml_file):
 def open_yaml_file(filename):
     with open(filename, 'r') as file:
         doc = yaml.safe_load(file)
-        return doc
+    return doc
 
 def npc_coordinates(npc):
     column = npc["column"]

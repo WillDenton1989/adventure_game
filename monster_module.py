@@ -17,6 +17,17 @@ npc_goblin = {
     "symbol": chr(GL)
 }
 
+npc_goblin_two = {
+    "name": "Gerald the Goblin",
+    "hit_points": 5,
+    "attack_power": 4,
+    "defense": 0,
+    "defense_scalar": .5,
+    "speed": 6,
+    "battle_decision": None,
+    "symbol": chr(GL)
+}
+
 npc_bandit = {
     "name": "Fred the Bandit",
     "hit_points": 10,

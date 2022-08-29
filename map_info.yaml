@@ -6,6 +6,9 @@ player_position:
 goblin_one_position:
   column: 2
   row: 2
+goblin_two_position:
+  column: 8
+  row: 10
 bandit_one_position:
   column: 6
   row: 5

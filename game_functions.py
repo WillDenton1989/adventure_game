@@ -81,6 +81,9 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
         if(player["battle_decision"] == "quit"):
             quit()
 
+        if(is_someone_dead(monster) == True):
+            monster['symbol'] = "x"
+
         print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
 
 def event_trigger(player_location, npc_location):

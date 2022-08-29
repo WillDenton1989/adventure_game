@@ -32,6 +32,7 @@ def game_board(player, game_map, objects):
             map.execute_player_move(player, new_column, new_row)
         moves = moves + 1
         goblin_location = map.npc_coordinates(monster_module.npc_goblin)
+        goblin_two_location = map.npc_coordinates(monster_module.npc_goblin_two)
         bandit_location = map.npc_coordinates(monster_module.npc_bandit)
         chest_location = map.npc_coordinates(loot_module.loot_chest)
         finish_line_location = map.npc_coordinates(game_commands.finish_line)
@@ -40,12 +41,15 @@ def game_board(player, game_map, objects):
 
         print(f"player {player_location}, goblin {goblin_location}, bandit {bandit_location}, chest {chest_location}, finish line {finish_line_location}")
         goblin_trigger = game_functions.event_trigger(player_location, goblin_location)
+        goblin_two_trigger = game_functions.event_trigger(player_location, goblin_two_location)
         bandit_trigger = game_functions.event_trigger(player_location, bandit_location)
         chest_trigger = game_functions.event_trigger(player_location, chest_location)
         finish_line_trigger = game_functions.event_trigger(player_location, finish_line_location)
 
         if(goblin_trigger == True):
             game_functions.battle(game_commands.player, monster_module.npc_goblin, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+        if(goblin_two_trigger == True):
+            game_functions.battle(game_commands.player, monster_module.npc_goblin_two, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
         if(bandit_trigger == True):
             game_functions.battle(game_commands.player, monster_module.npc_bandit, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
         if(chest_trigger == True):
