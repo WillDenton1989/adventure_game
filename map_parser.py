@@ -14,6 +14,8 @@ def parse_player_move(player_input):
         return "left"
     elif(player_input == "l"):
         return "right"
+    elif(player_input == "i"):
+        return "inventory"
     elif(player_input == "quit" or player_input == "q"):
         return "quit"
     else:

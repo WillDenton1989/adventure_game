@@ -24,6 +24,9 @@ def game_board(player, game_map, objects):
         player_input = input("Use the 'k' and 'j' keys to move up and down.\nUse the 'h' and 'l' keys to move left and right.\nType 'quit' or 'q' to quit out of the game.\n")
         player["m_decision"] = map_parser.parse_player_move(player_input)
         if(player["m_decision"] == "quit"): game_commands.quit()
+        if(player["m_decision"] == "inventory"):
+            loot_module.display_inventory_screen(loot_module.player_inventory, game_commands.player)
+            continue
         if(player["m_decision"] == "cont"):
             map_parser.show_controls()
             continue

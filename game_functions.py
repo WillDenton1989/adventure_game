@@ -13,16 +13,6 @@ def is_someone_dead(character):
 
 # def game_over_screen():
 
-def are_two_someones_dead(character_1, character_2):
-    if(character_2["hit_points"] <= 0):
-        print(f"\n{character_1['name']} has slain {character_2['name']}!")
-        return True
-    elif(character_1["hit_points"] <= 0):
-        print(f"\n{character_1['name']} has been slain by {character_2['name']}!")
-        return True
-    else:
-        return False
-
 def defend(original_defense, defense_scalar):
     new_defense = original_defense + defense_scalar
     #create a defense cap constant.
@@ -46,7 +36,7 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
     game_parser.show_controls()
     round = -1
 
-    while(are_two_someones_dead(player, monster,) == False):
+    while(is_someone_dead(player) == False and is_someone_dead(monster) == False):
         round = round + 1
 
         print(f"\n\nRound {round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
@@ -77,14 +67,21 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
         if(monster["battle_decision"] == "attack"):
             player["hit_points"] = attack(monster["attack_power"], player["hit_points"], player["defense"])
 
-        # 5) quit out
+        # 5) open inventory
+        #inventory code will go here.
+
+        # 6) quit out
         if(player["battle_decision"] == "quit"):
             quit()
 
-        if(is_someone_dead(monster) == True):
-            monster['symbol'] = "x"
-
         print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
+
+        #battle resolution
+        if(is_someone_dead(monster) == True):
+            print(f"\n\n{monster['name']} has been slain")
+            monster['symbol'] = "x"
+        if(is_someone_dead(player) == True):
+            print(f"\n\n{player['name']} has been slain by {monster['name']}")
 
 def event_trigger(player_location, npc_location):
     if(player_location == npc_location):

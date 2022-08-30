@@ -47,17 +47,8 @@ def player_name():
         print("\nHeh funny name.")
     return player["name"]
 
-def continue_menu(player, monster):
-    player_input_string = input(f"Do you wish to continue battling monsters {player['name']}?\nyes/no\n")
-    if(player_input_string == "yes" or player_input_string == "y"):
-        monster = monster_module.monster_generator()
-        player.update({"hit_points": 10})
-        player.update({"defense": 1})
-        return game_functions.battle(player, monster, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, quit)
-    elif(player_input_string == "no" or player_input_string == "n"):
-        return game_end()
-    else:
-        return continue_menu(player, monster)
+def continue_menu():
+    pass
 
 def quit():
     print(f"Farewell {player['name']}")

@@ -12,8 +12,25 @@ def parse_player_input(player_input_string):
         return "attack"
     elif(player_input_string == "defend" or player_input_string == "d"):
         return "defend"
+    elif(player_input_string == "inventory" or player_input_string == "i"):
+        return "inventory"
     else:
         return "cont"
+
+def parse_inventory_input():
+    if(inventory_input == "1"):
+        pass
+    elif(inventory_input == "2"):
+        pass
+    elif(inventory_input == "3"):
+        pass
+    elif(inventory_input == "4"):
+        pass
+    elif(inventory_input == "5"):
+        pass
+    else:
+        pass
+
 
 def parse_continue_menu():
     player_cont_input = input(f"Do you wish to continue battling monsters {player['name']}?\nYes/No\n")
