@@ -19,16 +19,18 @@ objects = [
     loot_module.loot_chest
 ]
 
-def load_character_locations(yaml_file):
-    info_dict = open_yaml_file(yaml_file)
+def load_character_locations(yaml_file, yaml_file_2):
+    player_data = open_yaml_file(yaml_file)
+    npc_data = open_yaml_file(yaml_file_2)
 
-    game_commands.player.update(info_dict['player'])
-    monster_module.npc_goblin.update(info_dict['goblin_one'])
-    monster_module.npc_goblin_two.update(info_dict['goblin_two'])
-    monster_module.npc_bandit.update(info_dict['bandit_one'])
-    monster_module.npc_dwarf.update(info_dict['dwarf_one'])
-    loot_module.loot_chest.update(info_dict['chest_one'])
-    game_commands.finish_line.update(info_dict['finish_line'])
+    game_commands.player.update(player_data['player'])
+
+    monster_module.npc_goblin.update(npc_data['goblin_one'])
+    monster_module.npc_goblin_two.update(npc_data['goblin_two'])
+    monster_module.npc_bandit.update(npc_data['bandit_one'])
+    monster_module.npc_dwarf.update(npc_data['dwarf_one'])
+    loot_module.loot_chest.update(npc_data['chest_one'])
+    game_commands.finish_line.update(npc_data['finish_line'])
 
 def open_yaml_file(filename):
     with open(filename, 'r') as file:
@@ -56,7 +58,7 @@ def draw_map(map, objects):
             if(object == None):
                 print(chr(column), end = "")
             else:
-                print(object["symbol"], end = "")
+                print(chr(object["symbol"]), end = "")
             col_index += 1
         print("\r")
         row_index += 1

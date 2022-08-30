@@ -79,7 +79,7 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
         #battle resolution
         if(is_someone_dead(monster) == True):
             print(f"\n\n{monster['name']} has been slain")
-            monster['symbol'] = "x"
+            monster['symbol'] = 120
         if(is_someone_dead(player) == True):
             print(f"\n\n{player['name']} has been slain by {monster['name']}")
 

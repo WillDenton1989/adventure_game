@@ -1,0 +1,15 @@
+#where the player information shall live.
+---
+player:
+  name: null
+  hit_points: 10
+  attack_power: 5
+  defense: 1
+  defense_scalar: 1
+  speed: 5
+  battle_decision: null
+  m_decision: null
+  symbol: 9791
+  column: 1
+  row: 1
+...

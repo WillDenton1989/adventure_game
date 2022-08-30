@@ -3,24 +3,9 @@ import monster_module
 import game_functions
 import game_parser
 
-PL = 9791
-FL = 43359
+player = {}
 
-player = {
-    "name": None,
-    "hit_points": 10,
-    "attack_power": 5,
-    "defense": 1,
-    "defense_scalar": 1,
-    "speed": 5,
-    "battle_decision": None,
-    "m_decision": None,
-    "symbol": chr(PL)
-    }
-
-finish_line = {
-    "symbol": chr(FL)
-}
+finish_line = {}
 
 def player_name():
     player["name"] = input("So tell me your name and your adventure shall begin!\n").strip()
@@ -57,3 +42,6 @@ def quit():
 def game_end():
     print(f"\n\n{player['name']} has finished their Adventure! So far...")
     exit()
+
+def divider():
+    print("------------------------------------------------------------------------")

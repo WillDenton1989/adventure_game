@@ -1,54 +1,13 @@
 #where the monsters are
 from random import randint
 
-#GL = 43961
-GL = 9785
-BN = 9792
-DW = 9786
+npc_goblin = {}
 
-npc_goblin = {
-    "name": "Gilbert the Goblin",
-    "hit_points": 5,
-    "attack_power": 4,
-    "defense": 0,
-    "defense_scalar": .5,
-    "speed": 6,
-    "battle_decision": None,
-    "symbol": chr(GL)
-}
+npc_goblin_two = {}
 
-npc_goblin_two = {
-    "name": "Gerald the Goblin",
-    "hit_points": 5,
-    "attack_power": 4,
-    "defense": 0,
-    "defense_scalar": .5,
-    "speed": 6,
-    "battle_decision": None,
-    "symbol": chr(GL)
-}
+npc_bandit = {}
 
-npc_bandit = {
-    "name": "Fred the Bandit",
-    "hit_points": 10,
-    "attack_power": 5,
-    "defense": 1,
-    "defense_scalar": 1,
-    "speed": 5,
-    "battle_decision": None,
-    "symbol": chr(BN)
-}
-
-npc_dwarf = {
-    "name": "Dain the Dwarf",
-    "hit_points": 15,
-    "attack_power": 5,
-    "defense": 0,
-    "defense_scalar": 1,
-    "speed": 3,
-    "battle_decision": None,
-    "symbol": chr(DW)
-}
+npc_dwarf = {}
 
 def enemy_npc_choice():
     x = randint(1, 10)
