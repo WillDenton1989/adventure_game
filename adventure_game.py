@@ -13,7 +13,7 @@ import map
 def game_board(player, game_map, objects):
     moves = 0
 
-    map.load_character_locations('player_data.yaml', 'npc_data.yaml')
+    map.load_character_locations('data/player_data.yaml', 'data/npc_data.yaml')
 
     while(game_functions.is_someone_dead(player) == False):
         game_commands.divider()
@@ -66,7 +66,7 @@ def game_board(player, game_map, objects):
         if(finish_line_trigger == True):
             print(f"\nCongratulations {game_commands.player['name']}!\nIt took you {moves} moves to escape the bleak and terrible dungeon!\n")
             break
-            
+
     if(game_functions.is_someone_dead(player) == True):
         print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
 

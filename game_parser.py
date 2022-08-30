@@ -30,13 +30,3 @@ def parse_inventory_input():
         pass
     else:
         pass
-
-
-def parse_continue_menu():
-    player_cont_input = input(f"Do you wish to continue battling monsters {player['name']}?\nYes/No\n")
-    if(player_cont_input == "yes" or player_cont_input == "Yes" or player_cont_input == "y"):
-        return "yes"
-    elif(player_cont_input == "no" or player_cont_input == "No" or player_cont_input == "n"):
-        return "no"
-    else:
-        return "cont"

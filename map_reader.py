@@ -1,5 +1,10 @@
 #this is tha map reader boi.
-import symbol_reader
+import yaml
+
+def load_dictionary_yaml(filename):
+    with open(filename) as f:
+        data = yaml.safe_load(f)
+    return data
 
 def load_map(filename):
     map_list = []
@@ -36,12 +41,12 @@ def check_map(string_map, map_key_dict):
 
 def build_the_map(text_file, symbol_dict,):
     string_map = load_map(text_file)
-    map_key_dict = symbol_reader.load_dictionary_yaml(symbol_dict)
+    map_key_dict = load_dictionary_yaml(symbol_dict)
     usable_map = check_map(string_map, map_key_dict)
     return usable_map
 
 #code start
-dungeon_map = build_the_map('map.txt', 'symbols_dictionary.yaml')
+dungeon_map = build_the_map('data/level_1.txt', 'data/symbols_dictionary.yaml')
 
 # print(dungeon_map)
 # example of keys dictionary.
