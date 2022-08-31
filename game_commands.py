@@ -3,9 +3,11 @@ import monster_module
 import game_functions
 import game_parser
 
-player = {}
-
-finish_line = {}
+player = {
+    "name": None,
+    "battle_decision": None,
+    "m_decision": None
+}
 
 def player_name():
     player["name"] = input("So tell me your name and your adventure shall begin!\n").strip()

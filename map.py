@@ -8,34 +8,51 @@ import game_parser
 import loot_module
 import map_reader
 import yaml
+import data
+import level_1_characters
 
 objects = [
     game_commands.player,
-    game_commands.finish_line,
-    monster_module.npc_goblin,
-    monster_module.npc_goblin_two,
-    monster_module.npc_bandit,
-    monster_module.npc_dwarf,
+    level_1_characters.finish_line,
+    level_1_characters.npc_goblin,
+    level_1_characters.npc_goblin_two,
+    level_1_characters.npc_bandit,
+    level_1_characters.npc_dwarf,
     loot_module.loot_chest
 ]
 
-def load_character_locations(yaml_file, yaml_file_2):
-    player_data = open_yaml_file(yaml_file)
-    npc_data = open_yaml_file(yaml_file_2)
+def load_character_data(yaml_file):
+    data = open_yaml_file(yaml_file)
 
-    game_commands.player.update(player_data['player'])
+    loot_module.loot_chest.update(data['chest'])
 
-    monster_module.npc_goblin.update(npc_data['goblin_one'])
-    monster_module.npc_goblin_two.update(npc_data['goblin_two'])
-    monster_module.npc_bandit.update(npc_data['bandit_one'])
-    monster_module.npc_dwarf.update(npc_data['dwarf_one'])
-    loot_module.loot_chest.update(npc_data['chest_one'])
-    game_commands.finish_line.update(npc_data['finish_line'])
+    level_1_characters.npc_goblin.update(data['goblin'])
+    level_1_characters.npc_goblin_two.update(data['goblin'])
+    level_1_characters.npc_bandit.update(data['bandit'])
+    level_1_characters.npc_dwarf.update(data['dwarf'])
+    level_1_characters.finish_line.update(data['finish_line'])
+
+def load_character_location(yaml_file):
+    data = open_yaml_file(yaml_file)
+
+    loot_module.loot_chest.update(data['chest'])
+    game_commands.player.update(data['player'])
+
+    level_1_characters.npc_goblin.update(data['goblin'])
+    level_1_characters.npc_goblin_two.update(data['goblin_two'])
+    level_1_characters.npc_bandit.update(data['bandit'])
+    level_1_characters.npc_dwarf.update(data['dwarf'])
+    level_1_characters.finish_line.update(data['finish_line'])
 
 def open_yaml_file(filename):
     with open(filename, 'r') as file:
         doc = yaml.safe_load(file)
     return doc
+
+def load_player_data(yaml_file):
+    data = open_yaml_file(yaml_file)
+
+    game_commands.player.update(data['player'])
 
 def npc_coordinates(npc):
     column = npc["column"]

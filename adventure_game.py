@@ -9,11 +9,14 @@ import loot_module
 import map_reader
 import map_parser
 import map
+import level_1_characters
 
 def game_board(player, game_map, objects):
     moves = 0
 
-    map.load_character_locations('data/player_data.yaml', 'data/npc_data.yaml')
+    map.load_character_location('data/level_1_character_locations.yaml')
+    map.load_character_data('data/npc_data.yaml')
+    map.load_player_data('data/player_data.yaml')
 
     while(game_functions.is_someone_dead(player) == False):
         game_commands.divider()
@@ -41,11 +44,11 @@ def game_board(player, game_map, objects):
 
         #sets the coordinate of various characters on the map.
         player_location = new_column, new_row
-        goblin_location = map.npc_coordinates(monster_module.npc_goblin)
-        goblin_two_location = map.npc_coordinates(monster_module.npc_goblin_two)
-        bandit_location = map.npc_coordinates(monster_module.npc_bandit)
+        goblin_location = map.npc_coordinates(level_1_characters.npc_goblin)
+        goblin_two_location = map.npc_coordinates(level_1_characters.npc_goblin_two)
+        bandit_location = map.npc_coordinates(level_1_characters.npc_bandit)
         chest_location = map.npc_coordinates(loot_module.loot_chest)
-        finish_line_location = map.npc_coordinates(game_commands.finish_line)
+        finish_line_location = map.npc_coordinates(level_1_characters.finish_line)
 
         #booleans for if the player occupies the same coordinate as another character. maybe turn this into a list?
         goblin_trigger = game_functions.event_trigger(player_location, goblin_location)
@@ -55,11 +58,11 @@ def game_board(player, game_map, objects):
         finish_line_trigger = game_functions.event_trigger(player_location, finish_line_location)
 
         if(goblin_trigger == True):
-            game_functions.battle(game_commands.player, monster_module.npc_goblin, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+            game_functions.battle(game_commands.player, level_1_characters.npc_goblin, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
         if(goblin_two_trigger == True):
-            game_functions.battle(game_commands.player, monster_module.npc_goblin_two, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+            game_functions.battle(game_commands.player, level_1_characters.npc_goblin_two, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
         if(bandit_trigger == True):
-            game_functions.battle(game_commands.player, monster_module.npc_bandit, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+            game_functions.battle(game_commands.player, level_1_characters.npc_bandit, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
         if(chest_trigger == True):
             print("\nGreat chest ahead. Sadly there is no loot here.\n") #run chest screen here
 

@@ -1,55 +1,28 @@
 #where the npc data shall live.
 ---
-goblin_one:
-  name: Gilbert the Goblin
+goblin:
   hit_points: 5
   attack_power: 4
   defense: 0
   defense_scalar: .5
   speed: 6
-  battle_decision: null
   symbol: 9785
-  column: 2
-  row: 2
-goblin_two:
-  name: Gerald the Goblin
-  hit_points: 5
-  attack_power: 4
-  defense: 0
-  defense_scalar: .5
-  speed: 6
-  battle_decision: null
-  symbol: 9785
-  column: 8
-  row: 10
-bandit_one:
-  name: Fred the Bandit
+bandit:
   hit_points: 10
   attack_power: 5
   defense: 1
   defense_scalar: 1
   speed: 5
-  battle_decision: null
   symbol: 9792
-  column: 6
-  row: 5
-dwarf_one:
-  name: Dain the Dwarf
+dwarf:
   hit_points: 15
   attack_power: 5
   defense: 0
   defense_scalar: 1
   speed: 3
-  battle_decision: null
   symbol: 9786
-  column: 10
-  row: 1
-chest_one:
+chest:
   symbol: 9691
-  column: 5
-  row: 6
 finish_line:
   symbol: 43359
-  column: 10
-  row: 10
 ...

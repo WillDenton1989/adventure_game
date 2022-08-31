@@ -1,14 +1,6 @@
 #where the monsters are
 from random import randint
 
-npc_goblin = {}
-
-npc_goblin_two = {}
-
-npc_bandit = {}
-
-npc_dwarf = {}
-
 def enemy_npc_choice():
     x = randint(1, 10)
     if(x <= 7):
