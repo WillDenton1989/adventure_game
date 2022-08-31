@@ -11,38 +11,36 @@ import yaml
 import data
 import level_1_characters
 
-objects = [
-    game_commands.player,
-    level_1_characters.finish_line,
-    level_1_characters.npc_goblin,
-    level_1_characters.npc_goblin_two,
-    level_1_characters.npc_bandit,
-    level_1_characters.npc_dwarf,
-    loot_module.loot_chest
-]
+objects = []
 
-def load_character_data(yaml_file):
-    data = open_yaml_file(yaml_file)
+def add_object(object):
+    objects.append(object)
 
-    loot_module.loot_chest.update(data['chest'])
+def add_player(player):
+    add_object(player)
 
-    level_1_characters.npc_goblin.update(data['goblin'])
-    level_1_characters.npc_goblin_two.update(data['goblin'])
-    level_1_characters.npc_bandit.update(data['bandit'])
-    level_1_characters.npc_dwarf.update(data['dwarf'])
-    level_1_characters.finish_line.update(data['finish_line'])
+# def load_character_data(yaml_file):
+#     data = open_yaml_file(yaml_file)
+#
+#     loot_module.loot_chest.update(data['chest'])
+#
+#     level_1_characters.npc_goblin.update(data['goblin'])
+#     level_1_characters.npc_goblin_two.update(data['goblin'])
+#     level_1_characters.npc_bandit.update(data['bandit'])
+#     level_1_characters.npc_dwarf.update(data['dwarf'])
+#     level_1_characters.finish_line.update(data['finish_line'])
 
-def load_character_location(yaml_file):
-    data = open_yaml_file(yaml_file)
-
-    loot_module.loot_chest.update(data['chest'])
-    game_commands.player.update(data['player'])
-
-    level_1_characters.npc_goblin.update(data['goblin'])
-    level_1_characters.npc_goblin_two.update(data['goblin_two'])
-    level_1_characters.npc_bandit.update(data['bandit'])
-    level_1_characters.npc_dwarf.update(data['dwarf'])
-    level_1_characters.finish_line.update(data['finish_line'])
+# def load_character_location(yaml_file):
+#     data = open_yaml_file(yaml_file)
+#
+#     loot_module.loot_chest.update(data['chest'])
+#     game_commands.player.update(data['player'])
+#
+#     level_1_characters.npc_goblin.update(data['goblin'])
+#     level_1_characters.npc_goblin_two.update(data['goblin_two'])
+#     level_1_characters.npc_bandit.update(data['bandit'])
+#     level_1_characters.npc_dwarf.update(data['dwarf'])
+#     level_1_characters.finish_line.update(data['finish_line'])
 
 def open_yaml_file(filename):
     with open(filename, 'r') as file:

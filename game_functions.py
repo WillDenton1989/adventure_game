@@ -11,12 +11,8 @@ def is_someone_dead(character):
     else:
         return False
 
-# def game_over_screen():
-
 def defend(original_defense, defense_scalar):
     new_defense = original_defense + defense_scalar
-    #create a defense cap constant.
-    #
     if(new_defense == 4):
         return original_defense
     else:
@@ -68,7 +64,7 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
             player["hit_points"] = attack(monster["attack_power"], player["hit_points"], player["defense"])
 
         # 5) open inventory
-        #inventory code will go here.
+        # inventory code will go here.
 
         # 6) quit out
         if(player["battle_decision"] == "quit"):
@@ -82,9 +78,3 @@ def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice
             monster['symbol'] = 120
         if(is_someone_dead(player) == True):
             print(f"\n\n{player['name']} has been slain by {monster['name']}")
-
-def event_trigger(player_location, npc_location):
-    if(player_location == npc_location):
-        return True
-    else:
-        return False

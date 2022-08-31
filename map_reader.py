@@ -1,5 +1,8 @@
 #this is tha map reader boi.
 import yaml
+import map
+import game_commands
+import level_1_characters
 
 def load_dictionary_yaml(filename):
     with open(filename) as f:
@@ -13,6 +16,53 @@ def load_map(filename):
         x = line.split()
         map_list.append(x)
     return map_list
+
+def load_events(filename):
+    with open(filename) as f:
+        data = yaml.safe_load(f)
+
+    for event in data["events"]:
+        if(event["event_name"] == "player_start"):
+            _set_player(event)
+        if(event["event_name"] == "monster"):
+            _add_monster(event)
+        if(event["event_name"] == "treasure"):
+            _add_treasure(event)
+        if(event["event_name"] == "finish_line"):
+            _add_finish_line(event)
+    return data
+
+def _set_player(data):
+    player_stats = _load_player_data()
+
+    game_commands.player.update(data['location'])
+    game_commands.player.update(player_stats)
+
+    map.add_player(game_commands.player)
+
+def _load_player_data():
+    with open("data/player_data.yaml") as f: # hardcoded file no bueno
+        data = yaml.safe_load(f)
+
+    return data["player"]
+
+def _add_monster(data):
+    npc_data = _load_npcs(data["key"])
+    npc_data.update(data["location"])
+
+    map.add_object(npc_data)
+
+def _add_treasure(data):
+    pass
+
+def _add_finish_line(data):
+    pass
+
+def _load_npcs(key):
+    with open("data/npc_data.yaml") as f: # hardcoded filename no bueno
+        data = yaml.safe_load(f)
+
+    return data[key]
 
 def parse_string_map(map, dictionary):
     #why is map list a bad variable name btw?
@@ -39,39 +89,11 @@ def check_map(string_map, map_key_dict):
         print("The map you provided is not square.")
         return None
 
-def build_the_map(text_file, symbol_dict,):
-    string_map = load_map(text_file)
+def build_the_map(level_name, symbol_dict,):
+    string_map = load_map("data/" + level_name + ".txt")
     map_key_dict = load_dictionary_yaml(symbol_dict)
     usable_map = check_map(string_map, map_key_dict)
+    load_events("data/" + level_name + "_events.yaml")
     return usable_map
 
-#code start
-dungeon_map = build_the_map('data/level_1.txt', 'data/symbols_dictionary.yaml')
-
-# print(dungeon_map)
-# example of keys dictionary.
-# map_key_dict = {
-#     "TL": 9484,
-#     "BL": 9492,
-#     "TR": 9488,
-#     "BR": 9496,
-#     "HH": 9472,
-#     "VV": 9474,
-#     "EE": 8901
-#     }
-
-# example of map
-# map_1 = [
-#         [TL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, TR],
-#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, TL, HH, HH, TR, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, VV, EE, EE, EE, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, VV, EE, EE, VV, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, BL, HH, HH, BR, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-#         [VV, EE, EE, EE, EE, EE, EE, EE, EE, EE, EE, VV],
-#         [BL, HH, HH, HH, HH, HH, HH, HH, HH, HH, HH, BR]
-# ]
+dungeon_map = build_the_map('level_1', 'data/symbols_dictionary.yaml') # TODO - this should be in adventure.py
