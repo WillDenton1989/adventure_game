@@ -1,9 +1,18 @@
-#technically battle functions but oh whale
+#battle manager
 #eventually revamp cobat system including defend and eventually add weapons and armor.
 from random import randint
 import game_commands
 import monster_module
 import game_parser
+import event_manager
+
+def initialize():
+    event_manager.listen(event_manager.BATTLE_EVENT, battle_callback)
+
+def battle_callback(event_name, data):
+
+    start_battle(game_commands.player, data, attack, defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
+    # we start the battle here. Might not have the player?
 
 def is_someone_dead(character):
     if(character["hit_points"] <= 0):
@@ -23,7 +32,8 @@ def attack(attack_power, hit_points, defense):
     attack_value =  max(0, attack_roll - defense)
     return hit_points - attack_value
 
-def battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
+def start_battle(player, monster, attack, defend, parse_player_input, enemy_npc_choice, quit):
+    monster["name"] = "bob"
     if(is_someone_dead(monster) == True):
         return print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
 

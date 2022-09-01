@@ -1,0 +1,47 @@
+# #where the level one objects shall live.
+---
+objects:
+  - object_name: player_start
+    location:
+      column: 1
+      row: 1
+  - object_name: monster
+    key: goblin
+    location:
+      column: 2
+      row: 2
+    events:
+      - battle_event
+  - object_name: monster
+    key: goblin
+    location:
+      column: 8
+      row: 10
+    events:
+      - battle_event
+  - object_name: monster
+    key: bandit
+    location:
+      column: 6
+      row: 5
+    events:
+      - battle_event
+  - object_name: npc
+    key: dwarf
+    location:
+      column: 10
+      row: 1
+    events:
+      - dialogue_event
+  - object_name: treasure
+    key: loot_chest
+    location:
+      column: 5
+      row: 6
+  - object_name: finish_line
+    key: finish_line
+    location:
+      column: 10
+      row: 10
+    events:
+      - game_finish

@@ -1,6 +1,6 @@
 #game commands or whatever i shall inevitably change this file to.
 import monster_module
-import game_functions
+import battle_manager
 import game_parser
 
 player = {
@@ -30,6 +30,8 @@ def player_name():
         print("\nSup dood :)")
     elif player["name"] == "dad":
         print("Oh no. I hope you dont encounter... him...")
+    elif player["name"] == "foobar":
+        print("Sounds like a foofoo barbar name ngl...")
     else:
         print("\nHeh funny name.")
     return player["name"]

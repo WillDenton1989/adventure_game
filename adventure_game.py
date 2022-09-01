@@ -2,7 +2,7 @@
 
 from random import randint
 import monster_module
-import game_functions
+import battle_manager
 import game_commands
 import game_parser
 import loot_module
@@ -11,11 +11,12 @@ import map_parser
 import map
 import event_parser
 import level_1_characters
+import battle_manager
 
 def game_board(player, game_map, objects):
     moves = 0
 
-    while(game_functions.is_someone_dead(player) == False):
+    while(battle_manager.is_someone_dead(player) == False):
         game_commands.divider()
         map.draw_map(game_map, objects)
 
@@ -39,27 +40,7 @@ def game_board(player, game_map, objects):
             map.execute_player_move(player, new_column, new_row)
         moves = moves + 1
 
-        # #booleans for if the player occupies the same coordinate as another character. maybe turn this into a list?
-        # goblin_trigger = event_parser.event_trigger(player_location, goblin_location)
-        # goblin_two_trigger = event_parser.event_trigger(player_location, goblin_two_location)
-        # bandit_trigger = event_parser.event_trigger(player_location, bandit_location)
-        # chest_trigger = event_parser.event_trigger(player_location, chest_location)
-        # finish_line_trigger = event_parser.event_trigger(player_location, finish_line_location)
-        #
-        # if(goblin_trigger == True):
-        #     game_functions.battle(game_commands.player, level_1_characters.npc_goblin, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
-        # if(goblin_two_trigger == True):
-        #     game_functions.battle(game_commands.player, level_1_characters.npc_goblin_two, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
-        # if(bandit_trigger == True):
-        #     game_functions.battle(game_commands.player, level_1_characters.npc_bandit, game_functions.attack, game_functions.defend, game_parser.parse_player_input, monster_module.enemy_npc_choice, game_commands.quit)
-        # if(chest_trigger == True):
-        #     print("\nGreat chest ahead. Sadly there is no loot here.\n") #run chest screen here
-        #
-        # if(finish_line_trigger == True):
-        #     print(f"\nCongratulations {game_commands.player['name']}!\nIt took you {moves} moves to escape the bleak and terrible dungeon!\n")
-        #     break
-
-    if(game_functions.is_someone_dead(player) == True):
+    if(battle_manager.is_someone_dead(player) == True):
         print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
 
 #game welcome menu
@@ -68,7 +49,10 @@ game_commands.player["name"] = game_commands.player_name()
 print(f"\nAlright {game_commands.player['name']}. lets go!")
 
 #map stuffs
-game_board(game_commands.player, map_reader.dungeon_map, map.objects)
+dungeon_map = map_reader.build_the_level('level_1', 'data/symbols_dictionary.yaml')# TODO - this should be in adventure.py / owo it is tho
+battle_manager.initialize()
+
+game_board(game_commands.player, dungeon_map, map.objects)
 
 #game end
 print(f"\n\n{game_commands.player['name']} has finished their Adventure! So far...")

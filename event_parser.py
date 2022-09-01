@@ -1,8 +1,7 @@
 # event parser.
 
-def event_trigger(player_location, npc_location):
-    pass
-    # if(player_location == npc_location):
-    #     return True
-    # else:
-    #     return False
+def check_location(player_location, npc_location):
+    if(player_location == npc_location):
+        return True
+    else:
+        return False

@@ -21,7 +21,7 @@ dwarf:
   defense_scalar: 1
   speed: 3
   symbol: 9786
-chest:
+loot_chest:
   symbol: 9691
 finish_line:
   symbol: 43359

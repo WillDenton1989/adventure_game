@@ -3,44 +3,26 @@ import time
 import game_commands
 import map_parser
 import monster_module
-import game_functions
+import battle_manager
 import game_parser
 import loot_module
 import map_reader
 import yaml
 import data
 import level_1_characters
+import event_manager
 
 objects = []
+events = []
 
-def add_object(object):
+def add_object(object, events=[]):
     objects.append(object)
+
+    for event_name in events:
+        _add_event(event_name, object)
 
 def add_player(player):
     add_object(player)
-
-# def load_character_data(yaml_file):
-#     data = open_yaml_file(yaml_file)
-#
-#     loot_module.loot_chest.update(data['chest'])
-#
-#     level_1_characters.npc_goblin.update(data['goblin'])
-#     level_1_characters.npc_goblin_two.update(data['goblin'])
-#     level_1_characters.npc_bandit.update(data['bandit'])
-#     level_1_characters.npc_dwarf.update(data['dwarf'])
-#     level_1_characters.finish_line.update(data['finish_line'])
-
-# def load_character_location(yaml_file):
-#     data = open_yaml_file(yaml_file)
-#
-#     loot_module.loot_chest.update(data['chest'])
-#     game_commands.player.update(data['player'])
-#
-#     level_1_characters.npc_goblin.update(data['goblin'])
-#     level_1_characters.npc_goblin_two.update(data['goblin_two'])
-#     level_1_characters.npc_bandit.update(data['bandit'])
-#     level_1_characters.npc_dwarf.update(data['dwarf'])
-#     level_1_characters.finish_line.update(data['finish_line'])
 
 def open_yaml_file(filename):
     with open(filename, 'r') as file:
@@ -108,6 +90,8 @@ def execute_player_move(player, new_column, new_row):
     player["column"] = new_column
     player["row"] = new_row
 
+    _trigger_events(new_column, new_row)
+
 def is_coordinate_passable(map, column, row):
     if(map[row][column] == 8901):
         return True
@@ -120,6 +104,13 @@ def can_player_move_to_coordinate(map, column, row):
 
     return True
 
-#code start
+# private methods
 
-#is this the end?
+def _add_event(event_name, data):
+    location = { "row": data["row"], "column": data["column"] }
+    events.append({ "event_name": event_name, "data": data, "location": location })
+
+def _trigger_events(column, row):
+    for event in events:
+        if(event["location"]["column"] == column and event["location"]["row"] == row):
+            event_manager.publish_event(event["event_name"], event["data"])
