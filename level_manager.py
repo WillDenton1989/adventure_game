@@ -5,24 +5,29 @@ import monster_module
 import battle_manager
 import input_manager
 import loot_module
-import map_reader
 import yaml
 import data
 import level_1_characters
 import event_manager
 import input_manager
 
-objects = []
-events = []
+_objects = []
+_events = []
+_current_level = None
 
-def add_object(object, events=[]):
-    objects.append(object)
+def add_object(object, _events=[]):
+    _objects.append(object)
 
-    for event_name in events:
+    for event_name in _events:
         _add_event(event_name, object)
 
 def add_player(player):
     add_object(player)
+
+def set_current_level(level):
+    global _current_level
+
+    _current_level = level
 
 def open_yaml_file(filename):
     with open(filename, 'r') as file:
@@ -34,24 +39,15 @@ def load_player_data(yaml_file):
 
     player_manager.player.update(data['player'])
 
-def npc_coordinates(npc):
-    column = npc["column"]
-    row = npc["row"]
-    return column, row
+def draw_map():
+    global _objects
 
-def object_at_coordinate(objects, column, row):
-    for object in objects:
-        if(object["column"] == column and object["row"] == row):
-            return object
-    return None
-
-def draw_map(map, objects):
     col_index = 0
     row_index = 0
 
-    for row in map:
+    for row in _current_level:
         for column in row:
-            object = object_at_coordinate(objects, col_index, row_index)
+            object = _object_at_coordinate(_objects, col_index, row_index)
             if(object == None):
                 print(chr(column), end = "")
             else:
@@ -61,7 +57,7 @@ def draw_map(map, objects):
         row_index += 1
         col_index = 0
 
-def determine_new_coordinates(map, direction, column, row):
+def determine_new_coordinates(direction, column, row):
     if(direction == "right"):
         return column + 1, row
     elif(direction == "left"):
@@ -73,9 +69,33 @@ def determine_new_coordinates(map, direction, column, row):
     else:
         pass
 
-def is_coordinate_on_map(map, column, row):
+def execute_player_move(player, new_column, new_row):
+    player["column"] = new_column
+    player["row"] = new_row
+
+    _trigger__events(new_column, new_row)
+
+def can_player_move_to_coordinate(column, row):
+    if(_is_coordinate_on_map(_current_level, column, row) == False): return False
+    if(_is_coordinate_passable(_current_level, column, row) == False): return False
+
+    return True
+
+# private methods
+
+def _add_event(event_name, data):
+    location = { "row": data["row"], "column": data["column"] }
+    _events.append({ "event_name": event_name, "data": data, "location": location })
+
+def _trigger__events(column, row):
+    for event in _events:
+        if(event["location"]["column"] == column and event["location"]["row"] == row):
+            event_manager.trigger_event(event["event_name"], event["data"])
+
+def _is_coordinate_on_map(map, column, row):
     num_rows = len(map)
     num_columns = len(map[0])
+
     if(column < 0):
         return False
     if(column >= num_columns):
@@ -86,31 +106,15 @@ def is_coordinate_on_map(map, column, row):
         return False
     return True
 
-def execute_player_move(player, new_column, new_row):
-    player["column"] = new_column
-    player["row"] = new_row
-
-    _trigger_events(new_column, new_row)
-
-def is_coordinate_passable(map, column, row):
+def _is_coordinate_passable(map, column, row):
     if(map[row][column] == 8901):
         return True
     else:
         return False
 
-def can_player_move_to_coordinate(map, column, row):
-    if(is_coordinate_on_map(map, column, row) == False): return False
-    if(is_coordinate_passable(map, column, row) == False): return False
+def _object_at_coordinate(_objects, column, row):
+    for object in _objects:
+        if(object["column"] == column and object["row"] == row):
+            return object
 
-    return True
-
-# private methods
-
-def _add_event(event_name, data):
-    location = { "row": data["row"], "column": data["column"] }
-    events.append({ "event_name": event_name, "data": data, "location": location })
-
-def _trigger_events(column, row):
-    for event in events:
-        if(event["location"]["column"] == column and event["location"]["row"] == row):
-            event_manager.trigger_event(event["event_name"], event["data"])
+    return None

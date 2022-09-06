@@ -2,6 +2,7 @@ import battle_manager
 import player_manager
 import event_manager
 import input_manager
+import level_parser
 
 STATE_CHARACTER_CREATION = "state_character_creation"
 STATE_MOVEMENT = "state_movement"
@@ -23,6 +24,7 @@ def game_state():
 
 def _transition_to_movement():
     _set_state(STATE_MOVEMENT)
+    dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
 
 def _initialize_managers():
     battle_manager.initialize() # we need to do any other managers initializations here!! :)
