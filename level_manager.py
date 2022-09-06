@@ -1,16 +1,16 @@
 #where the map lives.
 import time
-import game_commands
-import map_parser
+import player_manager
 import monster_module
 import battle_manager
-import game_parser
+import input_manager
 import loot_module
 import map_reader
 import yaml
 import data
 import level_1_characters
 import event_manager
+import input_manager
 
 objects = []
 events = []
@@ -32,7 +32,7 @@ def open_yaml_file(filename):
 def load_player_data(yaml_file):
     data = open_yaml_file(yaml_file)
 
-    game_commands.player.update(data['player'])
+    player_manager.player.update(data['player'])
 
 def npc_coordinates(npc):
     column = npc["column"]
@@ -113,4 +113,4 @@ def _add_event(event_name, data):
 def _trigger_events(column, row):
     for event in events:
         if(event["location"]["column"] == column and event["location"]["row"] == row):
-            event_manager.publish_event(event["event_name"], event["data"])
+            event_manager.trigger_event(event["event_name"], event["data"])

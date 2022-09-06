@@ -1,7 +1,7 @@
 #this is tha map reader boi.
 import yaml
-import map
-import game_commands
+import level_manager
+import player_manager
 import level_1_characters
 
 def load_dictionary_yaml(filename):
@@ -21,25 +21,28 @@ def load_objects(filename):
     with open(filename) as f:
         data = yaml.safe_load(f)
 
-    for object in data["objects"]:
-        if(object["object_name"] == "player_start"):
-            _set_player(object)
-        if(object["object_name"] == "monster"):
-            _add_monster(object)
-        if(object["object_name"] == "treasure"):
-            _add_treasure(object)
-        if(object["object_name"] == "finish_line"):
-            _add_finish_line(object)
-        if(object["object_name"] == "npc"):
-            _add_npc(object)
+        for object in data["objects"]:
+            if(object["object_name"] == "player_start"):
+                _set_player(object)
+            elif(object["object_name"] == "monster"):
+                _add_monster(object)
+            elif(object["object_name"] == "treasure"):
+                _add_treasure(object)
+            elif(object["object_name"] == "finish_line"):
+                _add_finish_line(object)
+            elif(object["object_name"] == "npc"):
+                _add_npc(object)
+            else:
+                pass # look at throwing exceptions!!!
+
     return data
 
 def _set_player(data):
     player_stats = _load_player_data()
 
-    game_commands.player.update(data['location'])
-    game_commands.player.update(player_stats)
-    map.add_player(game_commands.player)
+    player_manager.player.update(data['location'])
+    player_manager.player.update(player_stats)
+    level_manager.add_player(player_manager.player)
 
 def _load_player_data():
     with open("data/player_data.yaml") as f: # hardcoded file no bueno
@@ -51,25 +54,25 @@ def _add_npc(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
 
-    map.add_object(npc_data)
+    level_manager.add_object(npc_data)
 
 def _add_monster(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
 
-    map.add_object(npc_data, data["events"])
+    level_manager.add_object(npc_data, data["events"])
 
 def _add_treasure(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
 
-    map.add_object(npc_data)
+    level_manager.add_object(npc_data)
 
 def _add_finish_line(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
 
-    map.add_object(npc_data)
+    level_manager.add_object(npc_data)
 
 def _load_npcs(key):
     with open("data/npc_data.yaml") as f: # hardcoded filename no bueno

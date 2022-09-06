@@ -1,6 +1,5 @@
 #where the loot lives
-import game_commands
-import game_parser
+import player_manager
 
 loot_chest = {}
 
@@ -28,4 +27,4 @@ def display_inventory_screen(inventory, character):
         display_inventory(inventory, character)
         break
 
-#display_inventory_screen(player_inventory, game_commands.player)
+#display_inventory_screen(player_inventory, player_manager.player)

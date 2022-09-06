@@ -17,6 +17,29 @@ def npc_battle_choice():
     else:
         return "guard"
 
+def name_generator():
+    x = randint(0, 15)
+    names = [
+    "Bob",
+    "Joe",
+    "Jeff",
+    "Bren",
+    "Mike",
+    "Dennis",
+    "Tupok",
+    "Biggie",
+    "Huell",
+    "Jerry",
+    "Scott",
+    "Clarence",
+    "Daniel",
+    "Gary",
+    "Kyle",
+    "Theo"
+    ]
+
+    return names[x]
+
 def monster_generator():
     x = randint(1, 6)
     npc_orc = {
