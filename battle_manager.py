@@ -30,7 +30,7 @@ def attack(attack_power, hit_points, defense):
 
 # private methods
 
-def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice, quit):
+def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice):
 
     monster["name"] = monster_module.name_generator()
     if(is_someone_dead(monster) == True):
@@ -48,12 +48,9 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
         print(f"\n{player['name']} defense: {player['defense']} attack: {player['attack_power']}, {monster['name']} defense: {monster['defense']} attack: {monster['attack_power']}")
 
         # 1) player input
-        player_input_string = input(f"I await your command {player['name']}: ")
-        player["battle_decision"] = input_manager.parse_input(player_input_string)
-        while(player["battle_decision"] == "cont"):
-            input_manager.show_controls()
-            player_input_string = input(f"\nI await a real command {player['name']}: ")
-            player["battle_decision"] = input_manager.parse_input(player_input_string)
+        player["battle_decision"] = input_manager.parse_input()
+        if(player["battle_decision"] == "cont"):
+            continue
 
         # 2) gather monster input
         monster["battle_decision"] = enemy_npc_choice()
@@ -97,4 +94,4 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
 def _state_change_event_handler(event_name, data):
     if(data["new_state"] == game_manager.STATE_BATTLE):
         battle_data = data["event_data"]
-        _start_battle(player_manager.player, battle_data, attack, defend, input_manager.parse_input, monster_module.enemy_npc_choice, player_manager.quit)
+        _start_battle(player_manager.player, battle_data, attack, defend, input_manager.parse_input, monster_module.enemy_npc_choice)

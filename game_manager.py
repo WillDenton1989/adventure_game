@@ -12,7 +12,9 @@ STATE_BATTLE = "state_battle"
 _game_state = None
 
 def initialize():
+    global _game_state
     _game_state = STATE_CHARACTER_CREATION
+    
     _initialize_managers()
     _register_listeners()
 

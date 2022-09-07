@@ -6,6 +6,7 @@ BATTLE_EVENT = "battle_event"
 STATE_CHANGE_EVENT = "state_change" # maybe?
 END_BATTLE_EVENT = "end_battle"
 MOVEMENT_EVENT = "movement_event"
+QUIT_EVENT = "quit_event"
 
 _event_listeners = []
 

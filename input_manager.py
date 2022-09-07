@@ -1,27 +1,31 @@
 import game_manager
 import event_manager
+import player_manager
 
 # public methods
 def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
 
 def show_controls():
-    if(game_manager.game_state == game_manager.STATE_CHARACTER_CREATION):
-        return _show_player_creation_controls()
-    elif(game_manager.game_state == game_manager.STATE_MOVEMENT):
-        return _show_movement_controls()
-    elif(game_manager.game_state == game_manager.STATE_BATTLE):
-        return _show_battle_controls()
+    if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
+        _show_player_creation_controls()
+    elif(_game_state() == game_manager.STATE_MOVEMENT):
+        _show_movement_controls()
+    elif(_game_state() == game_manager.STATE_BATTLE):
+        _show_battle_controls()
     else:
         pass
 
-def parse_input(input):
-    if(game_manager.game_state() == game_manager.STATE_CHARACTER_CREATION):
-        return _parse_player_creation(input)
-    elif(game_manager.game_state() == game_manager.STATE_MOVEMENT):
-        return _parse_player_movement(input)
-    elif(game_manager.game_state() == game_manager.STATE_BATTLE):
-        return _parse_battle_input(input)
+def parse_input():
+    show_controls()
+    player_input = input(_prompt())
+
+    if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
+        return _parse_player_creation(player_input)
+    elif(_game_state() == game_manager.STATE_MOVEMENT):
+        return _parse_player_movement(player_input)
+    elif(_game_state() == game_manager.STATE_BATTLE):
+        return _parse_battle_input(player_input)
     else:
         pass
 
@@ -35,6 +39,21 @@ def _parse_player_creation(input):
     else:
         pass
 
+    return input
+
+def _prompt():
+    if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
+        return "A name, liege? "
+    elif(_game_state() == game_manager.STATE_MOVEMENT):
+        return "? "
+    elif(_game_state() == game_manager.STATE_BATTLE):
+        return f"\nI await a real command {player_manager.player['name']}: "
+    else:
+        return "THIS IS BROKEN AND SHOULD NEVER HAPPEN, RAISE AN EXCEPTION HERE!!"
+
+def _game_state():
+    return game_manager.game_state()
+
 # private methods
 
 def _show_movement_controls():
@@ -44,6 +63,7 @@ Type 'quit' or 'q' to quit out of the game.""")
 
 def _parse_player_movement(input):
     data = {}
+
     if(input == "k"):
         data["direction"] = "up"
         event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
@@ -57,11 +77,11 @@ def _parse_player_movement(input):
         data["direction"] = "right"
         event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
     elif(input == "i"):
-        return "inventory"
+        pass
     elif(input == "quit" or input == "q"):
-        return "quit"
+        event_manager.trigger_event(event_manager.QUIT_EVENT, data)
     else:
-        return "cont"
+        show_controls()
 
 def _show_battle_controls():
     print("""\nType 'attack' or 'a' to try to damage your foe;
@@ -98,7 +118,3 @@ def _parse_inventory_input(input):
 
 def _state_change_event_handler(event, data):
     print(f"GOT HERE: {data}")
-
-# def _move_event_handler(event_name, data):
-#     if(data["new_state"] == game_manager.STATE_MOVEMENT):
-#         level_manager.player_move(player_manager.player)

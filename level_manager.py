@@ -137,5 +137,6 @@ def _object_at_coordinate(_objects, column, row):
     return None
 
 # event handlers
+
 def _movement_event_handler(event_name, data):
     _player_move(data["direction"])
