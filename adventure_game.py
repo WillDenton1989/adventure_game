@@ -31,19 +31,11 @@ def game_board(player):
             input_manager.show_controls()
             continue
 
-        #takes desired direction and checks the coordinates and if valid executes them.
-        new_column, new_row = level_manager.determine_new_coordinates(player["m_decision"], player["column"], player["row"])
-        can_move = level_manager.can_player_move_to_coordinate(new_column, new_row)
-        if(can_move == True):
-            level_manager.execute_player_move(player, new_column, new_row)
-        moves = moves + 1
-
     if(battle_manager.is_someone_dead(player) == True):
         print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
 
 #game welcome menu
 print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
-# print(f"\nAlright {player_manager.player['name']}. lets go!")
 
 game_manager.initialize()
 

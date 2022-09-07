@@ -7,11 +7,11 @@ def initialize():
 
 def show_controls():
     if(game_manager.game_state == game_manager.STATE_CHARACTER_CREATION):
-        _show_player_creation_controls()
+        return _show_player_creation_controls()
     elif(game_manager.game_state == game_manager.STATE_MOVEMENT):
-        _show_movement_controls()
+        return _show_movement_controls()
     elif(game_manager.game_state == game_manager.STATE_BATTLE):
-        _show_battle_controls()
+        return _show_battle_controls()
     else:
         pass
 
@@ -24,7 +24,6 @@ def parse_input(input):
         return _parse_battle_input(input)
     else:
         pass
-
 
 # private methods
 def _show_player_creation_controls():
@@ -44,14 +43,19 @@ Use the 'h' and 'l' keys to move left and right.
 Type 'quit' or 'q' to quit out of the game.""")
 
 def _parse_player_movement(input):
+    data = {}
     if(input == "k"):
-        return "up"
+        data["direction"] = "up"
+        event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
     elif(input == "j"):
-        return "down"
+        data["direction"] = "down"
+        event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
     elif(input == "h"):
-        return "left"
+        data["direction"] = "left"
+        event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
     elif(input == "l"):
-        return "right"
+        data["direction"] = "right"
+        event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
     elif(input == "i"):
         return "inventory"
     elif(input == "quit" or input == "q"):
@@ -94,3 +98,7 @@ def _parse_inventory_input(input):
 
 def _state_change_event_handler(event, data):
     print(f"GOT HERE: {data}")
+
+# def _move_event_handler(event_name, data):
+#     if(data["new_state"] == game_manager.STATE_MOVEMENT):
+#         level_manager.player_move(player_manager.player)

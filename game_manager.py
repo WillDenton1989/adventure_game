@@ -3,6 +3,7 @@ import player_manager
 import event_manager
 import input_manager
 import level_parser
+import level_manager
 
 STATE_CHARACTER_CREATION = "state_character_creation"
 STATE_MOVEMENT = "state_movement"
@@ -30,6 +31,7 @@ def _initialize_managers():
     battle_manager.initialize() # we need to do any other managers initializations here!! :)
     player_manager.initialize()
     input_manager.initialize()
+    level_manager.initialize()
 
 def _set_state(new_state, event_data = []):
     global _game_state
@@ -46,6 +48,7 @@ def _dispatch_state_change(previous_state, new_state, event_data):
 def _register_listeners():
     event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
     event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
+    # event_manager.listen(event_manager.MOVEMENT_EVENT, _execute_move_handler)
 
 # event handlers
 
@@ -54,3 +57,6 @@ def _battle_started_handler(event, data):
 
 def _battle_ended_handler(event, data):
     _set_state(STATE_MOVEMENT, data)
+
+# def _execute_move_handler(event, data):
+#     _set_state(STATE_MOVEMENT, data)

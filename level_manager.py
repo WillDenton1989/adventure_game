@@ -14,6 +14,12 @@ import input_manager
 _objects = []
 _events = []
 _current_level = None
+_player = None
+
+def initialize():
+    event_manager.listen(event_manager.MOVEMENT_EVENT, _movement_event_handler)
+
+# event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
 
 def add_object(object, _events=[]):
     _objects.append(object)
@@ -22,7 +28,9 @@ def add_object(object, _events=[]):
         _add_event(event_name, object)
 
 def add_player(player):
+    global _player
     add_object(player)
+    _player = player
 
 def set_current_level(level):
     global _current_level
@@ -83,6 +91,15 @@ def can_player_move_to_coordinate(column, row):
 
 # private methods
 
+def _player_move(direction):
+    global _player
+    new_column, new_row = determine_new_coordinates(direction, _player["column"], _player["row"])
+
+    if(can_player_move_to_coordinate(new_column, new_row) == True):
+        execute_player_move(_player, new_column, new_row)
+    else:
+        print("You can't move there, hoe")
+
 def _add_event(event_name, data):
     location = { "row": data["row"], "column": data["column"] }
     _events.append({ "event_name": event_name, "data": data, "location": location })
@@ -118,3 +135,7 @@ def _object_at_coordinate(_objects, column, row):
             return object
 
     return None
+
+# event handlers
+def _movement_event_handler(event_name, data):
+    _player_move(data["direction"])

@@ -1,5 +1,5 @@
 #battle manager
-#eventually revamp cobat system including defend and eventually add weapons and armor.
+#eventually revamp combat system including defend and eventually add weapons and armor.
 from random import randint
 import player_manager
 import monster_module
