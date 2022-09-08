@@ -94,4 +94,4 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
 def _state_change_event_handler(event_name, data):
     if(data["new_state"] == game_manager.STATE_BATTLE):
         battle_data = data["event_data"]
-        _start_battle(player_manager.player, battle_data, attack, defend, input_manager.parse_input, monster_module.enemy_npc_choice)
+        _start_battle(player_manager.get_player_data(), battle_data, attack, defend, input_manager.parse_input, monster_module.enemy_npc_choice)

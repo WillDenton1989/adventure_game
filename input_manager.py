@@ -42,12 +42,13 @@ def _parse_player_creation(input):
     return input
 
 def _prompt():
+    player = player_manager.get_player_data()
     if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
         return "A name, liege? "
     elif(_game_state() == game_manager.STATE_MOVEMENT):
         return "? "
     elif(_game_state() == game_manager.STATE_BATTLE):
-        return f"\nI await your command {player_manager.player['name']}: "
+        return f"\nI await your command {player['name']}: "
     else:
         raise Exception("THIS IS BROKEN AND SHOULD NEVER HAPPEN, RAISE AN EXCEPTION HERE!!")
 

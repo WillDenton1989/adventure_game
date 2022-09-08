@@ -13,7 +13,7 @@ def game_board(player):
         level_manager.draw_map()
 
         # ghetto hud for now.
-        print(f"Player hit points: {player['hit_points']}")
+        print(f"{player['name']} hit points: {player['hit_points']}")
         print(f"Moves taken: {moves}")
         print(game_manager._game_state)
 
@@ -24,13 +24,20 @@ def game_board(player):
     if(battle_manager.is_someone_dead(player) == True):
         print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
 
-#game welcome menu
+def game_intro_message():
+    print("\nWelcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 
-print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
+def game_over_message():
+    player_data = player_manager.get_player_data()
+    print(f"\n\n{player_data['name']} has finished their Adventure! So far...")
+
+# the cool running
+
+game_intro_message()
 
 game_manager.initialize()
+game_board(player_manager.get_player_data())
 
-game_board(player_manager.player)
+game_over_message()
 
-#game end
-print(f"\n\n{player_manager.player['name']} has finished their Adventure! So far...")
+# is this the end?

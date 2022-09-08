@@ -21,9 +21,9 @@ def build_the_level(level_name, symbol_dict):
 def _set_player(data):
     player_stats = _load_player_data()
 
-    player_manager.player.update(data['location'])
-    player_manager.player.update(player_stats)
-    level_manager.add_player(player_manager.player)
+    player_manager.update_player_data(data['location'])
+    player_manager.update_player_data(player_stats)
+    level_manager.add_player(player_manager.get_player_data())
 
 def _load_player_data():
     with open("data/player_data.yaml") as f: # hardcoded file no bueno

@@ -32,7 +32,7 @@ def name_generator():
     "Jerry",
     "Scott",
     "Clarence",
-    "Daniel",
+    "Dan",
     "Gary",
     "Kyle",
     "Theo"

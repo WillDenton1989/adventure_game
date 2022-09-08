@@ -27,4 +27,4 @@ def display_inventory_screen(inventory, character):
         display_inventory(inventory, character)
         break
 
-#display_inventory_screen(player_inventory, player_manager.player)
+#display_inventory_screen(player_inventory, get_player_data())

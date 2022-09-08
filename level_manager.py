@@ -45,7 +45,7 @@ def open_yaml_file(filename):
 def load_player_data(yaml_file):
     data = open_yaml_file(yaml_file)
 
-    player_manager.player.update(data['player'])
+    player_manager.update_player_data(data['player'])
 
 def draw_map():
     global _objects

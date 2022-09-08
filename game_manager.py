@@ -18,7 +18,7 @@ def initialize():
     _initialize_managers()
     _register_listeners()
 
-    player_manager.create_player(player_manager.player) # and then change game state to STATE_MOVEMENT after player is created
+    player_manager.create_player(player_manager.get_player_data()) # and then change game state to STATE_MOVEMENT after player is created
     _transition_to_movement()
 
 def game_state():
