@@ -14,7 +14,7 @@ _game_state = None
 def initialize():
     global _game_state
     _game_state = STATE_CHARACTER_CREATION
-    
+
     _initialize_managers()
     _register_listeners()
 
@@ -50,7 +50,6 @@ def _dispatch_state_change(previous_state, new_state, event_data):
 def _register_listeners():
     event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
     event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
-    # event_manager.listen(event_manager.MOVEMENT_EVENT, _execute_move_handler)
 
 # event handlers
 
@@ -59,6 +58,3 @@ def _battle_started_handler(event, data):
 
 def _battle_ended_handler(event, data):
     _set_state(STATE_MOVEMENT, data)
-
-# def _execute_move_handler(event, data):
-#     _set_state(STATE_MOVEMENT, data)

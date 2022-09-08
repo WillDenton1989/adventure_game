@@ -18,7 +18,7 @@ def show_controls():
 
 def parse_input():
     show_controls()
-    player_input = input(_prompt())
+    player_input = input(_prompt()).strip()
 
     if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
         return _parse_player_creation(player_input)
@@ -35,9 +35,9 @@ def _show_player_creation_controls():
 
 def _parse_player_creation(input):
     if(input == "dood"):
-        print("stuff")
+        print(f"\nSup {input}.\n\nAlright then, lets go!\n")
     else:
-        pass
+        print(f"\nAlright {input}, lets go!\n")
 
     return input
 
@@ -47,9 +47,9 @@ def _prompt():
     elif(_game_state() == game_manager.STATE_MOVEMENT):
         return "? "
     elif(_game_state() == game_manager.STATE_BATTLE):
-        return f"\nI await a real command {player_manager.player['name']}: "
+        return f"\nI await your command {player_manager.player['name']}: "
     else:
-        return "THIS IS BROKEN AND SHOULD NEVER HAPPEN, RAISE AN EXCEPTION HERE!!"
+        raise Exception("THIS IS BROKEN AND SHOULD NEVER HAPPEN, RAISE AN EXCEPTION HERE!!")
 
 def _game_state():
     return game_manager.game_state()
@@ -117,4 +117,4 @@ def _parse_inventory_input(input):
 # event handlers
 
 def _state_change_event_handler(event, data):
-    print(f"GOT HERE: {data}")
+    pass # print(f"GOT HERE: {data}")

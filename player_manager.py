@@ -13,7 +13,6 @@ def initialize():
     event_manager.listen(event_manager.QUIT_EVENT, _quit_event_handler)
 
 def create_player(player):
-    input_manager.show_controls()
     player["name"] = input_manager.parse_input()
 
 # private methods

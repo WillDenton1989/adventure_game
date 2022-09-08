@@ -31,10 +31,12 @@ def attack(attack_power, hit_points, defense):
 # private methods
 
 def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice):
-
-    monster["name"] = monster_module.name_generator()
+    # stand in for what should probably be a looting event. for now it just lets you go back to the corpse without restarting the battle
     if(is_someone_dead(monster) == True):
+        event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
         return print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
+
+    monster["name"] = monster_module.name_generator() + " the " + monster["class"]
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     monster_module.monster_catchphrase_generator(monster)
@@ -45,7 +47,7 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
         round = round + 1
 
         print(f"\n\nRound {round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
-        print(f"\n{player['name']} defense: {player['defense']} attack: {player['attack_power']}, {monster['name']} defense: {monster['defense']} attack: {monster['attack_power']}")
+        print(f"\n{player['name']}: defense: {player['defense']} attack: {player['attack_power']}, {monster['name']}: defense: {monster['defense']} attack: {monster['attack_power']}")
 
         # 1) player input
         player["battle_decision"] = input_manager.parse_input()
@@ -78,9 +80,7 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
 
         print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
 
-        #battle resolution
-
-        #do i use an event handler?
+        # battle resolution
         if(is_someone_dead(monster) == True):
             print(f"\n\n{monster['name']} has been slain")
             monster['symbol'] = 120

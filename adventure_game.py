@@ -12,11 +12,14 @@ def game_board(player):
         print("------------------------------------------------------------------------")
         level_manager.draw_map()
 
-        #take and parse player input.
+        # ghetto hud for now.
         print(f"Player hit points: {player['hit_points']}")
         print(f"Moves taken: {moves}")
-        # player_input = input("Use the 'k' and 'j' keys to move up and down.\nUse the 'h' and 'l' keys to move left and right.\nType 'quit' or 'q' to quit out of the game.\n")
+        print(game_manager._game_state)
+
         input_manager.parse_input()
+        
+        moves = moves + 1
 
     if(battle_manager.is_someone_dead(player) == True):
         print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
