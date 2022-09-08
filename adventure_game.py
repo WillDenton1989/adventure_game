@@ -18,13 +18,14 @@ def game_board(player):
         print(game_manager._game_state)
 
         input_manager.parse_input()
-        
+
         moves = moves + 1
 
     if(battle_manager.is_someone_dead(player) == True):
         print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
 
 #game welcome menu
+
 print("Welcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 
 game_manager.initialize()
