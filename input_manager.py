@@ -4,7 +4,7 @@ import player_manager
 
 # public methods
 def initialize():
-    event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
+    pass
 
 def show_controls():
     if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
@@ -89,17 +89,22 @@ def _show_battle_controls():
 Type 'defend' or 'd' to increase your defense rating (max 3);
 Type 'quit' or 'q' to exit the adventure game.""")
 
-def _parse_battle_input(input): #changed from parse_battle_input
+def _parse_battle_input(input):
+    data = {}
     if(input == "quit" or input == "q"):
-        event_manager.trigger_event(event_manager.QUIT_EVENT, {})
+        event_manager.trigger_event(event_manager.QUIT_EVENT, data)
     elif(input == "attack" or input == "a"):
-        return "attack"
+        data["command"] = "attack"
+        event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
     elif(input == "defend" or input == "d"):
-        return "defend"
+        data["command"] = "defend"
+        event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
     elif(input == "inventory" or input == "i"):
-        return "inventory"
+        # data["command"] = "inventory"
+        # event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
+        pass
     else:
-        return "cont"
+        show_controls()
 
 def _parse_inventory_input(input):
     if(input == "1"):
@@ -116,6 +121,3 @@ def _parse_inventory_input(input):
         pass
 
 # event handlers
-
-def _state_change_event_handler(event, data):
-    pass # print(f"GOT HERE: {data}")

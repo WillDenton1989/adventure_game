@@ -9,10 +9,12 @@ import game_manager
 
 _player_decision = None
 _monster_decision = None
+_battle = {}
 _round = 0
 
 def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
+    event_manager.listen(event_manager.BATTLE_COMMAND_EVENT, _battle_command_event_handler)
 
 def is_someone_dead(character):
     if(character["hit_points"] <= 0):
@@ -26,45 +28,53 @@ def _initialize_battle(player, monster):
     if(_check_for_loot(monster) == True): return
 
     _round = 0
+    _battle["player"] = player
+    _battle["monster"] = monster
     monster["name"] = monster_manager.name_generator() + " the " + monster["class"]
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     monster_manager.monster_catchphrase_generator(monster)
     input_manager.show_controls()
 
-    _run_battle(player, monster)
+    _run_battle()
 
 def _check_for_loot(monster):
     if(is_someone_dead(monster) == True):
         event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
         print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
         return True
+    return False
 
-def _run_battle(player, monster):
-    global _player_decision
-    global _monster_decision
+def _run_battle():
     global _round
 
     _round += 1
+    player, monster = _battle["player"], _battle["monster"]
 
     print(f"\n\nRound {_round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
     print(f"\n{player['name']}: defense: {player['defense']} attack: {player['attack_power']}, {monster['name']}: defense: {monster['defense']} attack: {monster['attack_power']}")
+    input_manager.parse_input()
 
+def _handle_player_decision(decision):
+    global _player_decision
+    global _monster_decision
+
+    _player_decision = decision
     _monster_decision = monster_manager.enemy_npc_choice()
-    _player_decision = input_manager.parse_input()
-    _execute_battle_round(player, monster)
+    _execute_battle_round()
 
-    print(f"\n{player['name']} chooses to {_player_decision}, {monster['name']} chooses to {_monster_decision}")
-
-    if(_player_death(player, monster) == False and _monster_death(player, monster) == False):
-        _run_battle(player, monster)
-
-def _execute_battle_round(player, monster):
+def _execute_battle_round():
+    player, monster = _battle["player"], _battle["monster"]
     global _player_decision
     global _monster_decision
 
     _execute_defends(player, monster, _player_decision, _monster_decision)
     _execute_attacks(player, monster, _player_decision, _monster_decision)
+
+    print(f"\n{player['name']} chooses to {_player_decision}, {monster['name']} chooses to {_monster_decision}")
+
+    if(_player_death(player, monster) == False and _monster_death(player, monster) == False):
+        _run_battle()
 
 def _execute_defends(player, monster, player_decision, monster_decision):
     if(player_decision == "defend"):
@@ -112,3 +122,6 @@ def _state_change_event_handler(event_name, data):
     if(data["new_state"] == game_manager.STATE_BATTLE):
         battle_data = data["event_data"]
         _initialize_battle(player_manager.get_player_data(), battle_data)
+
+def _battle_command_event_handler(event_name, data):
+    _handle_player_decision(data["command"])

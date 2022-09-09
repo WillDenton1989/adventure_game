@@ -6,6 +6,7 @@ import yaml
 import data
 import event_manager
 import input_manager
+import game_manager
 
 _objects = []
 _events = []

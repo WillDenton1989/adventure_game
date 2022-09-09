@@ -22,7 +22,7 @@ def initialize():
     _transition_to_movement()
 
 def game_state():
-    global _game_State
+    global _game_state
     return _game_state
 
 def _transition_to_movement():
