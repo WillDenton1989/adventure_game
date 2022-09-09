@@ -7,6 +7,10 @@ import input_manager
 import event_manager
 import game_manager
 
+_player_decision = None
+_monster_decision = None
+_round = 0
+
 def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
 
@@ -16,75 +20,95 @@ def is_someone_dead(character):
     else:
         return False
 
-def defend(original_defense, defense_scalar):
+# private methods
+
+def _initialize_battle(player, monster):
+    if(_check_for_loot(monster) == True): return
+
+    _round = 0
+    monster["name"] = monster_manager.name_generator() + " the " + monster["class"]
+
+    print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
+    monster_manager.monster_catchphrase_generator(monster)
+    input_manager.show_controls()
+
+    _run_battle(player, monster)
+
+def _check_for_loot(monster):
+    if(is_someone_dead(monster) == True):
+        event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
+        print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
+        return True
+
+def _run_battle(player, monster):
+    global _player_decision
+    global _monster_decision
+    global _round
+
+    _round += 1
+
+    print(f"\n\nRound {_round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
+    print(f"\n{player['name']}: defense: {player['defense']} attack: {player['attack_power']}, {monster['name']}: defense: {monster['defense']} attack: {monster['attack_power']}")
+
+    _monster_decision = monster_manager.enemy_npc_choice()
+    _player_decision = input_manager.parse_input()
+    _execute_battle_round(player, monster)
+
+    print(f"\n{player['name']} chooses to {_player_decision}, {monster['name']} chooses to {_monster_decision}")
+
+    if(_player_death(player, monster) == False and _monster_death(player, monster) == False):
+        _run_battle(player, monster)
+
+def _execute_battle_round(player, monster):
+    global _player_decision
+    global _monster_decision
+
+    _execute_defends(player, monster, _player_decision, _monster_decision)
+    _execute_attacks(player, monster, _player_decision, _monster_decision)
+
+def _execute_defends(player, monster, player_decision, monster_decision):
+    if(player_decision == "defend"):
+        player["defense"] = _defend(player["defense"], player["defense_scalar"])
+
+    if(monster_decision == "defend"):
+        monster["defense"] = _defend(monster["defense"], monster["defense_scalar"])
+
+def _execute_attacks(player, monster, player_decision, monster_decision):
+    if(player_decision == "attack"):
+        monster["hit_points"] = _attack(player["attack_power"], monster["hit_points"], monster["defense"])
+
+    if(monster_decision == "attack"):
+        player["hit_points"] = _attack(monster["attack_power"], player["hit_points"], player["defense"])
+
+def _defend(original_defense, defense_scalar):
     new_defense = original_defense + defense_scalar
     if(new_defense == 4):
         return original_defense
     else:
         return new_defense
 
-def attack(attack_power, hit_points, defense):
+def _attack(attack_power, hit_points, defense):
     attack_roll = randint(1, attack_power)
     attack_value =  max(0, attack_roll - defense)
     return hit_points - attack_value
 
-# private methods
-
-def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice):
-    # stand in for what should probably be a looting event. for now it just lets you go back to the corpse without restarting the battle
+def _player_death(player, monster):
     if(is_someone_dead(monster) == True):
+        print(f"\n\n{monster['name']} has been slain")
+        monster['symbol'] = 120
         event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
-        return print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
+        return True
+    return False
 
-    monster["name"] = monster_manager.name_generator() + " the " + monster["class"]
-
-    print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
-    monster_manager.monster_catchphrase_generator(monster)
-    input_manager.show_controls()
-    round = -1
-
-    while(is_someone_dead(player) == False and is_someone_dead(monster) == False):
-        round = round + 1
-
-        print(f"\n\nRound {round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
-        print(f"\n{player['name']}: defense: {player['defense']} attack: {player['attack_power']}, {monster['name']}: defense: {monster['defense']} attack: {monster['attack_power']}")
-
-        # 1) player input
-        player["battle_decision"] = input_manager.parse_input()
-        if(player["battle_decision"] == "cont"):
-            continue
-
-        # 2) gather monster input
-        monster["battle_decision"] = enemy_npc_choice()
-
-        # 3) execute defends
-        if(player["battle_decision"] == "defend"):
-            player["defense"] = defend(player["defense"], player["defense_scalar"])
-
-        if(monster["battle_decision"] == "defend"):
-            monster["defense"] = defend(monster["defense"], monster["defense_scalar"])
-
-        # 4) execute attacks
-        if(player["battle_decision"] == "attack"):
-            monster["hit_points"] = attack(player["attack_power"], monster["hit_points"], monster["defense"])
-
-        if(monster["battle_decision"] == "attack"):
-            player["hit_points"] = attack(monster["attack_power"], player["hit_points"], player["defense"])
-
-        print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
-
-        # battle resolution
-        if(is_someone_dead(monster) == True):
-            print(f"\n\n{monster['name']} has been slain")
-            monster['symbol'] = 120
-            event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
-
-        if(is_someone_dead(player) == True):
-            print(f"\n\n{player['name']} has been slain by {monster['name']}")
+def _monster_death(player, monster):
+    if(is_someone_dead(player) == True):
+        print(f"\n\n{player['name']} has been slain by {monster['name']}")
+        return True
+    return False
 
 # event handlers
 
 def _state_change_event_handler(event_name, data):
     if(data["new_state"] == game_manager.STATE_BATTLE):
         battle_data = data["event_data"]
-        _start_battle(player_manager.get_player_data(), battle_data, attack, defend, input_manager.parse_input, monster_manager.enemy_npc_choice)
+        _initialize_battle(player_manager.get_player_data(), battle_data)
