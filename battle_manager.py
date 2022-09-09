@@ -2,7 +2,7 @@
 #eventually revamp combat system including defend and eventually add weapons and armor.
 from random import randint
 import player_manager
-import monster_module
+import monster_manager
 import input_manager
 import event_manager
 import game_manager
@@ -36,10 +36,10 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
         event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
         return print(f"\nThe corpse of {monster['name']} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
 
-    monster["name"] = monster_module.name_generator() + " the " + monster["class"]
+    monster["name"] = monster_manager.name_generator() + " the " + monster["class"]
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
-    monster_module.monster_catchphrase_generator(monster)
+    monster_manager.monster_catchphrase_generator(monster)
     input_manager.show_controls()
     round = -1
 
@@ -87,4 +87,4 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
 def _state_change_event_handler(event_name, data):
     if(data["new_state"] == game_manager.STATE_BATTLE):
         battle_data = data["event_data"]
-        _start_battle(player_manager.get_player_data(), battle_data, attack, defend, input_manager.parse_input, monster_module.enemy_npc_choice)
+        _start_battle(player_manager.get_player_data(), battle_data, attack, defend, input_manager.parse_input, monster_manager.enemy_npc_choice)
