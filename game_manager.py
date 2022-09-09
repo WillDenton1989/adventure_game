@@ -18,7 +18,7 @@ def initialize():
     _initialize_managers()
     _register_listeners()
 
-    player_manager.create_player(player_manager.get_player_data()) # and then change game state to STATE_MOVEMENT after player is created
+    player_manager.create_player()
     _transition_to_movement()
 
 def game_state():
@@ -35,6 +35,11 @@ def _initialize_managers():
     input_manager.initialize()
     level_manager.initialize()
 
+def _register_listeners():
+    event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
+    event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
+    event_manager.listen(event_manager.QUIT_EVENT, _quit_event_handler)
+
 def _set_state(new_state, event_data = []):
     global _game_state
 
@@ -47,9 +52,10 @@ def _dispatch_state_change(previous_state, new_state, event_data):
 
     event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
 
-def _register_listeners():
-    event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
-    event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
+def _quit():
+    player = player_manager.get_player_data()
+    print(f"Farewell {player['name']}")
+    exit()
 
 # event handlers
 
@@ -58,3 +64,6 @@ def _battle_started_handler(event, data):
 
 def _battle_ended_handler(event, data):
     _set_state(STATE_MOVEMENT, data)
+
+def _quit_event_handler(event_name, data):
+    _quit()

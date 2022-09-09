@@ -2,7 +2,7 @@
 import yaml
 import level_manager
 import player_manager
-import level_1_characters
+import event_manager
 
 # public methods
 
@@ -17,19 +17,6 @@ def build_the_level(level_name, symbol_dict):
     return usable_map
 
 # private methods
-
-def _set_player(data):
-    player_stats = _load_player_data()
-
-    player_manager.update_player_data(data['location'])
-    player_manager.update_player_data(player_stats)
-    level_manager.add_player(player_manager.get_player_data())
-
-def _load_player_data():
-    with open("data/player_data.yaml") as f: # hardcoded file no bueno
-        data = yaml.safe_load(f)
-
-    return data["player"]
 
 def _add_npc(data):
     npc_data = _load_npcs(data["key"])
@@ -98,13 +85,17 @@ def _parse_string_map(map, dictionary):
         map_list.append(list)
     return map_list
 
+def _add_player(object):
+    data = { "location": object["location"] }
+    event_manager.trigger_event(event_manager.UPDATE_PLAYER_LOCATION_EVENT, data)
+
 def _load_objects(filename):
     with open(filename) as f:
         data = yaml.safe_load(f)
 
         for object in data["objects"]:
             if(object["object_name"] == "player_start"):
-                _set_player(object)
+                _add_player(object)
             elif(object["object_name"] == "monster"):
                 _add_monster(object)
             elif(object["object_name"] == "treasure"):
@@ -114,6 +105,6 @@ def _load_objects(filename):
             elif(object["object_name"] == "npc"):
                 _add_npc(object)
             else:
-                pass # look at throwing exceptions!!!
+                raise Exception("error in load objects!")
 
     return data

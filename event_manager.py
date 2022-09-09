@@ -7,6 +7,8 @@ STATE_CHANGE_EVENT = "state_change" # maybe?
 END_BATTLE_EVENT = "end_battle"
 MOVEMENT_EVENT = "movement_event"
 QUIT_EVENT = "quit_event"
+ADD_PLAYER_TO_LEVEL_EVENT = "add_player_event"
+UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 
 _event_listeners = []
 

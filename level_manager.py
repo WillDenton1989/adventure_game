@@ -1,36 +1,24 @@
-#where the map lives.
-import time
+# where the map lives.
 import player_manager
-import monster_module
 import battle_manager
 import input_manager
-import loot_module
 import yaml
 import data
-import level_1_characters
 import event_manager
 import input_manager
 
 _objects = []
 _events = []
 _current_level = None
-_player = None
 
 def initialize():
     event_manager.listen(event_manager.MOVEMENT_EVENT, _movement_event_handler)
-
-# event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
 
 def add_object(object, _events=[]):
     _objects.append(object)
 
     for event_name in _events:
         _add_event(event_name, object)
-
-def add_player(player):
-    global _player
-    add_object(player)
-    _player = player
 
 def set_current_level(level):
     global _current_level
@@ -49,13 +37,15 @@ def load_player_data(yaml_file):
 
 def draw_map():
     global _objects
+    objects_to_draw = [player_manager.get_player_data()]
+    objects_to_draw.extend(_objects)
 
     col_index = 0
     row_index = 0
 
     for row in _current_level:
         for column in row:
-            object = _object_at_coordinate(_objects, col_index, row_index)
+            object = _object_at_coordinate(objects_to_draw, col_index, row_index)
             if(object == None):
                 print(chr(column), end = "")
             else:
@@ -65,7 +55,18 @@ def draw_map():
         row_index += 1
         col_index = 0
 
-def determine_new_coordinates(direction, column, row):
+# private methods
+
+def _add_event(event_name, data):
+    location = { "row": data["row"], "column": data["column"] }
+    _events.append({ "event_name": event_name, "data": data, "location": location })
+
+def _trigger_level_events(column, row):
+    for event in _events:
+        if(event["location"]["column"] == column and event["location"]["row"] == row):
+            event_manager.trigger_event(event["event_name"], event["data"])
+
+def _determine_new_coordinates(direction, column, row):
     if(direction == "right"):
         return column + 1, row
     elif(direction == "left"):
@@ -77,37 +78,23 @@ def determine_new_coordinates(direction, column, row):
     else:
         pass
 
-def execute_player_move(player, new_column, new_row):
-    player["column"] = new_column
-    player["row"] = new_row
-
-    _trigger__events(new_column, new_row)
-
-def can_player_move_to_coordinate(column, row):
+def _can_player_move_to_coordinate(column, row):
     if(_is_coordinate_on_map(_current_level, column, row) == False): return False
     if(_is_coordinate_passable(_current_level, column, row) == False): return False
 
     return True
 
-# private methods
+def _move(direction):
+    _player = player_manager.get_player_data()
+    new_column, new_row = _determine_new_coordinates(direction, _player["column"], _player["row"])
 
-def _player_move(direction):
-    global _player
-    new_column, new_row = determine_new_coordinates(direction, _player["column"], _player["row"])
-
-    if(can_player_move_to_coordinate(new_column, new_row) == True):
-        execute_player_move(_player, new_column, new_row)
+    if(_can_player_move_to_coordinate(new_column, new_row) == True):
+        data = { "location": { "column": new_column, "row": new_row } }
+        event_manager.trigger_event(event_manager.UPDATE_PLAYER_LOCATION_EVENT, data)
+        _trigger_level_events(new_column, new_row)
     else:
         print("You can't move there, hoe")
-
-def _add_event(event_name, data):
-    location = { "row": data["row"], "column": data["column"] }
-    _events.append({ "event_name": event_name, "data": data, "location": location })
-
-def _trigger__events(column, row):
-    for event in _events:
-        if(event["location"]["column"] == column and event["location"]["row"] == row):
-            event_manager.trigger_event(event["event_name"], event["data"])
+    pass
 
 def _is_coordinate_on_map(map, column, row):
     num_rows = len(map)
@@ -139,4 +126,4 @@ def _object_at_coordinate(_objects, column, row):
 # event handlers
 
 def _movement_event_handler(event_name, data):
-    _player_move(data["direction"])
+    _move(data["direction"])
