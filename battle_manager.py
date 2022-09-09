@@ -40,7 +40,7 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     monster_module.monster_catchphrase_generator(monster)
-    input_manager.show_controls()#input_manager.show_battle_controls()
+    input_manager.show_controls()
     round = -1
 
     while(is_someone_dead(player) == False and is_someone_dead(monster) == False):
@@ -70,13 +70,6 @@ def _start_battle(player, monster, attack, defend, parse_input, enemy_npc_choice
 
         if(monster["battle_decision"] == "attack"):
             player["hit_points"] = attack(monster["attack_power"], player["hit_points"], player["defense"])
-
-        # 5) open inventory
-        # inventory code will go here.
-
-        # 6) quit out
-        if(player["battle_decision"] == "quit"):
-            quit()
 
         print(f"\n{player['name']} chooses to {player['battle_decision']}, {monster['name']} chooses to {monster['battle_decision']}")
 

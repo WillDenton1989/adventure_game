@@ -91,7 +91,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
 
 def _parse_battle_input(input): #changed from parse_battle_input
     if(input == "quit" or input == "q"):
-        return "quit"
+        event_manager.trigger_event(event_manager.QUIT_EVENT, {})
     elif(input == "attack" or input == "a"):
         return "attack"
     elif(input == "defend" or input == "d"):
