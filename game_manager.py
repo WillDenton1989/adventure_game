@@ -39,6 +39,7 @@ def _register_listeners():
     event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
     event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
     event_manager.listen(event_manager.QUIT_EVENT, _quit_event_handler)
+    event_manager.listen(event_manager.GAME_FINISH_EVENT, _game_finish_event_handler)
 
 def _set_state(new_state, event_data = []):
     global _game_state
@@ -57,6 +58,14 @@ def _quit():
     print(f"Farewell {player['name']}")
     exit()
 
+def _game_over():
+    player_data = player_manager.get_player_data()
+    print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
+    print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
+    # should put the game over screen here when i make that.
+    # also what should be here is the portal, either the trigger will be here or ill make another trigger for it. 
+    exit()
+
 # event handlers
 
 def _battle_started_handler(event, data):
@@ -67,3 +76,6 @@ def _battle_ended_handler(event, data):
 
 def _quit_event_handler(event_name, data):
     _quit()
+
+def _game_finish_event_handler(event_name, data):
+    _game_over()

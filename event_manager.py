@@ -10,6 +10,7 @@ QUIT_EVENT = "quit_event"
 ADD_PLAYER_TO_LEVEL_EVENT = "add_player_event"
 UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 BATTLE_COMMAND_EVENT = "battle_command_event"
+GAME_FINISH_EVENT = "game_finish_event"
 
 _event_listeners = []
 

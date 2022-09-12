@@ -13,6 +13,7 @@ def game_board(player):
         level_manager.draw_map()
 
         # ghetto hud for now.
+        # print(level_manager._events)
         print(f"{player['name']} hit points: {player['hit_points']}")
         print(f"Moves taken: {moves}")
         print(game_manager._game_state)
@@ -27,17 +28,11 @@ def game_board(player):
 def game_intro_message():
     print("\nWelcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 
-def game_over_message():
-    player_data = player_manager.get_player_data()
-    print(f"\n\n{player_data['name']} has finished their Adventure! So far...")
-
 # the cool running
 
 game_intro_message()
 
 game_manager.initialize()
 game_board(player_manager.get_player_data())
-
-game_over_message()
 
 # is this the end?

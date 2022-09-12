@@ -40,7 +40,7 @@ def _add_finish_line(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
 
-    level_manager.add_object(npc_data)
+    level_manager.add_object(npc_data, data["events"])
 
 def _load_npcs(key):
     with open("data/npc_data.yaml") as f: # hardcoded filename no bueno

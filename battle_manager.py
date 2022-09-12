@@ -102,7 +102,7 @@ def _attack(attack_power, hit_points, defense):
     attack_value =  max(0, attack_roll - defense)
     return hit_points - attack_value
 
-def _player_death(player, monster):
+def _monster_death(player, monster): # was _player_death
     if(is_someone_dead(monster) == True):
         print(f"\n\n{monster['name']} has been slain")
         monster['symbol'] = 120
@@ -110,7 +110,7 @@ def _player_death(player, monster):
         return True
     return False
 
-def _monster_death(player, monster):
+def _player_death(player, monster): # was monster death. i assume it was accidently backwards
     if(is_someone_dead(player) == True):
         print(f"\n\n{player['name']} has been slain by {monster['name']}")
         return True

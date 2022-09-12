@@ -44,4 +44,4 @@ objects:
       column: 10
       row: 10
     events:
-      - game_finish
+      - game_finish_event

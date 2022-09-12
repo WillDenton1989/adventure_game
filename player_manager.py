@@ -13,7 +13,8 @@ _player = {
 
 def initialize():
     event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, _update_player_location_event_handler)
-    # add event handler to catch the level is loaded. That event should contain the player's location. You can set the location then, and add the player to the level manager's objects.
+    # add event handler to catch the level is loaded. That event should contain the player's location.
+    # You can set the location then, and add the player to the level manager's objects.
     _set_player()
 
 def get_player_data():
