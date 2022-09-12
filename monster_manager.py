@@ -8,15 +8,6 @@ def enemy_npc_choice():
     else:
         return "defend"
 
-# def npc_battle_choice():
-#     x = randint(1, 100)
-#     if(x <= 50):
-#         return "normal_attack"
-#     elif(x > 50 and x <= 70):
-#         return "special_attack"
-#     else:
-#         return "guard"
-
 def name_generator():
     x = randint(0, 15)
     names = [

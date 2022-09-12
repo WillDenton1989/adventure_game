@@ -1,7 +1,7 @@
 #where the loot lives
 import player_manager
 
-loot_chest = {}
+#loot_chest = {}
 
 player_inventory = {
     "space_1": None,

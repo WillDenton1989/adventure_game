@@ -101,7 +101,7 @@ def _parse_battle_input(input):
         event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
     elif(input == "inventory" or input == "i"):
         # data["command"] = "inventory"
-        # event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
+        # event_manager.trigger_event(event_manager.OPEN_INVENTORY_EVENT, data)
         pass
     else:
         show_controls()
