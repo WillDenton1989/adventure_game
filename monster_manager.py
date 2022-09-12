@@ -8,14 +8,14 @@ def enemy_npc_choice():
     else:
         return "defend"
 
-def npc_battle_choice():
-    x = randint(1, 100)
-    if(x <= 50):
-        return "normal_attack"
-    elif(x > 50 and x <= 70):
-        return "special_attack"
-    else:
-        return "guard"
+# def npc_battle_choice():
+#     x = randint(1, 100)
+#     if(x <= 50):
+#         return "normal_attack"
+#     elif(x > 50 and x <= 70):
+#         return "special_attack"
+#     else:
+#         return "guard"
 
 def name_generator():
     x = randint(0, 15)
@@ -110,16 +110,12 @@ def monster_generator():
 
 def monster_catchphrase_generator(monster):
     print("\nAs your foe engages you in glorious combat they cry out...")
-    if(monster["name"] == "Ugluk the Orc"):
-        print("Looks like meat's back on the menu boys!")
-    elif(monster["name"] == "Lurtz the Uruk"):
-        print("Have you seen a pair of Hobbits nearby?")
-    elif(monster["name"] == "Bob the cave Troll"):
-        print("Ugh. its a cave Troll")
-    elif(monster["name"] == "Gilbert the Goblin"):
-        print("Reeeeeeee!")
-    elif(monster["name"] == "Fred the Bandit"):
-        print("You're not a dad by any chance?")
+    if(monster["name"] == "Mike the goblin"):
+        print("I'm a goblin? Why not something cool like an Elf?")
+    elif(monster["name"] == "Gary the goblin"):
+        print("It's Gary UwU XD")
+    elif(monster["name"] == "Scott the goblin"):
+        print("Is that 'THE' father linux?")
     else:
         print("We battle to the death!!")
 

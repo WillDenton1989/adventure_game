@@ -34,7 +34,7 @@ def _initialize_battle(player, monster):
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     monster_manager.monster_catchphrase_generator(monster)
-    input_manager.show_controls()
+    # input_manager.show_controls()
 
     _run_battle()
 
@@ -51,7 +51,7 @@ def _run_battle():
     _round += 1
     player, monster = _battle["player"], _battle["monster"]
 
-    print(f"\n\nRound {_round}: {monster['name']} - {monster['hit_points']}, {player['name']} - {player['hit_points']}")
+    print(f"\n\nRound {_round}: {player['name']} - {player['hit_points']}, {monster['name']} - {monster['hit_points']}")
     print(f"\n{player['name']}: defense: {player['defense']} attack: {player['attack_power']}, {monster['name']}: defense: {monster['defense']} attack: {monster['attack_power']}")
     input_manager.parse_input()
 
