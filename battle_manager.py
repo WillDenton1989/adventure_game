@@ -2,7 +2,7 @@
 #eventually revamp combat system including defend and eventually add weapons and armor.
 from random import randint
 import player_manager
-import monster_manager
+import npc_manager
 import input_manager
 import event_manager
 import game_manager
@@ -26,14 +26,13 @@ def is_someone_dead(character):
 
 def _initialize_battle(player, monster):
     if(_check_for_loot(monster) == True): return
-
     _round = 0
     _battle["player"] = player
     _battle["monster"] = monster
-    monster["name"] = monster_manager.name_generator() + " the " + monster["class"]
+    monster["name"] = npc_manager.name_generator(monster["class"]) + " the " + monster["class"]
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
-    monster_manager.monster_catchphrase_generator(monster)
+    npc_manager.monster_catchphrase_generator(monster)
     # input_manager.show_controls()
 
     _run_battle()
@@ -60,7 +59,7 @@ def _handle_player_decision(decision):
     global _monster_decision
 
     _player_decision = decision
-    _monster_decision = monster_manager.enemy_npc_choice()
+    _monster_decision = npc_manager.enemy_npc_choice()
     _execute_battle_round()
 
 def _execute_battle_round():
@@ -102,7 +101,7 @@ def _attack(attack_power, hit_points, defense):
     attack_value =  max(0, attack_roll - defense)
     return hit_points - attack_value
 
-def _monster_death(player, monster): # was _player_death
+def _monster_death(player, monster):
     if(is_someone_dead(monster) == True):
         print(f"\n\n{monster['name']} has been slain")
         monster['symbol'] = 120
@@ -110,7 +109,7 @@ def _monster_death(player, monster): # was _player_death
         return True
     return False
 
-def _player_death(player, monster): # was monster death. i assume it was accidently backwards
+def _player_death(player, monster): # was monster death. i assume these were accidently backwards
     if(is_someone_dead(player) == True):
         print(f"\n\n{player['name']} has been slain by {monster['name']}")
         return True

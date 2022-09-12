@@ -19,7 +19,7 @@ bandit:
 dwarf:
   class: dwarf
   hit_points: 15
-  attack_power: 5
+  attack_power: 6
   defense: 0
   defense_scalar: 1
   speed: 3

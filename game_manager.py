@@ -4,10 +4,12 @@ import event_manager
 import input_manager
 import level_parser
 import level_manager
+import conversation_manager
 
 STATE_CHARACTER_CREATION = "state_character_creation"
 STATE_MOVEMENT = "state_movement"
 STATE_BATTLE = "state_battle"
+STATE_CONVERSATION = "state_conversation"
 
 _game_state = None
 
@@ -34,10 +36,15 @@ def _initialize_managers():
     player_manager.initialize()
     input_manager.initialize()
     level_manager.initialize()
+    conversation_manager.initialize()
 
 def _register_listeners():
     event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
     event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
+
+    event_manager.listen(event_manager.CONVERSATION_EVENT, _conversation_started_handler)
+    event_manager.listen(event_manager.END_CONVERSATION_EVENT, _conversation_started_handler)
+
     event_manager.listen(event_manager.QUIT_EVENT, _quit_event_handler)
     event_manager.listen(event_manager.GAME_FINISH_EVENT, _game_finish_event_handler)
 
@@ -63,7 +70,7 @@ def _game_over():
     print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
     print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
     # should put the game over screen here when i make that.
-    # also what should be here is the portal, either the trigger will be here or ill make another trigger for it. 
+    # also what should be here is the portal, either the trigger will be here or ill make another trigger for it.
     exit()
 
 # event handlers
@@ -72,6 +79,12 @@ def _battle_started_handler(event, data):
     _set_state(STATE_BATTLE, data)
 
 def _battle_ended_handler(event, data):
+    _set_state(STATE_MOVEMENT, data)
+
+def _conversation_started_handler(event, data):
+    _set_state(STATE_CONVERSATION, data)
+
+def _converstion_ended_handler(event, data):
     _set_state(STATE_MOVEMENT, data)
 
 def _quit_event_handler(event_name, data):

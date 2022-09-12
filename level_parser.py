@@ -22,7 +22,7 @@ def _add_npc(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
     # dis is where we work bby
-    level_manager.add_object(npc_data)
+    level_manager.add_object(npc_data, data["events"])
 
 def _add_monster(data):
     npc_data = _load_npcs(data["key"])

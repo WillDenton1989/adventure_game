@@ -13,8 +13,10 @@ def show_controls():
         _show_movement_controls()
     elif(_game_state() == game_manager.STATE_BATTLE):
         _show_battle_controls()
+    elif(_game_state() == game_manager.STATE_CONVERSATION):
+        _show_conversation_controls()
     else:
-        pass
+        raise Exception("error in show_controls")
 
 def parse_input():
     show_controls()
@@ -26,8 +28,10 @@ def parse_input():
         return _parse_player_movement(player_input)
     elif(_game_state() == game_manager.STATE_BATTLE):
         return _parse_battle_input(player_input)
+    elif(_game_state() == game_manager.STATE_CONVERSATION):
+        return _parse_conversation_input(player_input)
     else:
-        pass
+        raise Exception("error in parse input")
 
 # private methods
 def _show_player_creation_controls():
@@ -49,13 +53,13 @@ def _prompt():
         return "? "
     elif(_game_state() == game_manager.STATE_BATTLE):
         return f"\nI await your command {player['name']}: "
+    elif(_game_state() == game_manager.STATE_CONVERSATION):
+        return "What is your response? "
     else:
         raise Exception("THIS IS BROKEN AND SHOULD NEVER HAPPEN, RAISE AN EXCEPTION HERE!!")
 
 def _game_state():
     return game_manager.game_state()
-
-# private methods
 
 def _show_movement_controls():
     print(f"""Use the 'k' and 'j' keys to move up and down;
@@ -105,6 +109,22 @@ def _parse_battle_input(input):
         pass
     else:
         show_controls()
+
+def _show_conversation_controls():
+    print("Use the numbers 1 - 3 to reply")
+
+def _parse_conversation_input(input):
+    data = {}
+    if(input == "quit" or input == "q"):
+        event_manager.trigger_event(event_manager.QUIT_EVENT, data)
+    elif(input == "1"):
+        pass
+    elif(input == "2"):
+        pass
+    elif(input == "3"):
+        event_manager.trigger_event(event_manager.END_CONVERSATION_EVENT, data)
+    else:
+        pass
 
 def _parse_inventory_input(input):
     if(input == "1"):

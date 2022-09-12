@@ -1,4 +1,4 @@
-#where the monsters are
+#where the npcs are
 from random import randint
 
 def enemy_npc_choice():
@@ -8,7 +8,8 @@ def enemy_npc_choice():
     else:
         return "defend"
 
-def name_generator():
+def name_generator(type):
+    y = 0# randint(0, 3)
     x = randint(0, 15)
     names = [
     "Bob",
@@ -29,7 +30,19 @@ def name_generator():
     "Theo"
     ]
 
-    return names[x]
+    dwarf_names = [
+        "Dain",
+        "Gimli",
+        "Kirk",
+        "Scotty"
+    ]
+
+    if(type == "goblin"):
+        return names[x]
+    elif(type == "dwarf"):
+        return dwarf_names[y]
+    else:
+        return names[x]
 
 def monster_generator():
     x = randint(1, 6)
