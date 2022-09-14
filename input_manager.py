@@ -3,6 +3,7 @@ import event_manager
 import player_manager
 
 # public methods
+
 def initialize():
     pass
 
@@ -15,6 +16,8 @@ def show_controls():
         _show_battle_controls()
     elif(_game_state() == game_manager.STATE_CONVERSATION):
         _show_conversation_controls()
+    elif(_game_state() == game_manager.STATE_INVENTORY):
+        _show_inventory_controls()
     else:
         raise Exception("error in show_controls")
 
@@ -30,10 +33,13 @@ def parse_input():
         return _parse_battle_input(player_input)
     elif(_game_state() == game_manager.STATE_CONVERSATION):
         return _parse_conversation_input(player_input)
+    elif(_game_state() == game_manager.STATE_INVENTORY):
+        return _parse_inventory_input(player_input)
     else:
         raise Exception("error in parse input")
 
 # private methods
+
 def _show_player_creation_controls():
     print("Type in your name and your adventure shall begin!\n")
 
@@ -55,8 +61,10 @@ def _prompt():
         return f"\nI await your command {player['name']}: "
     elif(_game_state() == game_manager.STATE_CONVERSATION):
         return "What is your response? "
+    elif(_game_state() == game_manager.STATE_INVENTORY):
+        return "Inventory prompt here, dude. "
     else:
-        raise Exception("THIS IS BROKEN AND SHOULD NEVER HAPPEN, RAISE AN EXCEPTION HERE!!")
+        raise Exception("There is an issue in _promt in input manager")
 
 def _game_state():
     return game_manager.game_state()
@@ -64,6 +72,7 @@ def _game_state():
 def _show_movement_controls():
     print(f"""Use the 'k' and 'j' keys to move up and down;
 Use the 'h' and 'l' keys to move left and right.
+Type 'inventory' or 'i' to open the inventory screen.
 Type 'quit' or 'q' to quit out of the game.""")
 
 def _parse_player_movement(input):
@@ -81,8 +90,8 @@ def _parse_player_movement(input):
     elif(input == "l"):
         data["direction"] = "right"
         event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
-    elif(input == "i"):
-        pass
+    elif(input == "inventory" or input == "i"):
+        event_manager.trigger_event(event_manager.OPEN_INVENTORY_EVENT, data)
     elif(input == "quit" or input == "q"):
         event_manager.trigger_event(event_manager.QUIT_EVENT, data)
     else:
@@ -104,7 +113,6 @@ def _parse_battle_input(input):
         data["command"] = "defend"
         event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
     elif(input == "inventory" or input == "i"):
-        # data["command"] = "inventory"
         # event_manager.trigger_event(event_manager.OPEN_INVENTORY_EVENT, data)
         pass
     else:
@@ -126,18 +134,20 @@ def _parse_conversation_input(input):
     else:
         pass
 
+def _show_inventory_controls():
+    print("Select the item you wish to use. press 'i' to close your inventory.")
+
 def _parse_inventory_input(input):
+    data = {}
     if(input == "1"):
         pass
     elif(input == "2"):
         pass
     elif(input == "3"):
         pass
-    elif(input == "4"):
-        pass
-    elif(input == "5"):
-        pass
+    elif(input == "i"):
+        event_manager.trigger_event(event_manager.CLOSE_INVENTORY_EVENT, data)
     else:
-        pass
+        parse_input()
 
 # event handlers

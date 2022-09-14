@@ -5,11 +5,14 @@ import input_manager
 import level_parser
 import level_manager
 import conversation_manager
+import inventory_manager
+import item_manager
 
 STATE_CHARACTER_CREATION = "state_character_creation"
 STATE_MOVEMENT = "state_movement"
 STATE_BATTLE = "state_battle"
 STATE_CONVERSATION = "state_conversation"
+STATE_INVENTORY = "state_inventory"
 
 _game_state = None
 
@@ -27,6 +30,8 @@ def game_state():
     global _game_state
     return _game_state
 
+# private methods
+
 def _transition_to_movement():
     _set_state(STATE_MOVEMENT)
     dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
@@ -37,13 +42,18 @@ def _initialize_managers():
     input_manager.initialize()
     level_manager.initialize()
     conversation_manager.initialize()
+    inventory_manager.initialize()
+    item_manager.initialize()
 
 def _register_listeners():
     event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
     event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
 
     event_manager.listen(event_manager.CONVERSATION_EVENT, _conversation_started_handler)
-    event_manager.listen(event_manager.END_CONVERSATION_EVENT, _conversation_started_handler)
+    event_manager.listen(event_manager.END_CONVERSATION_EVENT, _conversation_ended_handler)
+
+    event_manager.listen(event_manager.OPEN_INVENTORY_EVENT, _inventory_opened_handler)
+    event_manager.listen(event_manager.CLOSE_INVENTORY_EVENT, _inventory_closed_handler)
 
     event_manager.listen(event_manager.QUIT_EVENT, _quit_event_handler)
     event_manager.listen(event_manager.GAME_FINISH_EVENT, _game_finish_event_handler)
@@ -81,10 +91,16 @@ def _battle_started_handler(event, data):
 def _battle_ended_handler(event, data):
     _set_state(STATE_MOVEMENT, data)
 
+def _inventory_opened_handler(event, data):
+    _set_state(STATE_INVENTORY, data)
+
+def _inventory_closed_handler(event, data):
+    _set_state(STATE_MOVEMENT, data)
+
 def _conversation_started_handler(event, data):
     _set_state(STATE_CONVERSATION, data)
 
-def _converstion_ended_handler(event, data):
+def _conversation_ended_handler(event, data):
     _set_state(STATE_MOVEMENT, data)
 
 def _quit_event_handler(event_name, data):

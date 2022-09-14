@@ -8,7 +8,7 @@ def enemy_npc_choice():
     else:
         return "defend"
 
-def name_generator(type):
+def name_generator(character_class):
     y = 0# randint(0, 3)
     x = randint(0, 15)
     names = [
@@ -37,9 +37,9 @@ def name_generator(type):
         "Scotty"
     ]
 
-    if(type == "goblin"):
+    if(character_class == "goblin"):
         return names[x]
-    elif(type == "dwarf"):
+    elif(character_class == "dwarf"):
         return dwarf_names[y]
     else:
         return names[x]

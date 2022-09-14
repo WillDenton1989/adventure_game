@@ -1,3 +1,7 @@
 # dis is the items yaml. eventually rename this.
-items:
-  health_potion
+---
+player_inventory:
+  space_1: health_potion
+  space_2: null
+  space_3: null
+...

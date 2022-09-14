@@ -12,6 +12,8 @@ _monster_decision = None
 _battle = {}
 _round = 0
 
+# public methods
+
 def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
     event_manager.listen(event_manager.BATTLE_COMMAND_EVENT, _battle_command_event_handler)
@@ -29,7 +31,7 @@ def _initialize_battle(player, monster):
     _round = 0
     _battle["player"] = player
     _battle["monster"] = monster
-    monster["name"] = npc_manager.name_generator(monster["class"]) + " the " + monster["class"]
+    monster["name"] = npc_manager.name_generator(monster["character_class"]) + " the " + monster["character_class"]
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     npc_manager.monster_catchphrase_generator(monster)

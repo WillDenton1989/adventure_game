@@ -1,7 +1,7 @@
 #where the npc data shall live.
 ---
 goblin:
-  class: goblin
+  character_class: goblin
   hit_points: 5
   attack_power: 4
   defense: 0
@@ -9,7 +9,7 @@ goblin:
   speed: 6
   symbol: 9785
 bandit:
-  class: bandit
+  character_class: bandit
   hit_points: 10
   attack_power: 5
   defense: 1
@@ -17,7 +17,7 @@ bandit:
   speed: 5
   symbol: 9792
 dwarf:
-  class: dwarf
+  character_class: dwarf
   hit_points: 15
   attack_power: 6
   defense: 0
