@@ -1,4 +1,4 @@
-#where the inventory lives
+#where the inventory lives.
 import player_manager
 
 # loot_chest = {}
