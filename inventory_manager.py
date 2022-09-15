@@ -12,12 +12,9 @@ _player_inventory = []
 def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
     event_manager.listen(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, _add_item_to_inventory_event_handler)
-    event_manager.listen(event_manager.INVENTORY_COMMAND_EVENT, _inventory_command_event_handler)
+    event_manager.listen(event_manager.USE_ITEM_IN_INVENTORY_EVENT, _inventory_command_event_handler)
 
 # private methods
-
-def _initialize_inventory(player, inventory):
-    pass
 
 def _display_inventory():
     global _player_inventory
@@ -49,9 +46,24 @@ def _inventory_continue():
 def _game_state():
     return game_manager.game_state()
 
-def _handle_inventory_command(data):
+def _use_item(inventory_position):
     print("here is where something would happen with the item you chose")
-    pass
+
+    if(_so_you_tried_to_use_an_item_thats_not_there(inventory_position) == True):
+        _remove_item(inventory_position)
+
+def _remove_item(inventory_position):
+    global _player_inventory
+
+    _player_inventory.pop(inventory_position)
+
+def _so_you_tried_to_use_an_item_thats_not_there(inventory_position):
+    global _player_inventory
+    if(inventory_position > len(_player_inventory) - 1):
+        print("idk how to use that")
+        return False
+    else:
+        return True
 
 # event handlers
 
@@ -63,4 +75,4 @@ def _add_item_to_inventory_event_handler(event_name, data):
     _add_item_to_inventory(data["item"])
 
 def _inventory_command_event_handler(event_name, data):
-    _handle_inventory_command(data["choice"])
+    _use_item(data["choice"])

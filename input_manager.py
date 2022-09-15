@@ -141,9 +141,9 @@ def _parse_inventory_input(input):
     data = {}
     if(input == "quit" or input == "q"):
         event_manager.trigger_event(event_manager.QUIT_EVENT, data)
-    elif(input == "1"):
-        data["choice"] = input
-        event_manager.trigger_event(event_manager.INVENTORY_COMMAND_EVENT, data)
+    elif(input.isdigit() == True):
+        data["choice"] = int(input) - 1
+        event_manager.trigger_event(event_manager.USE_ITEM_IN_INVENTORY_EVENT, data)
     elif(input == "i"):
         event_manager.trigger_event(event_manager.CLOSE_INVENTORY_EVENT, data)
     else:

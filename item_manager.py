@@ -10,7 +10,6 @@ _items = {}
 
 def initialize():
     _load_items("data/items.yaml")
-    event_manager.listen(event_manager.USE_ITEM_EVENT, _use_item_event_handler)
 
 def item_from_key(key):
     global _items
