@@ -62,7 +62,7 @@ def _prompt():
     elif(_game_state() == game_manager.STATE_CONVERSATION):
         return "What is your response? "
     elif(_game_state() == game_manager.STATE_INVENTORY):
-        return "Inventory prompt here, dude. "
+        return "Select the item you wish to use, dude. "
     else:
         raise Exception("there is no prompt for your current game state.")
 
@@ -135,16 +135,15 @@ def _parse_conversation_input(input):
         pass
 
 def _show_inventory_controls():
-    print("Select the item you wish to use. press 'i' to close your inventory.")
+    print("Press 'i' to close your inventory.")
 
 def _parse_inventory_input(input):
     data = {}
-    if(input == "1"):
-        pass
-    elif(input == "2"):
-        pass
-    elif(input == "3"):
-        pass
+    if(input == "quit" or input == "q"):
+        event_manager.trigger_event(event_manager.QUIT_EVENT, data)
+    elif(input == "1"):
+        data["choice"] = input
+        event_manager.trigger_event(event_manager.INVENTORY_COMMAND_EVENT, data)
     elif(input == "i"):
         event_manager.trigger_event(event_manager.CLOSE_INVENTORY_EVENT, data)
     else:

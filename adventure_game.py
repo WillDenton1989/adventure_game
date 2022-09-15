@@ -9,6 +9,8 @@ def game_board(player):
     moves = 0
 
     # need to fix this sometime soon. tis leaky
+    # we really really really really really need to fix this loop now.
+    # i know i gave a little push back but now it bothers me. 
     while(battle_manager.is_someone_dead(player) == False):
         print("------------------------------------------------------------------------")
         level_manager.draw_map()

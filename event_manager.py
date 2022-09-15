@@ -9,11 +9,14 @@ BATTLE_COMMAND_EVENT = "battle_command_event"
 END_BATTLE_EVENT = "end_battle_event"
 
 MOVEMENT_EVENT = "movement_event"
-OPEN_INVENTORY_EVENT = "open_inventory event"
-CLOSE_INVENTORY_EVENT = "close_inventory_event"
 UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 
+OPEN_INVENTORY_EVENT = "open_inventory event"
+CLOSE_INVENTORY_EVENT = "close_inventory_event"
+INVENTORY_COMMAND_EVENT = "inventory_command_event"
 ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
+REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
+USE_ITEM_EVENT = "use_item_event"
 
 CONVERSATION_EVENT = "conversation_event"
 CONVERSATION_INPUT_EVENT = "conversation_input_event"
