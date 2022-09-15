@@ -18,6 +18,30 @@ def build_the_level(level_name, symbol_dict):
 
 # private methods
 
+def _load_objects(filename):
+    with open(filename) as f:
+        data = yaml.safe_load(f)
+
+        for object in data["objects"]:
+            if(object["object_name"] == "player_start"):
+                _add_player(object)
+            elif(object["object_name"] == "monster"):
+                _add_monster(object)
+            elif(object["object_name"] == "treasure"):
+                _add_treasure(object)
+            elif(object["object_name"] == "finish_line"):
+                _add_finish_line(object)
+            elif(object["object_name"] == "npc"):
+                _add_npc(object)
+            else:
+                raise Exception("error in load objects!")
+        
+    return data
+
+def _add_player(object):
+    data = { "location": object["location"] }
+    event_manager.trigger_event(event_manager.UPDATE_PLAYER_LOCATION_EVENT, data)
+
 def _add_npc(data):
     npc_data = _load_npcs(data["key"])
     npc_data.update(data["location"])
@@ -47,6 +71,8 @@ def _load_npcs(key):
         data = yaml.safe_load(f)
 
     return data[key]
+
+# map stuffs
 
 def _check_map(string_map, map_key_dict):
     if(_is_it_square(string_map) == True):
@@ -84,27 +110,3 @@ def _parse_string_map(map, dictionary):
             list.append(new_value)
         map_list.append(list)
     return map_list
-
-def _add_player(object):
-    data = { "location": object["location"] }
-    event_manager.trigger_event(event_manager.UPDATE_PLAYER_LOCATION_EVENT, data)
-
-def _load_objects(filename):
-    with open(filename) as f:
-        data = yaml.safe_load(f)
-
-        for object in data["objects"]:
-            if(object["object_name"] == "player_start"):
-                _add_player(object)
-            elif(object["object_name"] == "monster"):
-                _add_monster(object)
-            elif(object["object_name"] == "treasure"):
-                _add_treasure(object)
-            elif(object["object_name"] == "finish_line"):
-                _add_finish_line(object)
-            elif(object["object_name"] == "npc"):
-                _add_npc(object)
-            else:
-                raise Exception("error in load objects!")
-
-    return data

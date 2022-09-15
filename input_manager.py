@@ -19,7 +19,7 @@ def show_controls():
     elif(_game_state() == game_manager.STATE_INVENTORY):
         _show_inventory_controls()
     else:
-        raise Exception("error in show_controls")
+        raise Exception("cannot show controls for your current game state.")
 
 def parse_input():
     show_controls()
@@ -36,7 +36,7 @@ def parse_input():
     elif(_game_state() == game_manager.STATE_INVENTORY):
         return _parse_inventory_input(player_input)
     else:
-        raise Exception("error in parse input")
+        raise Exception("cannot parse input for your current game state.")
 
 # private methods
 
@@ -64,7 +64,7 @@ def _prompt():
     elif(_game_state() == game_manager.STATE_INVENTORY):
         return "Inventory prompt here, dude. "
     else:
-        raise Exception("There is an issue in _promt in input manager")
+        raise Exception("there is no prompt for your current game state.")
 
 def _game_state():
     return game_manager.game_state()

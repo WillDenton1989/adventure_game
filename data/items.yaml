@@ -1,7 +1,25 @@
 # dis is the items yaml. eventually rename this.
 ---
-player_inventory:
-  space_1: health_potion
-  space_2: null
-  space_3: null
+red_potion:
+  display_name: Red Potion
+  item_class: potion
+  effects:
+    hp_restored: 5
+  weight: 1
+sword:
+  display_name: "Iron Sword"
+  item_class: weapon
+  effects:
+    attack_damage_increase: 3
+  weight: 5
+leather_armor:
+  display_name: "Leather Armor"
+  item_class: armor
+  effects:
+    defense_increase: 2
+  weight: 6
+rock:
+  display_name: "Small Rock"
+  item_class: junk
+  weight: 5
 ...

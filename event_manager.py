@@ -13,6 +13,8 @@ OPEN_INVENTORY_EVENT = "open_inventory event"
 CLOSE_INVENTORY_EVENT = "close_inventory_event"
 UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 
+ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
+
 CONVERSATION_EVENT = "conversation_event"
 CONVERSATION_INPUT_EVENT = "conversation_input_event"
 END_CONVERSATION_EVENT = "end_conversation_event"

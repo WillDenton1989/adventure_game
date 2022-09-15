@@ -37,13 +37,13 @@ def _transition_to_movement():
     dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
 
 def _initialize_managers():
-    battle_manager.initialize() # we need to do any other managers initializations here!! :)
+    battle_manager.initialize() # do any other managers initializations here!! :)
+    item_manager.initialize()
+    inventory_manager.initialize()
     player_manager.initialize()
     input_manager.initialize()
     level_manager.initialize()
     conversation_manager.initialize()
-    inventory_manager.initialize()
-    item_manager.initialize()
 
 def _register_listeners():
     event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)

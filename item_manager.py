@@ -2,25 +2,24 @@
 import yaml
 import player_manager
 
+#fix this next time youre on this no longer works. make the items append into here like the level manager? use of items should def be event.
+_items = {}
+
 # public methods
 
 def initialize():
-    _load_player_inventory("data/items.yaml")
+    _load_items("data/items.yaml")
+
+def item_from_key(key):
+    global _items
+    return _items[key]
 
 # private methods
-
-def _load_player_inventory(filename):
-    data = _load_items(filename)
-
-    player_manager.update_player_inventory(data["player_inventory"])
 
 def _load_items(filename):
     with open(filename) as f:
         items = yaml.safe_load(f)
 
-    return items
-
-def _use_item():
-    pass
+    _items.update(items)
 
 # event handlers

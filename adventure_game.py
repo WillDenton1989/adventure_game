@@ -8,10 +8,11 @@ import input_manager
 def game_board(player):
     moves = 0
 
+    # need to fix this sometime soon. tis leaky
     while(battle_manager.is_someone_dead(player) == False):
         print("------------------------------------------------------------------------")
         level_manager.draw_map()
-        
+
         # ghetto hud for now.
         # print(level_manager._events
         print(f"{player['name']} hit points: {player['hit_points']}")
