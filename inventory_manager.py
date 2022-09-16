@@ -49,7 +49,7 @@ def _game_state():
 def _use_item(inventory_position):
     print("here is where something would happen with the item you chose")
 
-    if(_so_you_tried_to_use_an_item_thats_not_there(inventory_position) == True):
+    if(_is_selected_item_in_inventory_range(inventory_position) == True):
         _remove_item(inventory_position)
 
 def _remove_item(inventory_position):
@@ -57,10 +57,10 @@ def _remove_item(inventory_position):
 
     _player_inventory.pop(inventory_position)
 
-def _so_you_tried_to_use_an_item_thats_not_there(inventory_position):
+def _is_selected_item_in_inventory_range(inventory_position):
     global _player_inventory
     if(inventory_position > len(_player_inventory) - 1):
-        print("idk how to use that")
+        print("Please select a valid item")
         return False
     else:
         return True
