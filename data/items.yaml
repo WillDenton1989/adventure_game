@@ -2,19 +2,19 @@
 ---
 red_potion:
   display_name: Red Potion
-  item_class: potion
+  item_class: consumable
   effects:
     hp_restored: 5
   weight: 1
-sword:
+iron_sword:
   display_name: "Iron Sword"
-  item_class: weapon
+  item_class: equipment
   effects:
     attack_damage_increase: 3
   weight: 5
 leather_armor:
   display_name: "Leather Armor"
-  item_class: armor
+  item_class: equipment
   effects:
     defense_increase: 2
   weight: 6

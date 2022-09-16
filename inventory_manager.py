@@ -47,10 +47,11 @@ def _game_state():
     return game_manager.game_state()
 
 def _use_item(inventory_position):
-    print("here is where something would happen with the item you chose")
-
     if(_is_selected_item_in_inventory_range(inventory_position) == True):
+        print("here is where something would happen with the item you chose")
         _remove_item(inventory_position)
+    else:
+        print("Please select a valid item")
 
 def _remove_item(inventory_position):
     global _player_inventory
@@ -60,10 +61,25 @@ def _remove_item(inventory_position):
 def _is_selected_item_in_inventory_range(inventory_position):
     global _player_inventory
     if(inventory_position > len(_player_inventory) - 1):
-        print("Please select a valid item")
         return False
     else:
         return True
+
+def is_item_consumable(item_choice_data):
+    global _player_inventory
+    # breakpoint()
+    if(_player_inventory[item_choice_data]["item_class"] == "consumable"):
+        return True
+    else:
+        return False
+
+def _is_item_equipment(item_choice_data):
+        global _player_inventory
+        # breakpoint()
+        if(_player_inventory[item_choice_data]["item_class"] == "equipment"):
+            return True
+        else:
+            return False
 
 # event handlers
 
@@ -75,4 +91,9 @@ def _add_item_to_inventory_event_handler(event_name, data):
     _add_item_to_inventory(data["item"])
 
 def _inventory_command_event_handler(event_name, data):
-    _use_item(data["choice"])
+    if(is_item_consumable(data["choice"]) == True):
+        _use_item(data["choice"])
+    elif(_is_item_equipment(data["choice"]) == True):
+        print("\nThis item is equipable not consumable")
+    else:
+        print("That item is not useable")
