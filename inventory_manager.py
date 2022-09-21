@@ -23,9 +23,12 @@ def _display_inventory():
     print("Here is your inventory:\n")
     element_number = 1
 
-    for item in _player_inventory:
-        print(f"{element_number}" + ") - " + f"{item['display_name']}")
-        element_number += 1
+    if(len(_player_inventory) == 0):
+        print("Your inventory is empty.")
+    else:
+        for item in _player_inventory:
+                print(f"{element_number}" + ") - " + f"{item['display_name']}")
+                element_number += 1
 
     print("\n------------------------------------------------------------------------\n")
 
@@ -65,7 +68,7 @@ def _is_selected_item_in_inventory_range(inventory_position):
     else:
         return True
 
-def is_item_consumable(item_choice_data):
+def _is_item_consumable(item_choice_data):
     global _player_inventory
     # breakpoint()
     if(_player_inventory[item_choice_data]["item_class"] == "consumable"):
@@ -91,9 +94,4 @@ def _add_item_to_inventory_event_handler(event_name, data):
     _add_item_to_inventory(data["item"])
 
 def _inventory_command_event_handler(event_name, data):
-    if(is_item_consumable(data["choice"]) == True):
-        _use_item(data["choice"])
-    elif(_is_item_equipment(data["choice"]) == True):
-        print("\nThis item is equipable not consumable")
-    else:
-        print("That item is not useable")
+    _use_item(data["choice"])

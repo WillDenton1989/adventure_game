@@ -114,12 +114,16 @@ def monster_generator():
 
 def monster_catchphrase_generator(monster):
     print("\nAs your foe engages you in glorious combat they cry out...")
-    if(monster["name"] == "Mike the goblin"):
-        print("I'm a goblin? Why not something cool like an Elf?")
-    elif(monster["name"] == "Gary the goblin"):
-        print("It's Gary UwU XD")
-    elif(monster["name"] == "Scott the goblin"):
+    if("Mike" in monster["name"]):
+        print("Why am I even in here, man? Making this was a waste of your time...")
+    elif("Scott" in monster["name"]):
         print("Is that 'THE' father linux?")
+    elif("Gary" in monster["name"]):
+        print("It's Gary UwU XD")
+    elif("Theo" in monster["name"]):
+        print("It me, Thed the smooth brain")
+    elif("Dan" in monster["name"]):
+        print("Reeeeeeeee")
     else:
         print("We battle to the death!!")
 

@@ -10,7 +10,7 @@ player:
 starting_inventory:
   - red_potion
   - rock
-  - rock
+  - death_root
   - iron_sword
   - red_potion
 ...

@@ -7,19 +7,32 @@ red_potion:
     hp_restored: 5
   weight: 1
 iron_sword:
-  display_name: "Iron Sword"
+  display_name: Iron Sword
   item_class: equipment
   effects:
     attack_damage_increase: 3
   weight: 5
 leather_armor:
-  display_name: "Leather Armor"
+  display_name: Leather Armor
   item_class: equipment
   effects:
     defense_increase: 2
   weight: 6
 rock:
-  display_name: "Small Rock"
+  display_name: Small Rock
   item_class: junk
   weight: 5
+blue_potion:
+  display_name: Blue Potion
+  item_class: consumable
+  effects:
+    mp_restored: 5
+  weight: 1
+death_root:
+  display_name: Death Root
+  item_class: consumable
+  effects:
+    reduce_hp: -100
+    amount_of_death_per_death: 1
+  weight: 1
 ...

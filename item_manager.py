@@ -3,9 +3,21 @@ import yaml
 import player_manager
 import event_manager
 
-#fix this next time youre on this no longer works. make the items append into here like the level manager? use of items should def be event.
 _items = {}
 
+class Item:
+    """builds the basics for items"""
+
+    def __init__(self, name, display_name, type, effects, value):
+        pass
+
+    def drop_item():
+        pass
+
+    def use_item():
+        pass
+    pass
+    
 # public methods
 
 def initialize():
