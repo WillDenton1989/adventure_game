@@ -1,38 +1,44 @@
-# dis is the items yaml. eventually rename this.
+# dis is the items yaml.
 ---
 red_potion:
   display_name: Red Potion
-  item_class: consumable
+  category: 1 # consumable
   effects:
-    hp_restored: 5
+    heal: 1
   weight: 1
+  value: 10
 iron_sword:
   display_name: Iron Sword
-  item_class: equipment
+  category: 2 # equipment
   effects:
-    attack_damage_increase: 3
+    attack_damage: 3
   weight: 5
+  value: 100
 leather_armor:
   display_name: Leather Armor
-  item_class: equipment
+  category: 2 # equipment
   effects:
-    defense_increase: 2
+    defense: 2
   weight: 6
+  value: 150
 rock:
   display_name: Small Rock
-  item_class: junk
+  category: 0 # junk
   weight: 5
+  value: 1
 blue_potion:
   display_name: Blue Potion
-  item_class: consumable
+  category: 1 # consumable
   effects:
     mp_restored: 5
   weight: 1
+  value: 1000
 death_root:
   display_name: Death Root
-  item_class: consumable
+  category: 1 # consumable
   effects:
-    reduce_hp: -100
+    damage: -100
     amount_of_death_per_death: 1
   weight: 1
+  value: 5000
 ...

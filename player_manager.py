@@ -6,6 +6,7 @@ import event_manager
 import game_manager
 import level_manager
 import item_manager
+from models import item_model
 
 _player = {
     "name": None,
@@ -43,8 +44,19 @@ def _set_player(player_data):
 
 def _create_starting_inventory(inventory_data):
     for item_key in inventory_data:
+        # print(f"inventory data = {inventory_data}")
+        # print(f"item key = {item_key}")
+
+        # _player_inventory.append(Item(item_manager.item_from_key(item_key)))
         item = item_manager.item_from_key(item_key)
-        event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, { "item": item })
+        # print(f"item = {item}")
+
+        object_item = item_model.Item(item["display_name"], item["weight"], item["category"], item["value"])
+        # print(type(object_item))
+        # print(object_item)
+        # breakpoint()
+        # _player_inventory.append, this is what is happening to whatever is in { "item": item } { "item": item }
+        event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
 
 def _execute_player_move(new_column, new_row):
     global _player

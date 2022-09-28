@@ -3,7 +3,7 @@ import player_manager
 import battle_manager
 import input_manager
 import yaml
-import data
+#import data
 import event_manager
 import input_manager
 import game_manager

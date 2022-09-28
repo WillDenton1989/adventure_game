@@ -2,29 +2,19 @@
 import yaml
 import player_manager
 import event_manager
+from models import item_model
 
 _items = {}
 
-class Item:
-    """builds the basics for items"""
-
-    def __init__(self, name, display_name, type, effects, value):
-        pass
-
-    def drop_item():
-        pass
-
-    def use_item():
-        pass
-    pass
-    
 # public methods
 
 def initialize():
     _load_items("data/items.yaml")
 
+
 def item_from_key(key):
     global _items
+    # print(f"_items_key = {_items[key]}")
     return _items[key]
 
 # private methods

@@ -4,6 +4,7 @@ import level_manager
 import battle_manager
 import game_manager
 import input_manager
+import item_manager
 
 def game_board(player):
     moves = 0
@@ -17,7 +18,6 @@ def game_board(player):
         level_manager.draw_map()
 
         # ghetto hud for now.
-        # print(level_manager._events
         print(f"{player['name']} hit points: {player['hit_points']}")
         print(f"Moves taken: {moves}")
         print(game_manager._game_state)
