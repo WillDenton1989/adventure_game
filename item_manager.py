@@ -7,6 +7,7 @@ from models import item_model
 _items = {}
 
 # public methods
+# create healing potion
 
 def initialize():
     _load_items("data/items.yaml")

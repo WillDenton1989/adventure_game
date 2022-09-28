@@ -7,7 +7,6 @@ import input_manager
 
 _player_inventory = []
 
-
 # public methods
 
 def initialize():
