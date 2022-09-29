@@ -12,7 +12,6 @@ def initialize():
     _load_items("data/items.yaml")
     event_manager.listen(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, _trigger_item_effect_event_handler)
 
-
 def item_from_key(key):
     global _items
     return _items[key]
@@ -53,7 +52,6 @@ def _heal_user(hp_amount):
     max_hp = user["max_hit_points"]
     old_hp = user["hit_points"]
     new_hp = old_hp + hp_amount
-    print(f"old hp = {old_hp}, max hp = {max_hp}, hp_amount = {hp_amount}, new_hp = {new_hp}")
 
     if(new_hp > max_hp):
         player_manager.change_player_data("hit_points", max_hp)
