@@ -75,13 +75,16 @@ def _quit():
     print(f"Farewell {player['name']}")
     exit()
 
-def _game_over():
+def _game_end():
     player_data = player_manager.get_player_data()
     print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
     print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
     # should put the game over screen here when i make that.
     # also what should be here is the portal, either the trigger will be here or ill make another trigger for it.
     exit()
+
+def _game_over():
+    pass # when game board leaks again make the player hp hitting zero trigger an event here so that the game just ends. 
 
 # event handlers
 
@@ -107,4 +110,4 @@ def _quit_event_handler(event_name, data):
     _quit()
 
 def _game_finish_event_handler(event_name, data):
-    _game_over()
+    _game_end()

@@ -14,7 +14,10 @@ UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 OPEN_INVENTORY_EVENT = "open_inventory event"
 CLOSE_INVENTORY_EVENT = "close_inventory_event"
 
-USE_ITEM_IN_INVENTORY_EVENT = "use_item_in_inventory_event"
+SELECT_ITEM_IN_INVENTORY_EVENT = "select_item_in_inventory_event"
+
+TRIGGER_CONSUME_ITEM_EFFECT_EVENT = "trigger_consume_item_effect_event"
+
 ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
 REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
 

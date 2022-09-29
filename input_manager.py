@@ -143,7 +143,7 @@ def _parse_inventory_input(input):
         event_manager.trigger_event(event_manager.QUIT_EVENT, data)
     elif(input.isdigit() == True):
         data["choice"] = int(input) - 1
-        event_manager.trigger_event(event_manager.USE_ITEM_IN_INVENTORY_EVENT, data)
+        event_manager.trigger_event(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, data)
     elif(input == "i"):
         event_manager.trigger_event(event_manager.CLOSE_INVENTORY_EVENT, data)
     else:

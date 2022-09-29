@@ -1,44 +1,83 @@
 # dis is the items yaml.
 ---
-red_potion:
-  display_name: Red Potion
-  category: 1 # consumable
-  effects:
-    heal: 1
-  weight: 1
-  value: 10
-iron_sword:
-  display_name: Iron Sword
-  category: 2 # equipment
-  effects:
-    attack_damage: 3
-  weight: 5
-  value: 100
-leather_armor:
-  display_name: Leather Armor
-  category: 2 # equipment
-  effects:
-    defense: 2
-  weight: 6
-  value: 150
-rock:
-  display_name: Small Rock
-  category: 0 # junk
-  weight: 5
-  value: 1
-blue_potion:
-  display_name: Blue Potion
-  category: 1 # consumable
-  effects:
-    mp_restored: 5
-  weight: 1
-  value: 1000
-death_root:
-  display_name: Death Root
-  category: 1 # consumable
-  effects:
-    damage: -100
-    amount_of_death_per_death: 1
-  weight: 1
-  value: 5000
+item_data:
+  red_potion:
+    display_name: Red Potion
+    type: 1 # consumable
+    effect:
+      heal: 5
+    weight: 1
+    value: 10
+    consumable: True
+    equipable: False
+  iron_sword:
+    display_name: Iron Sword
+    type: 2 # weapon
+    effect:
+      attack_damage: 3
+    weight: 4
+    value: 100
+    consumable: False
+    equipable: True
+  leather_armor:
+    display_name: Leather Armor
+    type: 3 # armor
+    effect:
+      defense: 2
+    weight: 8
+    value: 150
+    consumable: False
+    equipable: True
+  rock:
+    display_name: Small Rock
+    type: 0 # junk
+    effect:
+      null
+    weight: 5
+    value: 1
+    consumable: False
+    equipable: False
+  blue_potion:
+    display_name: Blue Potion
+    type: 1 # consumable
+    effect:
+      mana: 10
+    weight: 1
+    value: 1000
+    consumable: True
+    equipable: False
+  death_root:
+    display_name: Death Root
+    type: 1 # consumable
+    effect:
+      damage: 100
+    weight: 1
+    value: 5000
+    consumable: True
+    equipable: False
+  gold_bar:
+    display_name: Gold Bar
+    type: 4 # treasure
+    effect:
+      null
+    weight: 20
+    value: 15000
+    consumable: False
+    equipable: False
+  the_last_word:
+    display_name: The Last Word
+    type: 5 # gun
+    effect:
+      attack_damage: 50
+    weight: 3
+    value: 100000
+    consumable: False
+    equipable: True
+
+effects_data:
+  heal: 1
+  damage: 1
+  attack_damage: 1
+  defense: 1
+  mana: 1
 ...

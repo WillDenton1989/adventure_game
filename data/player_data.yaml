@@ -1,6 +1,7 @@
 #where the player information shall live.
 ---
 player:
+  max_hit_points: 10
   hit_points: 10
   attack_power: 5
   defense: 1
@@ -13,4 +14,6 @@ starting_inventory:
   - death_root
   - iron_sword
   - red_potion
+  - gold_bar
+  - the_last_word
 ...

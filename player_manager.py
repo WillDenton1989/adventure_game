@@ -27,6 +27,12 @@ def update_player_data(data):
     global _player
     return _player.update(data)
 
+def change_player_data(key, value):
+    global _player
+    _player[key] = value
+    return _player
+
+
 def create_player():
     _player["name"] = input_manager.parse_input()
 
@@ -44,18 +50,11 @@ def _set_player(player_data):
 
 def _create_starting_inventory(inventory_data):
     for item_key in inventory_data:
-        # print(f"inventory data = {inventory_data}")
-        # print(f"item key = {item_key}")
 
-        # _player_inventory.append(Item(item_manager.item_from_key(item_key)))
         item = item_manager.item_from_key(item_key)
-        # print(f"item = {item}")
 
-        object_item = item_model.Item(item["display_name"], item["weight"], item["category"], item["value"])
-        # print(type(object_item))
-        # print(object_item)
-        # breakpoint()
-        # _player_inventory.append, this is what is happening to whatever is in { "item": item } { "item": item }
+        object_item = item_model.Item(item["display_name"], item["type"], item["effect"], item["weight"], item["value"], item["consumable"], item["equipable"])
+
         event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
 
 def _execute_player_move(new_column, new_row):
