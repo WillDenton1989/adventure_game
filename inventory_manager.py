@@ -7,14 +7,17 @@ import input_manager
 from models.inventory import Inventory
 
 _player_inventory = []
-# _player_equiped_items_inventory = []
+_game_manager = None
 
 # public methods
 
-def initialize():
+def initialize(game_manager):
+    global _game_manager
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
     event_manager.listen(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, _add_item_to_inventory_event_handler)
     event_manager.listen(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, _inventory_command_event_handler)
+
+    _game_manager = game_manager
 
 # private methods
 
@@ -44,11 +47,12 @@ def _add_item_to_inventory(item):
     return _player_inventory.append(item)
 
 def _inventory_continue(): # this function is necessary for _inventory_screen to work until the gameboard loop is reworked.
-    if(_game_state() == game_manager.STATE_INVENTORY):
+    if(_game_state() == game_manager.GameManager.STATE_INVENTORY):
         _inventory_screen()
 
 def _game_state():
-    return game_manager.game_state()
+    global _game_manager
+    return _game_manager.game_state
 
 def _select_item(inventory_position):
     if(_is_selected_item_in_inventory_range(inventory_position) == True):
@@ -109,7 +113,7 @@ def _is_item_equipable(inventory_position):
 # event handlers
 
 def _state_change_event_handler(event_name, data):
-    if(data["new_state"] == game_manager.STATE_INVENTORY):
+    if(data["new_state"] == game_manager.GameManager.STATE_INVENTORY):
         _inventory_screen()
 
 def _add_item_to_inventory_event_handler(event_name, item_object_data):

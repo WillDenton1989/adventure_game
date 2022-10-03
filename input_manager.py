@@ -1,22 +1,27 @@
-import game_manager
+from game_manager import GameManager
 import event_manager
 import player_manager
 
+_game_manager = None
+
 # public methods
 
-def initialize():
-    pass
+def initialize(game_manager):
+    global _game_manager
+
+    _game_manager = game_manager
 
 def show_controls():
-    if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
+    # breakpoint()
+    if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         _show_player_creation_controls()
-    elif(_game_state() == game_manager.STATE_MOVEMENT):
+    elif(_game_state() == GameManager.STATE_MOVEMENT):
         _show_movement_controls()
-    elif(_game_state() == game_manager.STATE_BATTLE):
+    elif(_game_state() == GameManager.STATE_BATTLE):
         _show_battle_controls()
-    elif(_game_state() == game_manager.STATE_CONVERSATION):
+    elif(_game_state() == GameManager.STATE_CONVERSATION):
         _show_conversation_controls()
-    elif(_game_state() == game_manager.STATE_INVENTORY):
+    elif(_game_state() == GameManager.STATE_INVENTORY):
         _show_inventory_controls()
     else:
         raise Exception("cannot show controls for your current game state.")
@@ -25,20 +30,24 @@ def parse_input():
     show_controls()
     player_input = input(_prompt()).strip()
 
-    if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
+    if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         return _parse_player_creation(player_input)
-    elif(_game_state() == game_manager.STATE_MOVEMENT):
+    elif(_game_state() == GameManager.STATE_MOVEMENT):
         return _parse_player_movement(player_input)
-    elif(_game_state() == game_manager.STATE_BATTLE):
+    elif(_game_state() == GameManager.STATE_BATTLE):
         return _parse_battle_input(player_input)
-    elif(_game_state() == game_manager.STATE_CONVERSATION):
+    elif(_game_state() == GameManager.STATE_CONVERSATION):
         return _parse_conversation_input(player_input)
-    elif(_game_state() == game_manager.STATE_INVENTORY):
+    elif(_game_state() == GameManager.STATE_INVENTORY):
         return _parse_inventory_input(player_input)
     else:
         raise Exception("cannot parse input for your current game state.")
 
 # private methods
+
+def _game_state():
+    global _game_manager
+    return _game_manager.game_state
 
 def _show_player_creation_controls():
     print("Type in your name and your adventure shall begin!\n")
@@ -53,21 +62,18 @@ def _parse_player_creation(input):
 
 def _prompt():
     player = player_manager.get_player_data()
-    if(_game_state() == game_manager.STATE_CHARACTER_CREATION):
+    if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         return "A name, liege? "
-    elif(_game_state() == game_manager.STATE_MOVEMENT):
+    elif(_game_state() == GameManager.STATE_MOVEMENT):
         return "? "
-    elif(_game_state() == game_manager.STATE_BATTLE):
+    elif(_game_state() == GameManager.STATE_BATTLE):
         return f"\nI await your command {player['name']}: "
-    elif(_game_state() == game_manager.STATE_CONVERSATION):
+    elif(_game_state() == GameManager.STATE_CONVERSATION):
         return "What is your response? "
-    elif(_game_state() == game_manager.STATE_INVENTORY):
+    elif(_game_state() == GameManager.STATE_INVENTORY):
         return "Select the item you wish to use, dude. "
     else:
         raise Exception("there is no prompt for your current game state.")
-
-def _game_state():
-    return game_manager.game_state()
 
 def _show_movement_controls():
     print(f"""Use the 'k' and 'j' keys to move up and down;

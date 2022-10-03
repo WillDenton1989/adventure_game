@@ -8,111 +8,114 @@ import conversation_manager
 import inventory_manager
 import item_manager
 
-STATE_CHARACTER_CREATION = "state_character_creation"
-STATE_MOVEMENT = "state_movement"
-STATE_BATTLE = "state_battle"
-STATE_CONVERSATION = "state_conversation"
-STATE_INVENTORY = "state_inventory"
+class GameManager:
+    """Herald ye, i am the game manager of this game all shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
-_game_state = None
+    STATE_CHARACTER_CREATION = "state_character_creation"
+    STATE_MOVEMENT = "state_movement"
+    STATE_BATTLE = "state_battle"
+    STATE_CONVERSATION = "state_conversation"
+    STATE_INVENTORY = "state_inventory"
 
-def initialize():
-    global _game_state
-    _game_state = STATE_CHARACTER_CREATION
+    _game_state = None
 
-    _initialize_managers()
-    _register_listeners()
+    def __init__(self):
+        GameManager._game_state = GameManager.STATE_CHARACTER_CREATION
 
-    player_manager.create_player()
-    _transition_to_movement()
+        self._initialize_managers()
+        self._register_listeners()
 
-def game_state():
-    global _game_state
-    return _game_state
+        player_manager.create_player()
+        self._transition_to_movement()
 
-# attribute accessors
+    # attribute accessors
 
-def get_player_manager():
-    return player_manager
+    # @property
+    def get_player_manager(self):
+        return self._player_manager
 
-# private methods
+    @property
+    def game_state(self):
+        return self._game_state
 
-def _transition_to_movement():
-    _set_state(STATE_MOVEMENT)
-    dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
+    # private methods
 
-def _initialize_managers():
-    battle_manager.initialize() # do any other managers initializations here!! :)
-    item_manager.initialize()
-    inventory_manager.initialize()
-    player_manager.initialize()
-    input_manager.initialize()
-    level_manager.initialize()
-    conversation_manager.initialize()
+    def _transition_to_movement(self):
+        self._set_state(GameManager.STATE_MOVEMENT)
+        dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
 
-def _register_listeners():
-    event_manager.listen(event_manager.BATTLE_EVENT, _battle_started_handler)
-    event_manager.listen(event_manager.END_BATTLE_EVENT, _battle_ended_handler)
+    def _initialize_managers(self):
+        battle_manager.initialize() # do any other managers initializations here!! :)
+        item_manager.initialize(self)
+        inventory_manager.initialize(self)
+        player_manager.initialize()
+        input_manager.initialize(self)
+        level_manager.initialize()
+        conversation_manager.initialize()
 
-    event_manager.listen(event_manager.CONVERSATION_EVENT, _conversation_started_handler)
-    event_manager.listen(event_manager.END_CONVERSATION_EVENT, _conversation_ended_handler)
+        self._player_manager = player_manager # make player manager a class
 
-    event_manager.listen(event_manager.OPEN_INVENTORY_EVENT, _inventory_opened_handler)
-    event_manager.listen(event_manager.CLOSE_INVENTORY_EVENT, _inventory_closed_handler)
+    def _register_listeners(self):
+        event_manager.listen(event_manager.BATTLE_EVENT, self._battle_started_handler)
+        event_manager.listen(event_manager.END_BATTLE_EVENT, self._battle_ended_handler)
 
-    event_manager.listen(event_manager.QUIT_EVENT, _quit_event_handler)
-    event_manager.listen(event_manager.GAME_FINISH_EVENT, _game_finish_event_handler)
+        event_manager.listen(event_manager.CONVERSATION_EVENT, self._conversation_started_handler)
+        event_manager.listen(event_manager.END_CONVERSATION_EVENT, self._conversation_ended_handler)
 
-def _set_state(new_state, event_data = []):
-    global _game_state
+        event_manager.listen(event_manager.OPEN_INVENTORY_EVENT, self._inventory_opened_handler)
+        event_manager.listen(event_manager.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
 
-    previous_state = _game_state
-    _game_state = new_state
-    _dispatch_state_change(previous_state, new_state, event_data)
+        event_manager.listen(event_manager.QUIT_EVENT, self._quit_event_handler)
+        event_manager.listen(event_manager.GAME_FINISH_EVENT, self._game_finish_event_handler)
 
-def _dispatch_state_change(previous_state, new_state, event_data):
-    data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
+    def _set_state(self, new_state, event_data = []):
+        previous_state = GameManager._game_state
+        GameManager._game_state = new_state
+        self._dispatch_state_change(previous_state, new_state, event_data)
 
-    event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
+    def _dispatch_state_change(self, previous_state, new_state, event_data):
+        data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
 
-def _quit():
-    player = player_manager.get_player_data()
-    print(f"Farewell {player['name']}")
-    exit()
+        event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
 
-def _game_end():
-    player_data = player_manager.get_player_data()
-    print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
-    print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
-    # should put the game over screen here when i make that.
-    # also what should be here is the portal, either the trigger will be here or ill make another trigger for it.
-    exit()
+    def _quit(self):
+        player = player_manager.get_player_data()
+        print(f"Farewell {player['name']}")
+        exit()
 
-def _game_over():
-    pass # when game board leaks again make the player hp hitting zero trigger an event here so that the game just ends.
+    def _game_end(self):
+        player_data = player_manager.get_player_data()
+        print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
+        print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
+        # should put the game over screen here when i make that.
+        # also what should be here is the portal, either the trigger will be here or ill make another trigger for it.
+        exit()
 
-# event handlers
+    def _game_over(self):
+        pass # when game board leaks again make the player hp hitting zero trigger an event here so that the game just ends.
 
-def _battle_started_handler(event, data):
-    _set_state(STATE_BATTLE, data)
+    # event handlers
 
-def _battle_ended_handler(event, data):
-    _set_state(STATE_MOVEMENT, data)
+    def _battle_started_handler(self, event, data):
+        self._set_state(GameManager.STATE_BATTLE, data)
 
-def _inventory_opened_handler(event, data):
-    _set_state(STATE_INVENTORY, data)
+    def _battle_ended_handler(self, event, data):
+        self._set_state(GameManager.STATE_MOVEMENT, data)
 
-def _inventory_closed_handler(event, data):
-    _set_state(STATE_MOVEMENT, data)
+    def _inventory_opened_handler(self, event, data):
+        self._set_state(GameManager.STATE_INVENTORY, data)
 
-def _conversation_started_handler(event, data):
-    _set_state(STATE_CONVERSATION, data)
+    def _inventory_closed_handler(self, event, data):
+        self._set_state(GameManager.STATE_MOVEMENT, data)
 
-def _conversation_ended_handler(event, data):
-    _set_state(STATE_MOVEMENT, data)
+    def _conversation_started_handler(self, event, data):
+        self._set_state(GameManager.STATE_CONVERSATION, data)
 
-def _quit_event_handler(event_name, data):
-    _quit()
+    def _conversation_ended_handler(self, event, data):
+        self._set_state(GameManager.STATE_MOVEMENT, data)
 
-def _game_finish_event_handler(event_name, data):
-    _game_end()
+    def _quit_event_handler(self, event_name, data):
+        self._quit()
+
+    def _game_finish_event_handler(self, event_name, data):
+        self. _game_end()

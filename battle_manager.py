@@ -5,7 +5,7 @@ import player_manager
 import npc_manager
 import input_manager
 import event_manager
-import game_manager
+from game_manager import GameManager
 
 _player_decision = None
 _monster_decision = None
@@ -120,8 +120,9 @@ def _player_death(player, monster): # was monster death. i assume these were acc
 # event handlers
 
 def _state_change_event_handler(event_name, data):
-    if(data["new_state"] == game_manager.STATE_BATTLE):
+    if(data["new_state"] == GameManager.STATE_BATTLE):
         battle_data = data["event_data"]
+        # when i get the class hieracrchy right i think i should move this to game manager so that this "class" doesnt need to know about game manager?
         _initialize_battle(player_manager.get_player_data(), battle_data)
 
 def _battle_command_event_handler(event_name, data):

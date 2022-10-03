@@ -26,6 +26,13 @@ objects:
       row: 5
     events:
       - battle_event
+  - object_name: monster
+    key: goblin
+    location:
+      column: 2
+      row: 9
+    events:
+      - battle_event
   - object_name: npc
     key: dwarf
     location:

@@ -7,12 +7,16 @@ from models.item import Item
 from models.effects.heal import Heal
 
 _items = {}
+_game_manager = None
 
 # public methods
 
-def initialize():
+def initialize(game_manager):
+    global _game_manager
+
     _load_items("data/items.yaml")
     event_manager.listen(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, _trigger_item_effect_event_handler)
+    _game_manager = game_manager
 
 def item_from_key(key):
     global _items
@@ -27,6 +31,7 @@ def _load_items(filename):
     _items.update(items["item_data"])
 
 def _execute_effects(item_choice):
+    global _game_manager
     # could take the list of available effects and just use that as a variable. but i would still need functions for them so idk.
     # make a distinct option for this in input manager.
     effects = item_choice.effects
@@ -34,7 +39,7 @@ def _execute_effects(item_choice):
     for effect_key in effects:
         if(effect_key == "heal"):
             max_heal = effects[effect_key]
-            effect = Heal(max_heal, game_manager)
+            effect = Heal(max_heal, _game_manager)
             effect.execute()
         elif(effect_key == "damage"):
             damage_amount = effects[effect_key]
