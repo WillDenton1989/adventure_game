@@ -2,7 +2,9 @@
 import yaml
 import player_manager
 import event_manager
-from models import item_model
+import game_manager
+from models.item import Item
+from models.effects.heal import Heal
 
 _items = {}
 
@@ -24,41 +26,30 @@ def _load_items(filename):
 
     _items.update(items["item_data"])
 
-def _effects_parser(item_choice):
-    # could take the list of available effects and just use that as a variable. but i would still need functions for the m so idk.
-    effect = getattr(item_choice, "effect")
+def _execute_effects(item_choice):
+    # could take the list of available effects and just use that as a variable. but i would still need functions for them so idk.
+    # make a distinct option for this in input manager.
+    effects = item_choice.effects
 
-    for e in effect:
-        if(e == "heal"):
-            hp_amount = effect[e]
-            _heal_user(hp_amount)
-        elif(e == "damage"):
-            damage_amount = effect[e]
+    for effect_key in effects:
+        if(effect_key == "heal"):
+            max_heal = effects[effect_key]
+            effect = Heal(max_heal, game_manager)
+            effect.execute()
+        elif(effect_key == "damage"):
+            damage_amount = effects[effect_key]
             _damage_user(damage_amount)
-        elif(e == "attack_damage"):
-            ad_amount = effect[e]
+        elif(effect_key == "attack_damage"):
+            ad_amount = effects[effect_key]
             _increase_user_attack_damage(ad_amount)
-        elif(e == "defense"):
-            defense_amount = effect[e]
+        elif(effect_key == "defense"):
+            defense_amount = effects[effect_key]
             _increase_user_defense(defense_amount)
-        elif(e == "mana"):
-            mana_amount = effect[e]
+        elif(effect_key == "mana"):
+            mana_amount = effects[effect_key]
             _restore_user_mana(mana_amount)
         else:
             print("There is no effect for this item. This could be an error.")
-
-def _heal_user(hp_amount):
-    user = player_manager.get_player_data()
-    max_hp = user["max_hit_points"]
-    old_hp = user["hit_points"]
-    new_hp = old_hp + hp_amount
-
-    if(new_hp > max_hp):
-        player_manager.change_player_data("hit_points", max_hp)
-        print(f"{old_hp}, {max_hp}")
-    else:
-        player_manager.change_player_data("hit_points", new_hp)
-        print(f"{old_hp}, {new_hp}")
 
 def _damage_user(damage_amount):
     user = player_manager.get_player_data()
@@ -78,4 +69,4 @@ def _restore_user_mana(mana_amount):
 # event handlers
 
 def _trigger_item_effect_event_handler(event_name, data):
-    _effects_parser(data["item_choice"])
+    _execute_effects(data["item_choice"])

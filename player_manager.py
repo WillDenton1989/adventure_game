@@ -6,7 +6,7 @@ import event_manager
 import game_manager
 import level_manager
 import item_manager
-from models import item_model
+from models.item import Item
 
 _player = {
     "name": None,
@@ -15,7 +15,7 @@ _player = {
 
 def initialize():
     event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, _update_player_location_event_handler)
-    player_data, inventory_data = _load_player_default_data()
+    player_data, inventory_data = _load_player_default_data("data/player_data.yaml")
     _set_player(player_data)
     _create_starting_inventory(inventory_data)
 
@@ -32,14 +32,13 @@ def change_player_data(key, value):
     _player[key] = value
     return _player
 
-
 def create_player():
     _player["name"] = input_manager.parse_input()
 
 # private methods
 
-def _load_player_default_data():
-    with open("data/player_data.yaml") as f: # hardcoded file no bueno
+def _load_player_default_data(file_name):
+    with open(file_name) as f: # hardcoded file no bueno
         data = yaml.safe_load(f)
 
     return data["player"], data["starting_inventory"]
@@ -53,7 +52,7 @@ def _create_starting_inventory(inventory_data):
 
         item = item_manager.item_from_key(item_key)
 
-        object_item = item_model.Item(item["display_name"], item["type"], item["effect"], item["weight"], item["value"], item["consumable"], item["equipable"])
+        object_item = Item(item["display_name"], item["type"], item["effects"], item["weight"], item["value"], item["consumable"], item["equipable"])
 
         event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
 

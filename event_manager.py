@@ -17,6 +17,7 @@ CLOSE_INVENTORY_EVENT = "close_inventory_event"
 SELECT_ITEM_IN_INVENTORY_EVENT = "select_item_in_inventory_event"
 
 TRIGGER_CONSUME_ITEM_EFFECT_EVENT = "trigger_consume_item_effect_event"
+TRIGGER_EQUIP_ITEM_EFFECT_EVENT = "trigger_equip_item_effect_event"
 
 ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
 REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"

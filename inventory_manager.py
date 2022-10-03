@@ -4,8 +4,10 @@ import player_manager
 import event_manager
 import game_manager
 import input_manager
+from models.inventory import Inventory
 
 _player_inventory = []
+# _player_equiped_items_inventory = []
 
 # public methods
 
@@ -22,7 +24,7 @@ def _display_inventory():
     print("\n------------------------------------------------------------------------\n")
     print("Here is your inventory:\n")
     element_number = 1
-    print(_player_inventory)
+    # print(_player_inventory)
     if(len(_player_inventory) == 0):
         print("Your inventory is empty.")
     else:
@@ -58,14 +60,23 @@ def _select_item(inventory_position):
 
 def _use_item(inventory_position):
     global _player_inventory
-    data = {}
+    consumable_item_data = {}
+    equip_item_data = {}
     if(_is_item_consumable(inventory_position) == True):
-        data["item_choice"] = _player_inventory[inventory_position]
-        event_manager.trigger_event(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, data)
+        consumable_item_data["item_choice"] = _player_inventory[inventory_position]
+        event_manager.trigger_event(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, consumable_item_data)
     elif(_is_item_equipable(inventory_position) == True):
-        pass
+        _player_inventory[inventory_position]
+        print("here is where an equipable item trigger would happen.")
+        # event_manager.trigger_event(event_manager.TRIGGER_EQUIP_ITEM_EFFECT_EVENT, equip_item_data)
     else:
         print("That is not a useable item brother man.")
+
+def equip_item():
+    pass
+
+def unequip_item():
+    pass
 
 def _remove_consumable_item(inventory_position):
     global _player_inventory
@@ -83,14 +94,14 @@ def _is_selected_item_in_inventory_range(inventory_position):
 
 def _is_item_consumable(inventory_position):
     global _player_inventory
-    if(getattr(_player_inventory[inventory_position], "consumable") == True):
+    if(_player_inventory[inventory_position].consumable == True):
         return True
     else:
         return False
 
 def _is_item_equipable(inventory_position):
     global _player_inventory
-    if(getattr(_player_inventory[inventory_position], "equipable") == True):
+    if(_player_inventory[inventory_position].equipable == True):
         return True
     else:
         return False

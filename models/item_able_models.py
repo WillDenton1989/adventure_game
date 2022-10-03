@@ -7,11 +7,11 @@ class Consumable:
         # uses/charges
         pass
 
-    def consume_item():
+    def consume_item(self):
         # using an item will also apply its effects, maybe that needs another method.
         pass
 
-    def deduct_uses():
+    def deduct_uses(self):
         pass
 
     pass
@@ -22,12 +22,12 @@ class Equipable:
     def __init__(self):
         # effects when equiped.
         # effects lost when un_equiped.
-    pass
-
-    def equip():
         pass
 
-    def un_equip():
+    def equip(self):
+        pass
+
+    def un_equip(self):
         pass
 
     pass
@@ -39,10 +39,10 @@ class Useable:
         # effects when used.
     pass
 
-    def use():
+    def use(self):
         pass
 
-    def remove_use():
+    def remove_use(self):
         pass
 
     pass
@@ -54,10 +54,10 @@ class Droppable:
         # effects when used.
     pass
 
-    def drop_item():
+    def drop_item(self):
         pass
 
-    def drop_number_of_item():
+    def drop_number_of_item(self):
         pass
 
     pass

@@ -30,6 +30,11 @@ def game_state():
     global _game_state
     return _game_state
 
+# attribute accessors
+
+def get_player_manager():
+    return player_manager
+
 # private methods
 
 def _transition_to_movement():
@@ -84,7 +89,7 @@ def _game_end():
     exit()
 
 def _game_over():
-    pass # when game board leaks again make the player hp hitting zero trigger an event here so that the game just ends. 
+    pass # when game board leaks again make the player hp hitting zero trigger an event here so that the game just ends.
 
 # event handlers
 

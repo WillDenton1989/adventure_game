@@ -10,7 +10,7 @@ def enemy_npc_choice():
 
 def name_generator(character_class):
     y = 0# randint(0, 3)
-    x = randint(0, 15)
+    x = randint(0, 16)
     names = [
     "Bob",
     "Joe",
@@ -27,7 +27,8 @@ def name_generator(character_class):
     "Dan",
     "Gary",
     "Kyle",
-    "Theo"
+    "Theo",
+    "Jim Bob"
     ]
 
     dwarf_names = [
@@ -37,7 +38,7 @@ def name_generator(character_class):
         "Scotty"
     ]
 
-    if(character_class == "goblin"):
+    if("goblin" in character_class):
         return names[x]
     elif(character_class == "dwarf"):
         return dwarf_names[y]
@@ -124,6 +125,12 @@ def monster_catchphrase_generator(monster):
         print("It me, Thed the smooth brain")
     elif("Dan" in monster["name"]):
         print("Reeeeeeeee")
+    elif("Biggie" in monster["name"]):
+        print("It was all a dream...")
+    elif("Bren" in monster["name"]):
+        print("Gimme your pre workout! I neeeeeeed it!")
+    elif("Jim Bob" in monster["name"]):
+        print("Its Jesus' lesser known brother, Jim Bob the son of god!")
     else:
         print("We battle to the death!!")
 

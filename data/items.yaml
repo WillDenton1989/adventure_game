@@ -4,8 +4,8 @@ item_data:
   red_potion:
     display_name: Red Potion
     type: 1 # consumable
-    effect:
-      heal: 5
+    effects:
+      heal: 5 # heal is a key linking this item to the function that will heal, the value is how much will be healed.
     weight: 1
     value: 10
     consumable: True
@@ -13,7 +13,7 @@ item_data:
   iron_sword:
     display_name: Iron Sword
     type: 2 # weapon
-    effect:
+    effects:
       attack_damage: 3
     weight: 4
     value: 100
@@ -22,7 +22,7 @@ item_data:
   leather_armor:
     display_name: Leather Armor
     type: 3 # armor
-    effect:
+    effects:
       defense: 2
     weight: 8
     value: 150
@@ -31,7 +31,7 @@ item_data:
   rock:
     display_name: Small Rock
     type: 0 # junk
-    effect:
+    effects:
       null
     weight: 5
     value: 1
@@ -40,7 +40,7 @@ item_data:
   blue_potion:
     display_name: Blue Potion
     type: 1 # consumable
-    effect:
+    effects:
       mana: 10
     weight: 1
     value: 1000
@@ -49,8 +49,8 @@ item_data:
   death_root:
     display_name: Death Root
     type: 1 # consumable
-    effect:
-      damage: 100
+    effects:
+      damage: 15 # was 100.
     weight: 1
     value: 5000
     consumable: True
@@ -58,7 +58,7 @@ item_data:
   gold_bar:
     display_name: Gold Bar
     type: 4 # treasure
-    effect:
+    effects:
       null
     weight: 20
     value: 15000
@@ -66,10 +66,10 @@ item_data:
     equipable: False
   the_last_word:
     display_name: The Last Word
-    type: 5 # gun
-    effect:
+    type: 2 # weapon
+    effects:
       attack_damage: 50
-    weight: 3
+    weight: 2
     value: 100000
     consumable: False
     equipable: True
