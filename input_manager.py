@@ -1,18 +1,21 @@
 from game_manager import GameManager
 import event_manager
-import player_manager
+# import player_manager
+from player_manager import PlayerManager
 
 _game_manager = None
+_player_manager = None
 
 # public methods
 
-def initialize(game_manager):
+def initialize(game_manager, player_manager):
     global _game_manager
-
+    global _player_manager
+    # breakpoint()
     _game_manager = game_manager
+    _player_manager = player_manager
 
 def show_controls():
-    # breakpoint()
     if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         _show_player_creation_controls()
     elif(_game_state() == GameManager.STATE_MOVEMENT):
@@ -49,6 +52,11 @@ def _game_state():
     global _game_manager
     return _game_manager.game_state
 
+def _player_data():
+    global _player_manager
+    # breakpoint()
+    return _player_manager.get_player_data
+
 def _show_player_creation_controls():
     print("Type in your name and your adventure shall begin!\n")
 
@@ -61,7 +69,8 @@ def _parse_player_creation(input):
     return input
 
 def _prompt():
-    player = player_manager.get_player_data()
+    # _player_manager = player_manager.PlayerManager
+    player = _player_data()
     if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         return "A name, liege? "
     elif(_game_state() == GameManager.STATE_MOVEMENT):

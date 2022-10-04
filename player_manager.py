@@ -4,65 +4,73 @@ import battle_manager
 import input_manager
 import event_manager
 import game_manager
+# from game_manager import GameManager
 import level_manager
 import item_manager
 from models.item import Item
 
-_player = {
-    "name": None,
-    "battle_decision": None
-}
+class PlayerManager:
+    """this is the player manager class"""
 
-def initialize():
-    event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, _update_player_location_event_handler)
-    player_data, inventory_data = _load_player_default_data("data/player_data.yaml")
-    _set_player(player_data)
-    _create_starting_inventory(inventory_data)
+    _player = {
+        "name": None,
+        "battle_decision": None
+    }
 
-def get_player_data():
-    global _player
-    return _player
+    def __init__(self):
+        event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
+        player_data, inventory_data = self._load_player_default_data("data/player_data.yaml") # hard coded file, probably no beuno
+        self._set_player(player_data)
+        self._create_starting_inventory(inventory_data)
 
-def update_player_data(data):
-    global _player
-    return _player.update(data)
+    # attribute accessor bois.
 
-def change_player_data(key, value):
-    global _player
-    _player[key] = value
-    return _player
+    @property
+    def get_player_data(self):
+        # print(self._player)
+        return self._player
 
-def create_player():
-    _player["name"] = input_manager.parse_input()
+    # @property
+    def update_player_data(self, data_1):
+        return self._player.update(data_1)
 
-# private methods
+    @property
+    def change_player_data(self, key, value):
+        self._player[key] = value
+        return self._player
 
-def _load_player_default_data(file_name):
-    with open(file_name) as f: # hardcoded file no bueno
-        data = yaml.safe_load(f)
+    @property
+    def create_player(self):
+        self._player["name"] = input_manager.parse_input()
 
-    return data["player"], data["starting_inventory"]
+    # private methods
 
-def _set_player(player_data):
-    global _player
-    _player = player_data
+    def _load_player_default_data(self, file_name):
+        with open(file_name) as f:
+            data = yaml.safe_load(f)
 
-def _create_starting_inventory(inventory_data):
-    for item_key in inventory_data:
+        return data["player"], data["starting_inventory"]
 
-        item = item_manager.item_from_key(item_key)
+    def _set_player(self, player_data):
+        # global _player
+        self._player = player_data
 
-        object_item = Item(item["display_name"], item["type"], item["effects"], item["weight"], item["value"], item["consumable"], item["equipable"])
+    def _create_starting_inventory(self, inventory_data):
+        for item_key in inventory_data:
 
-        event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
+            item = item_manager.item_from_key(item_key)
 
-def _execute_player_move(new_column, new_row):
-    global _player
+            object_item = Item(item["display_name"], item["type"], item["effects"], item["weight"], item["value"], item["consumable"], item["equipable"])
 
-    _player["column"] = new_column
-    _player["row"] = new_row
+            event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
 
-# event handlers
+    def _execute_player_move(self, new_column, new_row):
+        # global _player
 
-def _update_player_location_event_handler(event_name, data):
-    _execute_player_move(data["location"]["column"], data["location"]["row"])
+        self._player["column"] = new_column
+        self._player["row"] = new_row
+
+    # event handlers
+
+    def _update_player_location_event_handler(self, event_name, data):
+        self._execute_player_move(data["location"]["column"], data["location"]["row"])

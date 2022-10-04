@@ -30,7 +30,7 @@ def _run_conversation():
 def _state_change_event_handler(event_name, data):
     if(data["new_state"] == game_manager.GameManager.STATE_CONVERSATION):
         conversation_data = data["event_data"]
-        initialize_conversation(player_manager.get_player_data(), conversation_data)
+        initialize_conversation(game_manager.GameManager._player_manager.get_player_data, conversation_data)
 
 def _conversation_command_event_handler(event_name, data):
     pass

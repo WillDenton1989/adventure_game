@@ -1,5 +1,6 @@
 import battle_manager
-import player_manager
+#import player_manager
+from player_manager import PlayerManager
 import event_manager
 import input_manager
 import level_parser
@@ -9,7 +10,7 @@ import inventory_manager
 import item_manager
 
 class GameManager:
-    """Herald ye, i am the game manager of this game all shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
+    """Herald ye, i am the gay manager of this game all shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
     STATE_CHARACTER_CREATION = "state_character_creation"
     STATE_MOVEMENT = "state_movement"
@@ -18,14 +19,14 @@ class GameManager:
     STATE_INVENTORY = "state_inventory"
 
     _game_state = None
+    _player_manager = None
 
     def __init__(self):
         GameManager._game_state = GameManager.STATE_CHARACTER_CREATION
-
         self._initialize_managers()
         self._register_listeners()
-
-        player_manager.create_player()
+        # breakpoint()
+        GameManager._player_manager.create_player
         self._transition_to_movement()
 
     # attribute accessors
@@ -33,6 +34,10 @@ class GameManager:
     # @property
     def get_player_manager(self):
         return self._player_manager
+
+    # @property
+    def get_manager(self):
+        pass
 
     @property
     def game_state(self):
@@ -48,12 +53,13 @@ class GameManager:
         battle_manager.initialize() # do any other managers initializations here!! :)
         item_manager.initialize(self)
         inventory_manager.initialize(self)
-        player_manager.initialize()
-        input_manager.initialize(self)
+
+        GameManager._player_manager = PlayerManager() # make player manager a class
+        # player_manager.initialize()
+
+        input_manager.initialize(self, self._player_manager)
         level_manager.initialize()
         conversation_manager.initialize()
-
-        self._player_manager = player_manager # make player manager a class
 
     def _register_listeners(self):
         event_manager.listen(event_manager.BATTLE_EVENT, self._battle_started_handler)
@@ -79,12 +85,12 @@ class GameManager:
         event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
 
     def _quit(self):
-        player = player_manager.get_player_data()
+        player = self._player_manager.get_player_data
         print(f"Farewell {player['name']}")
         exit()
 
     def _game_end(self):
-        player_data = player_manager.get_player_data()
+        player_data = self._player_manager.get_player_data
         print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
         print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
         # should put the game over screen here when i make that.

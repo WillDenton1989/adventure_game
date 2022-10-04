@@ -1,3 +1,6 @@
+# from player_manager import PlayerManager
+# import game_manager
+
 class Heal:
     """this is a class for healing effect"""
 
@@ -6,17 +9,18 @@ class Heal:
         self._game_manager = game_manager
 
     def execute(self):
-        user = self._player_manager().get_player_data()
+        # user = self._player_manager().get_player_data()
+        user = self._game_manager._player_manager.get_player_data
 
         max_hp = user["max_hit_points"]
         old_hp = user["hit_points"]
         new_hp = old_hp + self._max_heal
 
         if(new_hp > max_hp):
-            self._player_manager().change_player_data("hit_points", max_hp)
+            self._game_manager._player_manager.update_player_data( {"hit_points" : max_hp} )
             print(f"{old_hp}, {max_hp}")
         else:
-            self._player_manager().change_player_data("hit_points", new_hp)
+            self._game_manager._player_manager.update_player_data( {"hit_points" : new_hp} )
             print(f"{old_hp}, {new_hp}")
 
     # private methods

@@ -1,10 +1,12 @@
 import battle_manager
-import player_manager
+from player_manager import PlayerManager
 import level_manager
 import battle_manager
 from game_manager import GameManager
 import input_manager
-import item_manager
+# import item_manager
+
+_player = None
 
 def game_board(player):
     moves = 0
@@ -14,6 +16,7 @@ def game_board(player):
     # i know i gave a little push back at first but now its bothering me.
     # add one check everytime this leaks. # of times: |||||, ||||
     while(battle_manager.is_someone_dead(player) == False):
+
         print("------------------------------------------------------------------------")
         level_manager.draw_map()
 
@@ -39,6 +42,8 @@ game_intro_message()
 # game_manager.initialize()
 GameManager()
 
-game_board(player_manager.get_player_data())
+_player = GameManager._player_manager.get_player_data
+
+game_board(_player)
 
 # is this the end?
