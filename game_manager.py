@@ -1,5 +1,4 @@
 import battle_manager
-#import player_manager
 from player_manager import PlayerManager
 import event_manager
 import input_manager
@@ -25,17 +24,14 @@ class GameManager:
         GameManager._game_state = GameManager.STATE_CHARACTER_CREATION
         self._initialize_managers()
         self._register_listeners()
-        # breakpoint()
         GameManager._player_manager.create_player
         self._transition_to_movement()
 
     # attribute accessors
 
-    # @property
     def get_player_manager(self):
         return self._player_manager
 
-    # @property
     def get_manager(self):
         pass
 
@@ -50,12 +46,11 @@ class GameManager:
         dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
 
     def _initialize_managers(self):
-        battle_manager.initialize() # do any other managers initializations here!! :)
+        battle_manager.initialize()
         item_manager.initialize(self)
         inventory_manager.initialize(self)
 
-        GameManager._player_manager = PlayerManager() # make player manager a class
-        # player_manager.initialize()
+        GameManager._player_manager = PlayerManager()
 
         input_manager.initialize(self, self._player_manager)
         level_manager.initialize()
@@ -93,12 +88,10 @@ class GameManager:
         player_data = self._player_manager.get_player_data
         print(f"\nCongratulations {player_data['name']}!\n\nYou have escaped the bleak and terrible dungeon!\n")
         print(f"\n{player_data['name']} has finished their Adventure! So far...\n")
-        # should put the game over screen here when i make that.
-        # also what should be here is the portal, either the trigger will be here or ill make another trigger for it.
         exit()
 
     def _game_over(self):
-        pass # when game board leaks again make the player hp hitting zero trigger an event here so that the game just ends.
+        pass
 
     # event handlers
 

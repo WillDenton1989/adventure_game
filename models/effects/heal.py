@@ -1,29 +1,23 @@
-# from player_manager import PlayerManager
-# import game_manager
+from models.effects.effect_base import EffectBase
 
-class Heal:
+class Heal(EffectBase):
     """this is a class for healing effect"""
 
     def __init__(self, max_heal, game_manager):
         self._max_heal = max_heal
-        self._game_manager = game_manager
+
+        super().__init__(game_manager)
 
     def execute(self):
-        # user = self._player_manager().get_player_data()
-        user = self._game_manager._player_manager.get_player_data
+        player = self.player_manager.get_player_data
 
-        max_hp = user["max_hit_points"]
-        old_hp = user["hit_points"]
+        max_hp = player["max_hit_points"]
+        old_hp = player["hit_points"]
         new_hp = old_hp + self._max_heal
 
         if(new_hp > max_hp):
-            self._game_manager._player_manager.update_player_data( {"hit_points" : max_hp} )
+            self.player_manager.update_player_data({ "hit_points" : max_hp })
             print(f"{old_hp}, {max_hp}")
         else:
-            self._game_manager._player_manager.update_player_data( {"hit_points" : new_hp} )
+            self.player_manager.update_player_data({ "hit_points" : new_hp })
             print(f"{old_hp}, {new_hp}")
-
-    # private methods
-
-    def _player_manager(self):
-        return self._game_manager.get_player_manager()

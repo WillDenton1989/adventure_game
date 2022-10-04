@@ -32,8 +32,7 @@ def _load_items(filename):
 
 def _execute_effects(item_choice):
     global _game_manager
-    # could take the list of available effects and just use that as a variable. but i would still need functions for them so idk.
-    # make a distinct option for this in input manager.
+
     effects = item_choice.effects
 
     for effect_key in effects:

@@ -4,7 +4,6 @@ import level_manager
 import battle_manager
 from game_manager import GameManager
 import input_manager
-# import item_manager
 
 _player = None
 
@@ -14,7 +13,7 @@ def game_board(player):
     # need to fix this sometime soon. tis leaky
     # we really really really really really need to fix this loop soon.
     # i know i gave a little push back at first but now its bothering me.
-    # add one check everytime this leaks. # of times: |||||, ||||
+    # add one check everytime this leaks. # of times: |||||, |||||
     while(battle_manager.is_someone_dead(player) == False):
 
         print("------------------------------------------------------------------------")

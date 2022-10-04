@@ -5,7 +5,7 @@ item_data:
     display_name: Red Potion
     type: 1 # consumable
     effects:
-      heal: 5 # heal is a key linking this item to the function that will heal, the value is how much will be healed.
+      heal: 5
     weight: 1
     value: 10
     consumable: True
@@ -73,11 +73,4 @@ item_data:
     value: 100000
     consumable: False
     equipable: True
-
-effects_data:
-  heal: 1
-  damage: 1
-  attack_damage: 1
-  defense: 1
-  mana: 1
 ...

@@ -27,7 +27,7 @@ def _display_inventory():
     print("\n------------------------------------------------------------------------\n")
     print("Here is your inventory:\n")
     element_number = 1
-    # print(_player_inventory)
+
     if(len(_player_inventory) == 0):
         print("Your inventory is empty.")
     else:

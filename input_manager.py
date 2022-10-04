@@ -1,6 +1,5 @@
 from game_manager import GameManager
 import event_manager
-# import player_manager
 from player_manager import PlayerManager
 
 _game_manager = None
@@ -11,7 +10,7 @@ _player_manager = None
 def initialize(game_manager, player_manager):
     global _game_manager
     global _player_manager
-    # breakpoint()
+
     _game_manager = game_manager
     _player_manager = player_manager
 
@@ -69,7 +68,6 @@ def _parse_player_creation(input):
     return input
 
 def _prompt():
-    # _player_manager = player_manager.PlayerManager
     player = _player_data()
     if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         return "A name, liege? "
@@ -127,9 +125,6 @@ def _parse_battle_input(input):
     elif(input == "defend" or input == "d"):
         data["command"] = "defend"
         event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
-    elif(input == "inventory" or input == "i"):
-        # event_manager.trigger_event(event_manager.OPEN_INVENTORY_EVENT, data)
-        pass
     else:
         show_controls()
 

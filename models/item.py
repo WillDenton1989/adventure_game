@@ -3,10 +3,8 @@
 class Item:
     """builds the basics for items"""
 
-    # type
     VALID_TYPES = ["junk", "consumable", "weapon", "armor", "treasure"]
 
-    # this is just the constructor, fml
     def __init__(self, display_name = None, VALID_TYPES = 0, effects = None, weight = 1, value = 1, consumable = False, equipable = False):
         self._display_name = display_name
         self._type = VALID_TYPES
@@ -22,7 +20,6 @@ class Item:
 
     # Attribute accessors
 
-    # @property is a decorator.
     @property
     def consumable(self):
         return self._consumable

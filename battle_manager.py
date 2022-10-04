@@ -1,7 +1,5 @@
 #battle manager
-#eventually revamp combat system including defend and eventually add weapons and armor.
 from random import randint
-# import player_manager
 import npc_manager
 import input_manager
 import event_manager
@@ -35,7 +33,6 @@ def _initialize_battle(player, monster):
 
     print(f"\n{player['name']} is fighting the legendary {monster['name']}!!!\n")
     npc_manager.monster_catchphrase_generator(monster)
-    # input_manager.show_controls()
 
     _run_battle()
 
@@ -111,7 +108,7 @@ def _monster_death(player, monster):
         return True
     return False
 
-def _player_death(player, monster): # was monster death. i assume these were accidently backwards
+def _player_death(player, monster):
     if(is_someone_dead(player) == True):
         print(f"\n\n{player['name']} has been slain by {monster['name']}")
         return True
@@ -122,8 +119,6 @@ def _player_death(player, monster): # was monster death. i assume these were acc
 def _state_change_event_handler(event_name, data):
     if(data["new_state"] == GameManager.STATE_BATTLE):
         battle_data = data["event_data"]
-        # when i get the class hieracrchy right i think i should move this to game manager so that this "class" doesnt need to know about game manager?
-        # fix how this is getting player data. its disgusting.
         _initialize_battle(GameManager._player_manager.get_player_data, battle_data)
 
 def _battle_command_event_handler(event_name, data):

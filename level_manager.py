@@ -1,13 +1,11 @@
 # where the map lives.
 import player_manager
-# from player_manager import PlayerManager
 import battle_manager
 import input_manager
 import yaml
 import event_manager
 import input_manager
 import game_manager
-#from game_manager import GameManager
 
 _objects = []
 _events = []
@@ -39,7 +37,6 @@ def load_player_data(yaml_file):
 
 def draw_map():
     global _objects
-    # fix how this is getting player data. its disgusting.
     objects_to_draw = [game_manager.GameManager._player_manager.get_player_data]
     objects_to_draw.extend(_objects)
 
@@ -88,7 +85,6 @@ def _can_player_move_to_coordinate(column, row):
     return True
 
 def _move(direction):
-    # fix how this is getting player data. its disgusting.
     _player = game_manager.GameManager._player_manager.get_player_data
     new_column, new_row = _determine_new_coordinates(direction, _player["column"], _player["row"])
 

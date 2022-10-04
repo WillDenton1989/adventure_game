@@ -1,10 +1,8 @@
-#player manager
 import yaml
 import battle_manager
 import input_manager
 import event_manager
 import game_manager
-# from game_manager import GameManager
 import level_manager
 import item_manager
 from models.item import Item
@@ -27,10 +25,8 @@ class PlayerManager:
 
     @property
     def get_player_data(self):
-        # print(self._player)
         return self._player
 
-    # @property
     def update_player_data(self, data_1):
         return self._player.update(data_1)
 
@@ -52,7 +48,6 @@ class PlayerManager:
         return data["player"], data["starting_inventory"]
 
     def _set_player(self, player_data):
-        # global _player
         self._player = player_data
 
     def _create_starting_inventory(self, inventory_data):
@@ -65,7 +60,6 @@ class PlayerManager:
             event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
 
     def _execute_player_move(self, new_column, new_row):
-        # global _player
 
         self._player["column"] = new_column
         self._player["row"] = new_row
