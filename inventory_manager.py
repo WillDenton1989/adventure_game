@@ -4,7 +4,6 @@ import player_manager
 import event_manager
 import game_manager
 import input_manager
-from models.inventory import Inventory
 
 _player_inventory = []
 _game_manager = None
