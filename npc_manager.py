@@ -8,43 +8,6 @@ def enemy_npc_choice():
     else:
         return "defend"
 
-def name_generator(character_class):
-    y = 0# randint(0, 3)
-    x = randint(0, 16)
-    names = [
-    "Bob",
-    "Joe",
-    "Jeff",
-    "Bren",
-    "Mike",
-    "Dennis",
-    "Tupok",
-    "Biggie",
-    "Huell",
-    "Jerry",
-    "Scott",
-    "Clarence",
-    "Dan",
-    "Gary",
-    "Kyle",
-    "Theo",
-    "Jim Bob"
-    ]
-
-    dwarf_names = [
-        "Dain",
-        "Gimli",
-        "Kirk",
-        "Scotty"
-    ]
-
-    if("goblin" in character_class):
-        return names[x]
-    elif(character_class == "dwarf"):
-        return dwarf_names[y]
-    else:
-        return names[x]
-
 def monster_generator():
     x = randint(1, 6)
     npc_orc = {
@@ -112,27 +75,6 @@ def monster_generator():
         return npc_troll
     else:
         return npc_bandit
-
-def monster_catchphrase_generator(monster):
-    print("\nAs your foe engages you in glorious combat they cry out...")
-    if("Mike" in monster["name"]):
-        print("Why am I even in here, man? Making this was a waste of your time...")
-    elif("Scott" in monster["name"]):
-        print("Is that 'THE' father linux?")
-    elif("Gary" in monster["name"]):
-        print("It's Gary UwU XD")
-    elif("Theo" in monster["name"]):
-        print("It me, Thed the smooth brain")
-    elif("Dan" in monster["name"]):
-        print("Reeeeeeeee")
-    elif("Biggie" in monster["name"]):
-        print("It was all a dream...")
-    elif("Bren" in monster["name"]):
-        print("Gimme your pre workout! I neeeeeeed it!")
-    elif("Jim Bob" in monster["name"]):
-        print("Its Jesus' lesser known brother, Jim Bob the son of god!")
-    else:
-        print("We battle to the death!!")
 
 enemies_dict = {
     "npc_orc": {

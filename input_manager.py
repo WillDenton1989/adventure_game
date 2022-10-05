@@ -3,16 +3,13 @@ import event_manager
 from player_manager import PlayerManager
 
 _game_manager = None
-_player_manager = None
 
 # public methods
 
-def initialize(game_manager, player_manager):
+def initialize(game_manager):
     global _game_manager
-    global _player_manager
 
     _game_manager = game_manager
-    _player_manager = player_manager
 
 def show_controls():
     if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
@@ -52,9 +49,8 @@ def _game_state():
     return _game_manager.game_state
 
 def _player_data():
-    global _player_manager
-    # breakpoint()
-    return _player_manager.get_player_data
+    global _game_manager
+    return _game_manager.get_player_manager().player
 
 def _show_player_creation_controls():
     print("Type in your name and your adventure shall begin!\n")
@@ -68,13 +64,13 @@ def _parse_player_creation(input):
     return input
 
 def _prompt():
-    player = _player_data()
     if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
         return "A name, liege? "
     elif(_game_state() == GameManager.STATE_MOVEMENT):
         return "? "
     elif(_game_state() == GameManager.STATE_BATTLE):
-        return f"\nI await your command {player['name']}: "
+        player = _player_data()
+        return f"\nI await your command {player.name}: "
     elif(_game_state() == GameManager.STATE_CONVERSATION):
         return "What is your response? "
     elif(_game_state() == GameManager.STATE_INVENTORY):

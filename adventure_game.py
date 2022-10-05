@@ -20,7 +20,7 @@ def game_board(player):
         level_manager.draw_map()
 
         # ghetto hud for now.
-        print(f"{player['name']} hit points: {player['hit_points']}")
+        print(f"{player.name} hit points: {player.hit_points}")
         print(f"Moves taken: {moves}")
         print(GameManager._game_state)
 
@@ -29,7 +29,7 @@ def game_board(player):
         moves = moves + 1
 
     if(battle_manager.is_someone_dead(player) == True):
-        print(f"\n{player['name']} has perished in the depths of the dungeon, forever lost to its evil...\n")
+        print(f"\n{player.name} has perished in the depths of the dungeon, forever lost to its evil...\n")
 
 def game_intro_message():
     print("\nWelcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
@@ -39,9 +39,9 @@ def game_intro_message():
 game_intro_message()
 
 # game_manager.initialize()
-GameManager()
+game_manager = GameManager()
 
-_player = GameManager._player_manager.get_player_data
+_player = game_manager.get_player_manager().player
 
 game_board(_player)
 

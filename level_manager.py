@@ -5,20 +5,16 @@ import input_manager
 import yaml
 import event_manager
 import input_manager
-import game_manager
 
 _objects = []
 _events = []
 _current_level = None
+_game_manager = None
 
-def initialize():
-    event_manager.listen(event_manager.MOVEMENT_EVENT, _movement_event_handler)
-
-def add_object(object, _events=[]):
-    _objects.append(object)
-
-    for event_name in _events:
-        _add_event(event_name, object)
+def initialize(game_manager):
+    global _game_manager
+    _game_manager = game_manager
+    _register_listeners()
 
 def set_current_level(level):
     global _current_level
@@ -36,8 +32,8 @@ def load_player_data(yaml_file):
     player_manager.update_player_data(data['player'])
 
 def draw_map():
-    global _objects
-    objects_to_draw = [game_manager.GameManager._player_manager.get_player_data]
+    global _objects, _game_manager
+    objects_to_draw = [_game_manager.get_player_manager().player]
     objects_to_draw.extend(_objects)
 
     col_index = 0
@@ -49,7 +45,7 @@ def draw_map():
             if(object == None):
                 print(chr(column), end = "")
             else:
-                print(chr(object["symbol"]), end = "")
+                print(chr(object.symbol), end = "")
             col_index += 1
         print("\r")
         row_index += 1
@@ -57,9 +53,9 @@ def draw_map():
 
 # private methods
 
-def _add_event(event_name, data):
-    location = { "row": data["row"], "column": data["column"] }
-    _events.append({ "event_name": event_name, "data": data, "location": location })
+def _register_listeners():
+    event_manager.listen(event_manager.MOVEMENT_EVENT, _movement_event_handler)
+    event_manager.listen(event_manager.ENTITIES_UPDATED_EVENT, _entities_updated_event_handler)
 
 def _trigger_level_events(column, row):
     for event in _events:
@@ -85,8 +81,8 @@ def _can_player_move_to_coordinate(column, row):
     return True
 
 def _move(direction):
-    _player = game_manager.GameManager._player_manager.get_player_data
-    new_column, new_row = _determine_new_coordinates(direction, _player["column"], _player["row"])
+    player = _game_manager.get_player_manager().player
+    new_column, new_row = _determine_new_coordinates(direction, player.column, player.row)
 
     if(_can_player_move_to_coordinate(new_column, new_row) == True):
         data = { "location": { "column": new_column, "row": new_row } }
@@ -118,12 +114,29 @@ def _is_coordinate_passable(map, column, row):
 
 def _object_at_coordinate(_objects, column, row):
     for object in _objects:
-        if(object["column"] == column and object["row"] == row):
+        if(object.column == column and object.row == row):
             return object
 
     return None
+
+def _update_entities(updated_entities):
+    global _objects , _events
+
+    _objects = updated_entities
+    _events = []
+
+    for entity in _objects:
+        for event_name in entity.events:
+            _add_event(event_name, entity)
+
+def _add_event(event_name, entity):
+    location = { "row": entity.row, "column": entity.column }
+    _events.append({ "event_name": event_name, "data": entity, "location": location })
 
 # event handlers
 
 def _movement_event_handler(event_name, data):
     _move(data["direction"])
+
+def _entities_updated_event_handler(event_name, data):
+    _update_entities(data["updated_entities"])

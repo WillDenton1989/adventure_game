@@ -45,6 +45,8 @@ objects:
     location:
       column: 5
       row: 6
+    events:
+      - find_loot_event
   - object_name: finish_line
     key: finish_line
     location:

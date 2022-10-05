@@ -1,6 +1,7 @@
 #where the npc data shall live.
 ---
 goblin:
+  entity_type: monster
   character_class: goblin
   max_hit_points: 5
   hit_points: 5
@@ -10,6 +11,7 @@ goblin:
   speed: 6
   symbol: 9785
 bandit:
+  entity_type: monster
   character_class: bandit
   max_hit_points: 10
   hit_points: 10
@@ -19,6 +21,7 @@ bandit:
   speed: 5
   symbol: 9792
 dwarf:
+  entity_type: npc
   character_class: dwarf
   max_hit_points: 15
   hit_points: 15
@@ -28,6 +31,8 @@ dwarf:
   speed: 3
   symbol: 9786
 loot_chest:
+  entity_type: treasure
   symbol: 9691
 finish_line:
+  entity_type: exit
   symbol: 43359
