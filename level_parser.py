@@ -1,7 +1,6 @@
 #this is tha map reader boi.
 import yaml
 import level_manager
-import player_manager
 import event_manager
 from models.level import Level
 

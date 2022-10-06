@@ -3,7 +3,7 @@ import event_manager
 
 from managers.monster_manager import MonsterManager
 from managers.npc_manager import NpcManager
-from player_manager import PlayerManager
+from managers.player_manager import PlayerManager
 from models.entities.exit import Exit
 from models.entities.treasure import Treasure
 

@@ -7,14 +7,12 @@ import conversation_manager
 import inventory_manager
 import item_manager
 from managers.entity_manager import EntityManager
-from player_manager import PlayerManager
 from models.state import State
 
 class GameManager:
     """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
     _game_state = None
-    _player_manager = None
     _entity_manager = None
 
     def __init__(self):
@@ -95,7 +93,7 @@ class GameManager:
         self._set_state(State.STATE_BATTLE, battle_data)
 
     def _start_conversation(self, conversation_data):
-        conversation_data.update({ "player": self._player_manager.player })
+        conversation_data.update({ "player": self.player })
         self._set_state(State.STATE_CONVERSATION, conversation_data)
 
     # event handlers

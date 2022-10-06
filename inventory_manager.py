@@ -1,6 +1,5 @@
 #where the inventory lives.
 import yaml
-import player_manager
 import event_manager
 import input_manager
 from models.state import State
