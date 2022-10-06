@@ -11,5 +11,5 @@ class EffectBase:
         return self._game_manager
 
     @property
-    def player_manager(self):
-        return self._game_manager.get_player_manager()
+    def player(self):
+        return self._game_manager.player

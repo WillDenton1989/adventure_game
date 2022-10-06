@@ -26,7 +26,6 @@ def show_controls():
 def parse_input():
     show_controls()
     player_input = input(_prompt()).strip()
-
     if(_game_state() == State.STATE_CHARACTER_CREATION):
         return _parse_player_creation(player_input)
     elif(_game_state() == State.STATE_MOVEMENT):

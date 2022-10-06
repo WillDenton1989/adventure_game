@@ -3,7 +3,7 @@
 import battle_manager
 import level_manager
 import battle_manager
-from game_manager import GameManager
+from managers.game_manager import GameManager
 import input_manager
 from models.state import State
 

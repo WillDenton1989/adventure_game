@@ -40,11 +40,10 @@ class GameManager:
 
     def _initialize_managers(self):
         self._entity_manager = EntityManager()
+        input_manager.initialize(self._game_state)
         item_manager.initialize(self)
         inventory_manager.initialize()
-        input_manager.initialize(self._game_state)
         battle_manager.initialize()
-        # self._player_manager = PlayerManager() # REFACTOR:
         level_manager.initialize(self)
         conversation_manager.initialize()
 
@@ -80,14 +79,12 @@ class GameManager:
         level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
 
     def _quit(self):
-        player = self._player_manager.player
-        print(f"Farewell {player.name}")
+        print(f"Farewell {self.player.name}")
         exit()
 
     def _game_end(self):
-        player_data = self._player_manager.player
-        print(f"\nCongratulations {player_data.name}!\n\nYou have escaped the bleak and terrible dungeon!\n")
-        print(f"\n{player_data.name} has finished their Adventure! So far...\n")
+        print(f"\nCongratulations {self.player.name}!\n\nYou have escaped the bleak and terrible dungeon!\n")
+        print(f"\n{self.player.name} has finished their Adventure! So far...\n")
         exit()
 
     def _game_over(self):

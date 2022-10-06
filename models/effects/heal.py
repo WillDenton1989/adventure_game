@@ -9,7 +9,7 @@ class Heal(EffectBase):
         super().__init__(game_manager)
 
     def execute(self):
-        player = self.player_manager.player
+        player = self.player
 
         max_hp = player.max_hit_points
         old_hp = player.hit_points

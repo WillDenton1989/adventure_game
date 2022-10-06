@@ -1,7 +1,6 @@
 # the item manager.
 import yaml
 import event_manager
-import game_manager
 from models.item import Item
 from models.effects.heal import Heal
 
@@ -55,7 +54,7 @@ def _execute_effects(item_choice):
             print("There is no effect for this item. This could be an error.")
 
 def _damage_user(damage_amount):
-    player = _game_manager._player_manager.player
+    player = _game_manager.player
     hp = player.hit_points
     new_hp = hp - damage_amount
     player.hit_points = new_hp
