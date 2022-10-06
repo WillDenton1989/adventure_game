@@ -36,10 +36,10 @@ class ManagerBase(ABC):
         pass
 
     @abstractmethod
-    def _handle_game_state_change(self, previous_state, new_state):
+    def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     # event handlers
 
     def _state_change_event_handler(self, event_name, data):
-        self._handle_game_state_change(data["previous_state"], data["new_state"])
+        self._handle_game_state_change(data["previous_state"], data["new_state"], data)

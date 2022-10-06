@@ -88,7 +88,7 @@ class InventoryManager(ManagerBase):
         else:
             return False
 
-    def _handle_game_state_change(self, previous_state, new_state):
+    def _handle_game_state_change(self, previous_state, new_state, data):
         self._show_inventory()
 
     # event handlers

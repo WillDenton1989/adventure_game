@@ -81,7 +81,7 @@ class EntityManager(ManagerBase):
         updated_entities = self._entities.copy()
         event_manager.trigger_event(event_manager.ENTITIES_UPDATED_EVENT, { "updated_entities": updated_entities })
 
-    def _handle_game_state_change(self, previous_state, new_state):
+    def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     # event handlers

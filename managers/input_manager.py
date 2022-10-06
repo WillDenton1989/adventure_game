@@ -151,7 +151,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
         else:
             self._parse_input()
 
-    def _handle_game_state_change(self, previous_state, new_state):
+    def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     # event handlers

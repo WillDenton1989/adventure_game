@@ -3,13 +3,13 @@ import event_manager
 from managers.input_manager import InputManager
 import level_parser
 import level_manager
-import conversation_manager
 import item_manager
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 from managers.entity_manager import EntityManager
 from models.state import State
 from managers.inventory_manager import InventoryManager
+from managers.conversation_manager import ConversationManager
 
 class GameManager(ManagerBase):
     """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
@@ -44,7 +44,7 @@ class GameManager(ManagerBase):
         self._inventory_manager = InventoryManager()
         self._battle_manager = BattleManager()
         level_manager.initialize(self)
-        conversation_manager.initialize()
+        self._conversation_manager = ConversationManager()
 
     def _register_listeners(self):
         event_manager.listen(event_manager.BATTLE_EVENT, self._battle_started_handler)
@@ -89,7 +89,7 @@ class GameManager(ManagerBase):
         print(f"\n{self.player.name} has finished their Adventure! So far...\n")
         exit()
 
-    def _handle_game_state_change(self, previous_state, new_state):
+    def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     def _start_battle(self, battle_data):
