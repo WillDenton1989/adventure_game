@@ -54,10 +54,7 @@ def _execute_effects(item_choice):
             print("There is no effect for this item. This could be an error.")
 
 def _damage_user(damage_amount):
-    player = _game_manager.player
-    hp = player.hit_points
-    new_hp = hp - damage_amount
-    player.hit_points = new_hp
+    print(damage_amount)
 
 def _increase_user_attack_damage(ad_amount):
     print(ad_amount)

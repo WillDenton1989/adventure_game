@@ -1,19 +1,21 @@
 import yaml
 import event_manager
 
+from managers.manager_base import ManagerBase
 from managers.monster_manager import MonsterManager
 from managers.npc_manager import NpcManager
 from managers.player_manager import PlayerManager
 from models.entities.exit import Exit
 from models.entities.treasure import Treasure
 
-class EntityManager:
+class EntityManager(ManagerBase):
     """the basics of the entity manager"""
 
     def __init__(self):
+        ManagerBase.__init__(self)
+
         self._entities = []
 
-        self._register_listeners()
         self._load_entity_templates()
         self._create_sub_managers()
 
@@ -32,6 +34,9 @@ class EntityManager:
 
     def _register_listeners(self):
         event_manager.listen(event_manager.CREATE_ENTITY_EVENT, self._create_entity_event_handler)
+
+    def _unregister_listeners(self):
+        pass
 
     def _load_entity_templates(self):
         with open("data/npc_data.yaml") as f: # hardcoded filename no bueno
@@ -75,6 +80,9 @@ class EntityManager:
         self._entities.append(entity)
         updated_entities = self._entities.copy()
         event_manager.trigger_event(event_manager.ENTITIES_UPDATED_EVENT, { "updated_entities": updated_entities })
+
+    def _handle_game_state_change(self, previous_state, new_state):
+        pass
 
     # event handlers
 

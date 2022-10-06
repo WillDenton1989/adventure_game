@@ -1,24 +1,25 @@
 import battle_manager
 import event_manager
-import input_manager
+from managers.input_manager import InputManager
 import level_parser
 import level_manager
 import conversation_manager
-import inventory_manager
 import item_manager
+from managers.input_manager import InputManager
+from managers.manager_base import ManagerBase
 from managers.entity_manager import EntityManager
 from models.state import State
+from managers.inventory_manager import InventoryManager
 
-class GameManager:
+class GameManager(ManagerBase):
     """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
-    _game_state = None
-    _entity_manager = None
-
     def __init__(self):
-        self._set_state(State.STATE_CHARACTER_CREATION)
+        ManagerBase.__init__(self)
+
+        self.game_state = State.STATE_CHARACTER_CREATION
+
         self._initialize_managers()
-        self._register_listeners()
         self._start()
 
     # attribute accessors
@@ -30,17 +31,13 @@ class GameManager:
     def player(self):
         return self._entity_manager.player
 
-    @property
-    def game_state(self):
-        return self._game_state
-
     # private methods
 
     def _initialize_managers(self):
         self._entity_manager = EntityManager()
-        input_manager.initialize(self._game_state)
+        self._input_manager = InputManager()
         item_manager.initialize(self)
-        inventory_manager.initialize()
+        self._inventory_manager = InventoryManager()
         battle_manager.initialize()
         level_manager.initialize(self)
         conversation_manager.initialize()
@@ -58,9 +55,12 @@ class GameManager:
         event_manager.listen(event_manager.QUIT_EVENT, self._quit_event_handler)
         event_manager.listen(event_manager.GAME_FINISH_EVENT, self._game_finish_event_handler)
 
+    def _unregister_listeners(self):
+        pass
+
     def _set_state(self, new_state, event_data = []):
-        previous_state = GameManager._game_state
-        GameManager._game_state = new_state
+        previous_state = self.game_state
+        self.game_state = new_state
         self._dispatch_state_change(previous_state, new_state, event_data)
 
     def _dispatch_state_change(self, previous_state, new_state, event_data):
@@ -85,7 +85,7 @@ class GameManager:
         print(f"\n{self.player.name} has finished their Adventure! So far...\n")
         exit()
 
-    def _game_over(self):
+    def _handle_game_state_change(self, previous_state, new_state):
         pass
 
     def _start_battle(self, battle_data):

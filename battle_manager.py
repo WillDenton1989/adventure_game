@@ -1,7 +1,6 @@
 #battle manager
 from random import randint
-import npc_manager
-import input_manager
+from managers.input_manager import InputManager
 import event_manager
 from models.name_generator import NameGenerator
 from models.catchphrase_generator import CatchphraseGenerator
@@ -58,15 +57,22 @@ def _run_battle():
 
     print(f"\n\nRound {_round}: {player.name} - {player.hit_points}, {monster.name} - {monster.hit_points}")
     print(f"\n{player.name}: defense: {player.defense} attack: {player.attack_power}, {monster.name}: defense: {monster.defense} attack: {monster.attack_power}")
-    input_manager.parse_input()
+    event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
 
 def _handle_player_decision(decision):
     global _player_decision
     global _monster_decision
 
     _player_decision = decision
-    _monster_decision = npc_manager.enemy_npc_choice()
+    _monster_decision = _enemy_npc_choice()
     _execute_battle_round()
+
+def _enemy_npc_choice():
+    x = randint(1, 10)
+    if(x <= 7):
+        return "attack"
+    else:
+        return "defend"
 
 def _execute_battle_round():
     player, monster = _battle["player"], _battle["monster"]

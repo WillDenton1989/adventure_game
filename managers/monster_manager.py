@@ -1,10 +1,12 @@
 from models.entities.monster import Monster
+from managers.manager_base import ManagerBase
 from models.name_generator import NameGenerator
 from models.catchphrase_generator import CatchphraseGenerator
 
-class MonsterManager:
-
+class MonsterManager(ManagerBase):
     def __init__(self):
+        ManagerBase.__init__(self)
+
         self._monsters = []
 
     # public methods
@@ -17,3 +19,14 @@ class MonsterManager:
         self._monsters.append(monster)
 
         return monster
+
+    # private methods
+
+    def _register_listeners(self):
+        pass
+
+    def _unregister_listeners(self):
+        pass
+
+    def _handle_game_state_change(self, previous_state, new_state):
+        pass

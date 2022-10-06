@@ -1,7 +1,6 @@
 # where the conversation lives.
 import event_manager
-import npc_manager
-import input_manager
+from managers.input_manager import InputManager
 from models.state import State
 
 def initialize():
@@ -13,7 +12,7 @@ def initialize():
 def _run_conversation():
     # dwarf dialogue should come from a yaml file
     print("hello buddy! Whats your name?")
-    input_manager.parse_input()
+    event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
 
     # player dialogue choices should also come from a yaml file
 

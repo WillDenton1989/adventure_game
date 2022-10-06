@@ -1,9 +1,8 @@
 # where the map lives.
 import battle_manager
-import input_manager
+from managers.input_manager import InputManager
 import yaml
 import event_manager
-import input_manager
 from models.state import State
 
 _game_manager = None

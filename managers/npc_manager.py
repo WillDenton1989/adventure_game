@@ -1,8 +1,10 @@
 from models.entities.npc import Npc
+from managers.manager_base import ManagerBase
 from models.name_generator import NameGenerator
 
-class NpcManager:
+class NpcManager(ManagerBase):
     def __init__(self):
+        ManagerBase.__init__(self)
         self._npcs = []
 
     # public methods
@@ -14,3 +16,14 @@ class NpcManager:
         self._npcs.append(npc)
 
         return npc
+
+    # private methods
+
+    def _register_listeners(self):
+        pass
+
+    def _unregister_listeners(self):
+        pass
+
+    def _handle_game_state_change(self, previous_state, new_state):
+        pass
