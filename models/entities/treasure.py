@@ -4,3 +4,8 @@ class Treasure(EntityBase):
 
     def __init__(self, data):
         EntityBase.__init__(self, data)
+
+    # private methods
+
+    def _sort_index(self):
+        return 100

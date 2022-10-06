@@ -1,5 +1,7 @@
-class EntityBase:
-    """The entity base class"""
+from abc import ABC, abstractmethod
+
+class EntityBase(ABC):
+    """The basics for any entity that will be drawn on the map"""
 
     def __init__(self, data):
         self._name = data.get("name")
@@ -8,6 +10,9 @@ class EntityBase:
         self._original_symbol = data["symbol"]
         self._events = data.get("events")
         self._updated_symbol = None
+
+    def __lt__(self, other):
+        return self._sort_index() > other._sort_index()
 
     # attribute accessors
 
@@ -49,3 +54,9 @@ class EntityBase:
     @property
     def events(self):
         return self._events
+
+    # private methods
+
+    @abstractmethod
+    def _sort_index(self):
+        pass

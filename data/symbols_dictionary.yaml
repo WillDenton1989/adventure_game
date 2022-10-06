@@ -7,5 +7,14 @@ BR: 9496
 HH: 9472
 VV: 9474
 EE: 8901
-#communism
+
+# ENTITY SYMBOLS
+
+player: 9791
+goblin: 9785
+bandit: 9792
+dwarf: 9786
+loot_chest: 9691
+finish_line: 43359
+corpse: 120
 ...

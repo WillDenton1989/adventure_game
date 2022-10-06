@@ -3,24 +3,20 @@ from random import randint
 import npc_manager
 import input_manager
 import event_manager
-from game_manager import GameManager
 from models.name_generator import NameGenerator
 from models.catchphrase_generator import CatchphraseGenerator
+from models.state import State
 
-SYMBOL_DEAD = 120
+SYMBOL_DEAD = "corpse"
 
-_game_manager = None
 _player_decision = None
 _monster_decision = None
 _battle = {}
 _round = 0
 
-
 # public methods
 
-def initialize(game_manager):
-    global _game_manager
-    _game_manager = game_manager
+def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
     event_manager.listen(event_manager.BATTLE_COMMAND_EVENT, _battle_command_event_handler)
 
@@ -32,7 +28,8 @@ def is_someone_dead(character):
 
 # private methods
 
-def _initialize_battle(player, monster):
+def _initialize_battle(data):
+    player, monster = data["player"], data["entity"]
     if(_check_for_loot(monster) == True): return
 
     player.prepare_for_battle()
@@ -127,9 +124,9 @@ def _player_death(player, monster):
 # event handlers
 
 def _state_change_event_handler(event_name, data):
-    if(data["new_state"] == GameManager.STATE_BATTLE):
+    if(data["new_state"] == State.STATE_BATTLE):
         battle_data = data["event_data"]
-        _initialize_battle(_game_manager.get_player_manager().player, battle_data)
+        _initialize_battle(data["event_data"])
 
 def _battle_command_event_handler(event_name, data):
     _handle_player_decision(data["command"])

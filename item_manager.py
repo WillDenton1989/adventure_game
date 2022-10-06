@@ -1,6 +1,5 @@
 # the item manager.
 import yaml
-import player_manager
 import event_manager
 import game_manager
 from models.item import Item

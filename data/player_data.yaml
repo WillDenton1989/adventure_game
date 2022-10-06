@@ -7,7 +7,7 @@ player:
   defense: 1
   defense_scalar: 1
   speed: 5
-  symbol: 9791
+  symbol: player
 starting_inventory:
   - red_potion
   - rock

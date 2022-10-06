@@ -1,5 +1,4 @@
 import battle_manager
-from player_manager import PlayerManager
 import event_manager
 import input_manager
 import level_parser
@@ -8,33 +7,30 @@ import conversation_manager
 import inventory_manager
 import item_manager
 from managers.entity_manager import EntityManager
+from player_manager import PlayerManager
+from models.state import State
 
 class GameManager:
-    """Herald ye, i am the gay manager of this game all shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
-
-    STATE_CHARACTER_CREATION = "state_character_creation"
-    STATE_MOVEMENT = "state_movement"
-    STATE_BATTLE = "state_battle"
-    STATE_CONVERSATION = "state_conversation"
-    STATE_INVENTORY = "state_inventory"
+    """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
     _game_state = None
     _player_manager = None
     _entity_manager = None
 
     def __init__(self):
-        GameManager._game_state = GameManager.STATE_CHARACTER_CREATION
+        self._set_state(State.STATE_CHARACTER_CREATION)
         self._initialize_managers()
         self._register_listeners()
-        self._transition_to_movement()
+        self._start()
 
     # attribute accessors
 
     def get_player_manager(self):
-        return self._player_manager
+        return self.player
 
-    def get_manager(self):
-        pass
+    @property
+    def player(self):
+        return self._entity_manager.player
 
     @property
     def game_state(self):
@@ -42,19 +38,15 @@ class GameManager:
 
     # private methods
 
-    def _transition_to_movement(self):
-        self._set_state(GameManager.STATE_MOVEMENT)
-        dungeon_map = level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
-
     def _initialize_managers(self):
         self._entity_manager = EntityManager()
-        battle_manager.initialize(self)
         item_manager.initialize(self)
-        inventory_manager.initialize(self)
-        input_manager.initialize(self)
-        self._player_manager = PlayerManager()
+        inventory_manager.initialize()
+        input_manager.initialize(self._game_state)
+        battle_manager.initialize()
+        # self._player_manager = PlayerManager() # REFACTOR:
         level_manager.initialize(self)
-        conversation_manager.initialize(self)
+        conversation_manager.initialize()
 
     def _register_listeners(self):
         event_manager.listen(event_manager.BATTLE_EVENT, self._battle_started_handler)
@@ -79,6 +71,14 @@ class GameManager:
 
         event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
 
+    def _start(self):
+        self._entity_manager.create_player()
+        self._transition_to_movement()
+
+    def _transition_to_movement(self):
+        self._set_state(State.STATE_MOVEMENT)
+        level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
+
     def _quit(self):
         player = self._player_manager.player
         print(f"Farewell {player.name}")
@@ -93,25 +93,33 @@ class GameManager:
     def _game_over(self):
         pass
 
+    def _start_battle(self, battle_data):
+        battle_data.update({ "player": self.player })
+        self._set_state(State.STATE_BATTLE, battle_data)
+
+    def _start_conversation(self, conversation_data):
+        conversation_data.update({ "player": self._player_manager.player })
+        self._set_state(State.STATE_CONVERSATION, conversation_data)
+
     # event handlers
 
     def _battle_started_handler(self, event, data):
-        self._set_state(GameManager.STATE_BATTLE, data)
+        self._start_battle(data)
 
     def _battle_ended_handler(self, event, data):
-        self._set_state(GameManager.STATE_MOVEMENT, data)
+        self._set_state(State.STATE_MOVEMENT, data)
 
     def _inventory_opened_handler(self, event, data):
-        self._set_state(GameManager.STATE_INVENTORY, data)
+        self._set_state(State.STATE_INVENTORY, data)
 
     def _inventory_closed_handler(self, event, data):
-        self._set_state(GameManager.STATE_MOVEMENT, data)
+        self._set_state(State.STATE_MOVEMENT, data)
 
     def _conversation_started_handler(self, event, data):
-        self._set_state(GameManager.STATE_CONVERSATION, data)
+        self._start_conversation(data)
 
     def _conversation_ended_handler(self, event, data):
-        self._set_state(GameManager.STATE_MOVEMENT, data)
+        self._set_state(State.STATE_MOVEMENT, data)
 
     def _quit_event_handler(self, event_name, data):
         self._quit()

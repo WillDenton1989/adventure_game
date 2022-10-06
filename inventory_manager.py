@@ -2,21 +2,18 @@
 import yaml
 import player_manager
 import event_manager
-import game_manager
 import input_manager
+from models.state import State
 
 _player_inventory = []
-_game_manager = None
+_state = None
 
 # public methods
 
-def initialize(game_manager):
-    global _game_manager
+def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
     event_manager.listen(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, _add_item_to_inventory_event_handler)
     event_manager.listen(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, _inventory_command_event_handler)
-
-    _game_manager = game_manager
 
 # private methods
 
@@ -37,21 +34,15 @@ def _display_inventory():
     print("\n------------------------------------------------------------------------\n")
 
 def _inventory_screen():
+    global _state
+    if(_state != State.STATE_INVENTORY): return
     _display_inventory()
     input_manager.parse_input()
-    _inventory_continue()
+    _inventory_screen()
 
 def _add_item_to_inventory(item):
     global _player_inventory
     return _player_inventory.append(item)
-
-def _inventory_continue(): # this function is necessary for _inventory_screen to work until the gameboard loop is reworked.
-    if(_game_state() == game_manager.GameManager.STATE_INVENTORY):
-        _inventory_screen()
-
-def _game_state():
-    global _game_manager
-    return _game_manager.game_state
 
 def _select_item(inventory_position):
     if(_is_selected_item_in_inventory_range(inventory_position) == True):
@@ -109,11 +100,15 @@ def _is_item_equipable(inventory_position):
     else:
         return False
 
+def _set_state(new_state):
+    global _state
+    _state = new_state
+    _inventory_screen()
+
 # event handlers
 
 def _state_change_event_handler(event_name, data):
-    if(data["new_state"] == game_manager.GameManager.STATE_INVENTORY):
-        _inventory_screen()
+        _set_state(data["new_state"])
 
 def _add_item_to_inventory_event_handler(event_name, item_object_data):
     _add_item_to_inventory(item_object_data)

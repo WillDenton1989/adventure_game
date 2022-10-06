@@ -1,29 +1,30 @@
 import yaml
-import battle_manager
 import input_manager
 import event_manager
-import game_manager
-import level_manager
 import item_manager
 from models.item import Item
 from models.entities.player import Player
 
 class PlayerManager:
-    """this is the player manager class"""
+    """this class will manage the player character."""
 
     def __init__(self):
         event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
-        player_data, inventory_data = self._load_player_default_data("data/player_data.yaml")
+        player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
 
         self._set_player(player_data)
-        self._create_starting_inventory(inventory_data)
-        self._create_player()
 
     # attribute accessor bois.
 
     @property
     def player(self):
         return self._player
+
+    # public methods
+
+    def create_player(self):
+        self._player.name = input_manager.parse_input()
+        self._create_starting_inventory(self._inventory_data)
 
     # private methods
 
@@ -35,9 +36,6 @@ class PlayerManager:
 
     def _set_player(self, player_data):
         self._player = Player(player_data)
-
-    def _create_player(self):
-        self._player.name = input_manager.parse_input()
 
     def _create_starting_inventory(self, inventory_data):
         for item_key in inventory_data:

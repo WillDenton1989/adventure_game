@@ -14,3 +14,8 @@ class Monster(EntityBase, Battleable):
     @property
     def catchphrase(self):
         return self._catchphrase
+
+    # private method
+
+    def _sort_index(self):
+        return 300

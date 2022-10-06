@@ -9,7 +9,7 @@ goblin:
   defense: 0
   defense_scalar: .5
   speed: 6
-  symbol: 9785
+  symbol: goblin
 bandit:
   entity_type: monster
   character_class: bandit
@@ -19,7 +19,7 @@ bandit:
   defense: 1
   defense_scalar: 1
   speed: 5
-  symbol: 9792
+  symbol: bandit
 dwarf:
   entity_type: npc
   character_class: dwarf
@@ -29,10 +29,10 @@ dwarf:
   defense: 0
   defense_scalar: 1
   speed: 3
-  symbol: 9786
+  symbol: dwarf
 loot_chest:
   entity_type: treasure
-  symbol: 9691
+  symbol: loot_chest
 finish_line:
   entity_type: exit
-  symbol: 43359
+  symbol: finish_line

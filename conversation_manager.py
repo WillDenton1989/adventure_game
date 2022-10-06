@@ -1,14 +1,10 @@
 # where the conversation lives.
 import event_manager
-import game_manager
 import npc_manager
 import input_manager
+from models.state import State
 
-_game_manager = None
-
-def initialize(game_manager):
-    global _game_manager
-    _game_manager = game_manager
+def initialize():
     event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
     event_manager.listen(event_manager.CONVERSATION_EVENT, _conversation_command_event_handler)
 
@@ -21,17 +17,18 @@ def _run_conversation():
 
     # player dialogue choices should also come from a yaml file
 
-# event handlers
-
-def _initialize_conversation(player, npc):
+def _initialize_conversation(data):
+    npc = data["entity"]
+    player = data["player"]
     print(f"\n{player.name} has encountered the legendary {npc.name}!!!\n")
     _run_conversation()
 
+# event handlers
+
 def _state_change_event_handler(event_name, data):
-    global _game_manager
-    if(data["new_state"] == game_manager.GameManager.STATE_CONVERSATION):
+    if(data["new_state"] == State.STATE_CONVERSATION):
         conversation_data = data["event_data"]
-        _initialize_conversation(_game_manager.get_player_manager().player, conversation_data)
+        _initialize_conversation(conversation_data)
 
 def _conversation_command_event_handler(event_name, data):
     pass

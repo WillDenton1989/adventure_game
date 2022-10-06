@@ -1,26 +1,24 @@
-from game_manager import GameManager
 import event_manager
-from player_manager import PlayerManager
+from models.state import State
 
-_game_manager = None
+_state = None
 
 # public methods
 
-def initialize(game_manager):
-    global _game_manager
-
-    _game_manager = game_manager
+def initialize(state):
+    _register_listeners()
+    _set_state(state)
 
 def show_controls():
-    if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
+    if(_game_state() == State.STATE_CHARACTER_CREATION):
         _show_player_creation_controls()
-    elif(_game_state() == GameManager.STATE_MOVEMENT):
+    elif(_game_state() == State.STATE_MOVEMENT):
         _show_movement_controls()
-    elif(_game_state() == GameManager.STATE_BATTLE):
+    elif(_game_state() == State.STATE_BATTLE):
         _show_battle_controls()
-    elif(_game_state() == GameManager.STATE_CONVERSATION):
+    elif(_game_state() == State.STATE_CONVERSATION):
         _show_conversation_controls()
-    elif(_game_state() == GameManager.STATE_INVENTORY):
+    elif(_game_state() == State.STATE_INVENTORY):
         _show_inventory_controls()
     else:
         raise Exception("cannot show controls for your current game state.")
@@ -29,28 +27,31 @@ def parse_input():
     show_controls()
     player_input = input(_prompt()).strip()
 
-    if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
+    if(_game_state() == State.STATE_CHARACTER_CREATION):
         return _parse_player_creation(player_input)
-    elif(_game_state() == GameManager.STATE_MOVEMENT):
+    elif(_game_state() == State.STATE_MOVEMENT):
         return _parse_player_movement(player_input)
-    elif(_game_state() == GameManager.STATE_BATTLE):
+    elif(_game_state() == State.STATE_BATTLE):
         return _parse_battle_input(player_input)
-    elif(_game_state() == GameManager.STATE_CONVERSATION):
+    elif(_game_state() == State.STATE_CONVERSATION):
         return _parse_conversation_input(player_input)
-    elif(_game_state() == GameManager.STATE_INVENTORY):
+    elif(_game_state() == State.STATE_INVENTORY):
         return _parse_inventory_input(player_input)
     else:
-        raise Exception("cannot parse input for your current game state.")
+        raise Exception(f"cannot parse input for your current game state: {_game_state()}")
 
 # private methods
 
-def _game_state():
-    global _game_manager
-    return _game_manager.game_state
+def _register_listeners():
+    event_manager.listen(event_manager.STATE_CHANGE_EVENT, _state_change_event_handler)
 
-def _player_data():
-    global _game_manager
-    return _game_manager.get_player_manager().player
+def _set_state(state):
+    global _state
+    _state = state
+
+def _game_state():
+    global _state
+    return _state
 
 def _show_player_creation_controls():
     print("Type in your name and your adventure shall begin!\n")
@@ -64,16 +65,15 @@ def _parse_player_creation(input):
     return input
 
 def _prompt():
-    if(_game_state() == GameManager.STATE_CHARACTER_CREATION):
+    if(_game_state() == State.STATE_CHARACTER_CREATION):
         return "A name, liege? "
-    elif(_game_state() == GameManager.STATE_MOVEMENT):
+    elif(_game_state() == State.STATE_MOVEMENT):
         return "? "
-    elif(_game_state() == GameManager.STATE_BATTLE):
-        player = _player_data()
-        return f"\nI await your command {player.name}: "
-    elif(_game_state() == GameManager.STATE_CONVERSATION):
+    elif(_game_state() == State.STATE_BATTLE):
+        return f"\nI await your command: "
+    elif(_game_state() == State.STATE_CONVERSATION):
         return "What is your response? "
-    elif(_game_state() == GameManager.STATE_INVENTORY):
+    elif(_game_state() == State.STATE_INVENTORY):
         return "Select the item you wish to use, dude. "
     else:
         raise Exception("there is no prompt for your current game state.")
@@ -156,3 +156,6 @@ def _parse_inventory_input(input):
         parse_input()
 
 # event handlers
+
+def _state_change_event_handler(event_name, data):
+    _set_state(data["new_state"])

@@ -1,8 +1,9 @@
 import yaml
-
 import event_manager
+
 from managers.monster_manager import MonsterManager
 from managers.npc_manager import NpcManager
+from player_manager import PlayerManager
 from models.entities.exit import Exit
 from models.entities.treasure import Treasure
 
@@ -10,15 +11,22 @@ class EntityManager:
     """the basics of the entity manager"""
 
     def __init__(self):
+        self._entities = []
+
         self._register_listeners()
         self._load_entity_templates()
         self._create_sub_managers()
 
-        self._entities = []
-
     # attribute accessors
 
+    @property
+    def player(self):
+        return self._player_manager.player
+
     # public methods
+
+    def create_player(self):
+        self._player_manager.create_player()
 
     # private methods
 
@@ -32,6 +40,9 @@ class EntityManager:
     def _create_sub_managers(self):
         self._monster_manager = MonsterManager()
         self._npc_manager = NpcManager()
+        self._player_manager = PlayerManager()
+
+        self._add_entity(self._player_manager.player)
 
     def _create_entity(self, entity_data):
         template = self._entity_templates[entity_data["key"]]
