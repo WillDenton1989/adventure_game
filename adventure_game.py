@@ -1,8 +1,6 @@
 #!python3
 
-import battle_manager
 import level_manager
-import battle_manager
 import event_manager
 from managers.game_manager import GameManager
 from models.state import State
@@ -10,6 +8,8 @@ from models.state import State
 def game_board(game_manager):
     moves = 0
     player = None
+    battle_manager = game_manager.battle_manager
+
     while(battle_manager.is_someone_dead(player := game_manager.player) == False):
         if(game_manager.game_state == State.STATE_MOVEMENT):
             print("------------------------------------------------------------------------")

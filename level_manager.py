@@ -1,5 +1,4 @@
 # where the map lives.
-import battle_manager
 from managers.input_manager import InputManager
 import yaml
 import event_manager

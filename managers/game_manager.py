@@ -1,4 +1,4 @@
-import battle_manager
+from managers.battle_manager import BattleManager
 import event_manager
 from managers.input_manager import InputManager
 import level_parser
@@ -28,6 +28,10 @@ class GameManager(ManagerBase):
         return self.player
 
     @property
+    def battle_manager(self):
+        return self._battle_manager
+
+    @property
     def player(self):
         return self._entity_manager.player
 
@@ -38,7 +42,7 @@ class GameManager(ManagerBase):
         self._input_manager = InputManager()
         item_manager.initialize(self)
         self._inventory_manager = InventoryManager()
-        battle_manager.initialize()
+        self._battle_manager = BattleManager()
         level_manager.initialize(self)
         conversation_manager.initialize()
 

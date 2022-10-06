@@ -100,7 +100,7 @@ Type 'quit' or 'q' to quit out of the game.""")
         elif(input == "quit" or input == "q"):
             event_manager.trigger_event(event_manager.QUIT_EVENT, data)
         else:
-            self.show_controls()
+            self._parse_input()
 
     def _show_battle_controls(self):
         print("""\nType 'attack' or 'a' to try to damage your foe;
@@ -118,7 +118,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
             data["command"] = "defend"
             event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
         else:
-            self.show_controls()
+            self._parse_input()
 
     def _show_conversation_controls(self):
         print("Use the numbers 1 - 3 to reply")
