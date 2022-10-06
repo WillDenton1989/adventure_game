@@ -22,6 +22,10 @@ class EntityManager(ManagerBase):
     # attribute accessors
 
     @property
+    def player_manager(self):
+        return self._player_manager
+
+    @property
     def player(self):
         return self._player_manager.player
 

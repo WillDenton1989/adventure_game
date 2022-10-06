@@ -3,7 +3,7 @@ import event_manager
 from managers.input_manager import InputManager
 import level_parser
 import level_manager
-import item_manager
+from managers.item_manager import ItemManager
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 from managers.entity_manager import EntityManager
@@ -40,7 +40,7 @@ class GameManager(ManagerBase):
     def _initialize_managers(self):
         self._entity_manager = EntityManager()
         self._input_manager = InputManager()
-        item_manager.initialize(self)
+        self._item_manager = ItemManager(self)
         self._inventory_manager = InventoryManager()
         self._battle_manager = BattleManager()
         level_manager.initialize(self)
@@ -73,6 +73,7 @@ class GameManager(ManagerBase):
         event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
 
     def _start(self):
+        self._entity_manager.player_manager.set_item_manager(self._item_manager)
         self._entity_manager.create_player()
         self._transition_to_movement()
 

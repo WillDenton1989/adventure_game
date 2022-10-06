@@ -1,5 +1,4 @@
 import yaml
-import item_manager
 import event_manager
 from models.item import Item
 from models.entities.player import Player
@@ -9,10 +8,10 @@ from managers.input_manager import InputManager
 class PlayerManager(ManagerBase):
     def __init__(self):
         ManagerBase.__init__(self)
-
         event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
         player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
 
+        self._item_manager = None
         self._set_player(player_data)
 
     # attribute accessor bois.
@@ -22,6 +21,9 @@ class PlayerManager(ManagerBase):
         return self._player
 
     # public methods
+
+    def set_item_manager(self, item_manager):
+        self._item_manager = item_manager
 
     def create_player(self):
         event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
@@ -46,11 +48,8 @@ class PlayerManager(ManagerBase):
 
     def _create_starting_inventory(self, inventory_data):
         for item_key in inventory_data:
-            item = item_manager.item_from_key(item_key)
-
-            object_item = Item(item["display_name"], item["type"], item["effects"], item["weight"], item["value"], item["consumable"], item["equipable"])
-
-            event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, object_item)
+            item = self._item_manager.item_from_key(item_key)
+            event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, item)
 
     def _execute_player_move(self, new_column, new_row):
         self._player.column = new_column
