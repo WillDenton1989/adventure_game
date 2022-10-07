@@ -8,7 +8,6 @@ from models.events.inventory_event import InventoryEvent
 from models.state import State
 
 class InventoryManager(ManagerBase):
-    count = 0
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
         self._player_inventory = []
@@ -53,11 +52,11 @@ class InventoryManager(ManagerBase):
             print("Please select a valid item")
 
     def _use_item(self, inventory_position):
-        consumable_item_data = {}
+        data = {}
         equip_item_data = {}
         if(self._is_item_consumable(inventory_position) == True):
-            consumable_item_data["item_choice"] = self._player_inventory[inventory_position]
-            event_manager.trigger_event(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, consumable_item_data)
+            data["item"] = self._player_inventory[inventory_position]
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.TRIGGER_ITEM_EFFECT_EVENT, data))
         elif(self._is_item_equipable(inventory_position) == True):
             self._player_inventory[inventory_position]
             print("here is where an equipable item trigger would happen.")

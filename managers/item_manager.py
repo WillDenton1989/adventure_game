@@ -5,6 +5,7 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.effects.heal import Heal
+from models.events.inventory_event import InventoryEvent
 from models.item import Item
 
 class ItemManager(ManagerBase):
@@ -22,7 +23,7 @@ class ItemManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, self._trigger_item_effect_event_handler)
+        self.event_dispatcher.receive(InventoryEvent.TRIGGER_ITEM_EFFECT_EVENT, self._trigger_item_effect_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -73,5 +74,5 @@ class ItemManager(ManagerBase):
 
     # event handlers
 
-    def _trigger_item_effect_event_handler(self, event_name, data):
-        self._execute_effects(data["item_choice"])
+    def _trigger_item_effect_event_handler(self, event):
+        self._execute_effects(event.item)
