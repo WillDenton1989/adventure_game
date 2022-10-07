@@ -12,7 +12,6 @@ CONVERSATION_EVENT = "conversation_event"
 CONVERSATION_INPUT_EVENT = "conversation_input_event"
 END_CONVERSATION_EVENT = "end_conversation_event"
 
-GAME_FINISH_EVENT = "game_finish_event"
 
 # private variables
 

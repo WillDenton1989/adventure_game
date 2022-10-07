@@ -59,7 +59,7 @@ class LevelManager(ManagerBase):
             event_name = event_data["event_name"]
             data = event_data["data"]
 
-            if(event_name == "BattleEvent#BATTLE_EVENT"):
+            if(event_name == "BattleEvent#BATTLE_EVENT" or event_name == "GameEvent#GAME_FINISH_EVENT"):
                 event = self.event_dispatcher.event_from_string(event_name, data)
                 self.event_dispatcher.dispatch(event)
             else:

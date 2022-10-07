@@ -52,4 +52,4 @@ objects:
       column: 10
       row: 10
     events:
-      - game_finish_event
+      - GameEvent#GAME_FINISH_EVENT

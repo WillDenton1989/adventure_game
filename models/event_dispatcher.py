@@ -1,6 +1,7 @@
 import sys
 
 from models.events.battle_event import BattleEvent
+from models.events.game_event import GameEvent
 
 class EventDispatcher:
     def __init__(self):

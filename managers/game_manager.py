@@ -60,7 +60,7 @@ class GameManager(ManagerBase):
         self.event_dispatcher.receive(InventoryEvent.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
 
         self.event_dispatcher.receive(GameEvent.QUIT_EVENT, self._quit_event_handler)
-        event_manager.listen(event_manager.GAME_FINISH_EVENT, self._game_finish_event_handler)
+        self.event_dispatcher.receive(GameEvent.GAME_FINISH_EVENT, self._game_finish_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -126,5 +126,5 @@ class GameManager(ManagerBase):
     def _quit_event_handler(self, _event):
         self._quit()
 
-    def _game_finish_event_handler(self, event_name, data):
+    def _game_finish_event_handler(self, event):
         self._game_end()
