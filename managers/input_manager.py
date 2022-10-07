@@ -3,6 +3,7 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.events.game_event import GameEvent
+from models.events.inventory_event import InventoryEvent
 from models.state import State
 
 class InputManager(ManagerBase):
@@ -97,7 +98,7 @@ Type 'quit' or 'q' to quit out of the game.""")
             data["direction"] = "right"
             event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
         elif(input == "inventory" or input == "i"):
-            event_manager.trigger_event(event_manager.OPEN_INVENTORY_EVENT, data)
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.OPEN_INVENTORY_EVENT, data))
         elif(input == "quit" or input == "q"):
             self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         else:
