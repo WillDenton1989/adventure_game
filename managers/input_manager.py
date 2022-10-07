@@ -146,8 +146,8 @@ Type 'quit' or 'q' to exit the adventure game.""")
         if(input == "quit" or input == "q"):
             self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         elif(input.isdigit() == True):
-            data["choice"] = int(input) - 1
-            event_manager.trigger_event(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, data)
+            data["inventory_position"] = int(input) - 1
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, data))
         elif(input == "i"):
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:

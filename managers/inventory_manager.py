@@ -4,6 +4,7 @@ import event_manager
 
 from managers.manager_base import ManagerBase
 
+from models.events.inventory_event import InventoryEvent
 from models.state import State
 
 class InventoryManager(ManagerBase):
@@ -16,7 +17,7 @@ class InventoryManager(ManagerBase):
 
     def _register_listeners(self):
         event_manager.listen(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, self._add_item_to_inventory_event_handler)
-        event_manager.listen(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, self._inventory_command_event_handler)
+        self.event_dispatcher.receive(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, self._inventory_select_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -95,5 +96,5 @@ class InventoryManager(ManagerBase):
     def _add_item_to_inventory_event_handler(self, event_name, item_object_data):
         self._add_item_to_inventory(item_object_data)
 
-    def _inventory_command_event_handler(self, event_name, data):
-        self._select_item(data["choice"])
+    def _inventory_select_event_handler(self, event):
+        self._select_item(event.inventory_position)
