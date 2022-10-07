@@ -1,11 +1,17 @@
 import yaml
 import event_manager
+
+from models.events.level_event import LevelEvent
 from models.level import Level
+
+_event_dispatcher = None
 
 # public methods
 
-def initialize():
-    pass
+def initialize(event_dispatcher):
+    global _event_dispatcher
+
+    _event_dispatcher = event_dispatcher
 
 def build_the_level(level_name, symbol_dict):
     string_map = _load_map("data/" + level_name + ".txt")
@@ -31,8 +37,10 @@ def _load_objects(filename):
     return data
 
 def _add_player(object):
+    global _event_dispatcher
+
     data = { "location": object["location"] }
-    event_manager.trigger_event(event_manager.UPDATE_PLAYER_LOCATION_EVENT, data)
+    _event_dispatcher.dispatch(LevelEvent(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, data))
 
 def _add_entity(entity_data):
     data = { "entity_data": entity_data }

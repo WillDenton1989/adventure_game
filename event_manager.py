@@ -5,9 +5,6 @@ ENTITIES_UPDATED_EVENT = "entities_updated_event"
 ADD_PLAYER_TO_LEVEL_EVENT = "add_player_event"
 STATE_CHANGE_EVENT = "state_change_event"
 
-MOVEMENT_EVENT = "movement_event"
-UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
-
 # private variables
 
 _event_listeners = []

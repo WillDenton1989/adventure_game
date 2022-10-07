@@ -13,6 +13,7 @@ class LevelManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
         self._game_manager = game_manager
         self._level = None
+        level_parser.initialize(self.event_dispatcher)
 
     # public methods
 
@@ -48,7 +49,7 @@ class LevelManager(ManagerBase):
 
         if(self._level.can_move_to(new_column, new_row) == True):
             data = { "location": { "column": new_column, "row": new_row } }
-            event_manager.trigger_event(event_manager.UPDATE_PLAYER_LOCATION_EVENT, data)
+            self.event_dispatcher.dispatch(LevelEvent(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, data))
             self._trigger_level_events(new_column, new_row)
         else:
             print("You can't move there, hoe")

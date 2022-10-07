@@ -7,13 +7,14 @@ from managers.manager_base import ManagerBase
 from models.entities.player import Player
 from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
+from models.events.level_event import LevelEvent
 from models.events.player_event import PlayerEvent
 from models.item import Item
 
 class PlayerManager(ManagerBase):
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
-        event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
+
         player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
         self._item_manager = None
         self._set_player(player_data)
@@ -36,6 +37,7 @@ class PlayerManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
+        self.event_dispatcher.receive(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
         self.event_dispatcher.receive(PlayerEvent.PLAYER_NAME_CHANGE_EVENT, self._player_name_change_event_handler)
 
     def _unregister_listeners(self):
@@ -67,8 +69,8 @@ class PlayerManager(ManagerBase):
 
     # event handlers
 
-    def _update_player_location_event_handler(self, event_name, data):
-        self._execute_player_move(data["location"]["column"], data["location"]["row"])
+    def _update_player_location_event_handler(self, event):
+        self._execute_player_move(event.column, event.row)
 
     def _player_name_change_event_handler(self, event):
         self._change_player_name(event.new_name)
