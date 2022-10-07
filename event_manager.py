@@ -2,7 +2,6 @@
 CREATE_ENTITY_EVENT = "create_entity_event"
 ENTITIES_UPDATED_EVENT = "entities_updated_event"
 
-ADD_PLAYER_TO_LEVEL_EVENT = "add_player_event"
 STATE_CHANGE_EVENT = "state_change_event"
 
 # private variables
