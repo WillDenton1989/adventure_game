@@ -1,6 +1,5 @@
 #this is tha map reader boi.
 import yaml
-import level_manager
 import event_manager
 from models.level import Level
 
@@ -13,8 +12,9 @@ def build_the_level(level_name, symbol_dict):
     string_map = _load_map("data/" + level_name + ".txt")
     map_key_dict = _load_dictionary_yaml(symbol_dict)
     level = Level(string_map, map_key_dict)
+    return level
 
-    level_manager.set_level(level)
+def build_the_objects(level_name):
     _load_objects("data/" + level_name + "_objects.yaml")
 
 # private methods

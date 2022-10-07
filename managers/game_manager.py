@@ -1,8 +1,7 @@
 from managers.battle_manager import BattleManager
 import event_manager
 from managers.input_manager import InputManager
-import level_parser
-import level_manager
+from managers.level_manager import LevelManager
 from managers.item_manager import ItemManager
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
@@ -43,7 +42,7 @@ class GameManager(ManagerBase):
         self._item_manager = ItemManager(self)
         self._inventory_manager = InventoryManager()
         self._battle_manager = BattleManager()
-        level_manager.initialize(self)
+        self._level_manager = LevelManager(self)
         self._conversation_manager = ConversationManager()
 
     def _register_listeners(self):
@@ -79,7 +78,7 @@ class GameManager(ManagerBase):
 
     def _transition_to_movement(self):
         self._set_state(State.STATE_MOVEMENT)
-        level_parser.build_the_level('level_1', 'data/symbols_dictionary.yaml')
+        self._level_manager.set_level('level_1', 'data/symbols_dictionary.yaml')
 
     def _quit(self):
         print(f"Farewell {self.player.name}")

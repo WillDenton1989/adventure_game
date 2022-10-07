@@ -1,6 +1,5 @@
 #!python3
 
-import level_manager
 import event_manager
 from managers.game_manager import GameManager
 from models.state import State
@@ -13,7 +12,7 @@ def game_board(game_manager):
     while(battle_manager.is_someone_dead(player := game_manager.player) == False):
         if(game_manager.game_state == State.STATE_MOVEMENT):
             print("------------------------------------------------------------------------")
-            level_manager.draw_level()
+            event_manager.trigger_event(event_manager.DRAW_LEVEL_EVENT, {})
 
             # ghetto hud for now.
             print(f"{player.name} hit points: {player.hit_points}")
