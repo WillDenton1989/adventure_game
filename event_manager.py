@@ -17,7 +17,6 @@ END_BATTLE_EVENT = "end_battle_event"
 MOVEMENT_EVENT = "movement_event"
 UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 
-ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
 REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
 
 TRIGGER_CONSUME_ITEM_EFFECT_EVENT = "trigger_consume_item_effect_event"

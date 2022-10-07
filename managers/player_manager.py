@@ -5,6 +5,7 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.entities.player import Player
+from models.events.inventory_event import InventoryEvent
 from models.item import Item
 
 class PlayerManager(ManagerBase):
@@ -50,7 +51,7 @@ class PlayerManager(ManagerBase):
     def _create_starting_inventory(self, inventory_data):
         for item_key in inventory_data:
             item = self._item_manager.item_from_key(item_key)
-            event_manager.trigger_event(event_manager.ADD_ITEM_TO_INVENTORY_EVENT, item)
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.ADD_ITEM_TO_INVENTORY_EVENT, { "item": item }))
 
     def _execute_player_move(self, new_column, new_row):
         self._player.column = new_column
