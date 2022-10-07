@@ -1,9 +1,8 @@
 #!python3
 
-import event_manager
-
 from managers.game_manager import GameManager
 from models.events.level_event import LevelEvent
+from models.events.input_event import InputEvent
 from models.state import State
 
 def game_board(game_manager):
@@ -21,7 +20,7 @@ def game_board(game_manager):
             print(f"Moves taken: {moves}")
             print(f"STATE:  {game_manager.game_state}")
 
-            event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
+            game_manager.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
             moves = moves + 1
 

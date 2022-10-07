@@ -3,6 +3,7 @@ import event_manager
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
+from models.events.input_event import InputEvent
 from models.state import State
 
 class ConversationManager(ManagerBase):
@@ -19,7 +20,7 @@ class ConversationManager(ManagerBase):
 
     def _run_conversation(self):
         print("hello buddy! Whats your name?")
-        event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
+        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
     def _initialize_conversation(self, data):
         npc = data["entity"]

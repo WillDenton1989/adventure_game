@@ -5,18 +5,22 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.events.inventory_event import InventoryEvent
+from models.events.input_event import InputEvent
+from models.events.item_event import ItemEvent
 from models.state import State
 
 class InventoryManager(ManagerBase):
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
+
         self._player_inventory = []
 
     # private methods
 
     def _register_listeners(self):
         self.event_dispatcher.receive(InventoryEvent.ADD_ITEM_TO_INVENTORY_EVENT, self._add_item_to_inventory_event_handler)
-        self.event_dispatcher.receive(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, self._inventory_select_event_handler)
+        self.event_dispatcher.receive(InventoryEvent.REMOVE_ITEM_FROM_INVENTORY_EVENT, self._remove_item_from_inventory_event_handler)
+        self.event_dispatcher.receive(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, self._select_item_in_inventory_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -24,7 +28,7 @@ class InventoryManager(ManagerBase):
     def _show_inventory(self):
         while(self.game_state == State.STATE_INVENTORY):
             self._show_inventory_text()
-            event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
+            self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
     def _show_inventory_text(self):
         print("\n------------------------------------------------------------------------\n")
@@ -45,47 +49,25 @@ class InventoryManager(ManagerBase):
 
     def _select_item(self, inventory_position):
         if(self._is_selected_item_in_inventory_range(inventory_position) == True):
+            item = self._player_inventory[inventory_position]
+
             print("here is where something would happen with the item you chose")
-            self._use_item(inventory_position)
-            self._remove_consumable_item(inventory_position)
+            self._use_item(item, inventory_position)
         else:
             print("Please select a valid item")
 
-    def _use_item(self, inventory_position):
-        data = {}
-        equip_item_data = {}
-        if(self._is_item_consumable(inventory_position) == True):
-            data["item"] = self._player_inventory[inventory_position]
-            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.TRIGGER_ITEM_EFFECT_EVENT, data))
-        elif(self._is_item_equipable(inventory_position) == True):
-            self._player_inventory[inventory_position]
-            print("here is where an equipable item trigger would happen.")
-        else:
-            print("That is not a useable item brother man.")
+    def _use_item(self, item, inventory_position):
+        data = { "item": item, "inventory_position": inventory_position }
+        self.event_dispatcher.dispatch(ItemEvent(ItemEvent.USE_ITEM_EVENT, data))
 
-    def _remove_consumable_item(self, inventory_position):
-        if(self._is_item_consumable(inventory_position) == True):
+    def _remove_item(self, item, inventory_position):
+        if(item.consumable == True):
             self._player_inventory.pop(inventory_position)
         else:
-            pass
+            raise Exception("Item is not consumable")
 
     def _is_selected_item_in_inventory_range(self, inventory_position):
-        if(inventory_position > len(self._player_inventory) - 1):
-            return False
-        else:
-            return True
-
-    def _is_item_consumable(self, inventory_position):
-        if(self._player_inventory[inventory_position].consumable == True):
-            return True
-        else:
-            return False
-
-    def _is_item_equipable(self, inventory_position):
-        if(self._player_inventory[inventory_position].equipable == True):
-            return True
-        else:
-            return False
+        return (inventory_position < len(self._player_inventory) - 1)
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         self._show_inventory()
@@ -95,5 +77,8 @@ class InventoryManager(ManagerBase):
     def _add_item_to_inventory_event_handler(self, event):
         self._add_item_to_inventory(event.item)
 
-    def _inventory_select_event_handler(self, event):
+    def _remove_item_from_inventory_event_handler(self, event):
+        self._remove_item(event.item, event.inventory_position)
+
+    def _select_item_in_inventory_event_handler(self, event):
         self._select_item(event.inventory_position)

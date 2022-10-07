@@ -5,7 +5,9 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.entities.player import Player
+from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
+from models.events.player_event import PlayerEvent
 from models.item import Item
 
 class PlayerManager(ManagerBase):
@@ -28,13 +30,13 @@ class PlayerManager(ManagerBase):
         self._item_manager = item_manager
 
     def create_player(self):
-        event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
+        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
         self._create_starting_inventory(self._inventory_data)
 
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.PLAYER_NAME_CHANGE_EVENT, self._player_name_change_event_handler)
+        self.event_dispatcher.receive(PlayerEvent.PLAYER_NAME_CHANGE_EVENT, self._player_name_change_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -68,5 +70,5 @@ class PlayerManager(ManagerBase):
     def _update_player_location_event_handler(self, event_name, data):
         self._execute_player_move(data["location"]["column"], data["location"]["row"])
 
-    def _player_name_change_event_handler(self, event_name, data):
-        self._change_player_name(data["name"])
+    def _player_name_change_event_handler(self, event):
+        self._change_player_name(event.new_name)

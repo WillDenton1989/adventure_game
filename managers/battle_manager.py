@@ -6,6 +6,7 @@ from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.battle import Battle
+from models.events.input_event import InputEvent
 from models.state import State
 
 SYMBOL_DEAD = "corpse"
@@ -54,7 +55,7 @@ class BattleManager(ManagerBase):
         self._battle.round += 1
 
         print(self._battle)
-        event_manager.trigger_event(event_manager.INPUT_PARSE_EVENT, {})
+        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
     def _handle_player_decision(self, decision):
         self._battle.player_decision = decision

@@ -3,7 +3,9 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.events.game_event import GameEvent
+from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
+from models.events.player_event import PlayerEvent
 from models.state import State
 
 class InputManager(ManagerBase):
@@ -13,8 +15,7 @@ class InputManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.INPUT_PARSE_EVENT, self._input_parse_event_handler)
-        event_manager.listen(event_manager.INPUT_SHOW_CONTROLS_EVENT, self._input_show_controls_event_handler)
+        self.event_dispatcher.receive(InputEvent.INPUT_PARSE_EVENT, self._input_parse_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -74,7 +75,7 @@ class InputManager(ManagerBase):
         else:
             print(f"\nAlright {input}, lets go!\n")
 
-        event_manager.trigger_event(event_manager.PLAYER_NAME_CHANGE_EVENT, { "name": input })
+        self.event_dispatcher.dispatch(PlayerEvent(PlayerEvent.PLAYER_NAME_CHANGE_EVENT, { "new_name": input }))
 
     def _show_movement_controls(self):
         print(f"""Use the 'k' and 'j' keys to move up and down;
@@ -158,7 +159,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
 
     # event handlers
 
-    def _input_parse_event_handler(self, event_name, data):
+    def _input_parse_event_handler(self, _event):
         self._parse_input()
 
     def _input_show_controls_event_handler(self, event_name, data):
