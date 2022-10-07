@@ -8,8 +8,8 @@ from models.entities.player import Player
 from models.item import Item
 
 class PlayerManager(ManagerBase):
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
         event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
         player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
         self._item_manager = None

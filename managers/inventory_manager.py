@@ -8,8 +8,8 @@ from models.state import State
 
 class InventoryManager(ManagerBase):
     count = 0
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
         self._player_inventory = []
 
     # private methods

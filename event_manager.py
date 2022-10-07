@@ -31,7 +31,6 @@ CONVERSATION_EVENT = "conversation_event"
 CONVERSATION_INPUT_EVENT = "conversation_input_event"
 END_CONVERSATION_EVENT = "end_conversation_event"
 
-QUIT_EVENT = "quit_event"
 GAME_FINISH_EVENT = "game_finish_event"
 
 PLAYER_NAME_CHANGE_EVENT = "player_name_change_event"

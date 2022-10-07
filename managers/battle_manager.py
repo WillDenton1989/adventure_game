@@ -11,8 +11,8 @@ from models.state import State
 SYMBOL_DEAD = "corpse"
 
 class BattleManager(ManagerBase):
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
         self._battle = None
 
     # public methods

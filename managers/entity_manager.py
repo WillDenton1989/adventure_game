@@ -12,8 +12,8 @@ from models.entities.treasure import Treasure
 class EntityManager(ManagerBase):
     """This manages all entities in the game."""
 
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
         self._entities = []
         self._load_entity_templates()
         self._create_sub_managers()
@@ -46,9 +46,9 @@ class EntityManager(ManagerBase):
             self._entity_templates = yaml.safe_load(f)
 
     def _create_sub_managers(self):
-        self._monster_manager = MonsterManager()
-        self._npc_manager = NpcManager()
-        self._player_manager = PlayerManager()
+        self._monster_manager = MonsterManager(self.event_dispatcher)
+        self._npc_manager = NpcManager(self.event_dispatcher)
+        self._player_manager = PlayerManager(self.event_dispatcher)
 
         self._add_entity(self._player_manager.player)
 

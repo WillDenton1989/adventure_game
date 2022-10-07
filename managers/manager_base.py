@@ -7,10 +7,11 @@ ALLOWED_CLASS = "GameManager"
 class ManagerBase(ABC):
     """this is the base class for all managers in the game"""
 
-    _game_state = "FOOBAR"
+    _game_state = None
 
-    def __init__(self):
+    def __init__(self, event_dispatcher):
         event_manager.listen(event_manager.STATE_CHANGE_EVENT, self._state_change_event_handler)
+        self._event_dispatcher = event_dispatcher
         self._register_listeners()
 
     # attribute accessors
@@ -25,6 +26,10 @@ class ManagerBase(ABC):
             raise Exception("Only GameManager can do this")
         else:
             ManagerBase._game_state = value
+
+    @property
+    def event_dispatcher(self):
+        return self._event_dispatcher
 
     # public methods
 

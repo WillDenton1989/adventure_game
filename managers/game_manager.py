@@ -9,13 +9,16 @@ from managers.item_manager import ItemManager
 from managers.level_manager import LevelManager
 from managers.manager_base import ManagerBase
 
+from models.event_dispatcher import EventDispatcher
+from models.events.game_event import GameEvent
 from models.state import State
 
 class GameManager(ManagerBase):
     """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
     def __init__(self):
-        ManagerBase.__init__(self)
+        event_dispatcher = EventDispatcher()
+        ManagerBase.__init__(self, event_dispatcher)
         self.game_state = State.STATE_CHARACTER_CREATION
         self._initialize_managers()
         self._start()
@@ -36,13 +39,13 @@ class GameManager(ManagerBase):
     # private methods
 
     def _initialize_managers(self):
-        self._entity_manager = EntityManager()
-        self._input_manager = InputManager()
-        self._item_manager = ItemManager(self)
-        self._inventory_manager = InventoryManager()
-        self._battle_manager = BattleManager()
-        self._level_manager = LevelManager(self)
-        self._conversation_manager = ConversationManager()
+        self._entity_manager = EntityManager(self.event_dispatcher)
+        self._input_manager = InputManager(self.event_dispatcher)
+        self._item_manager = ItemManager(self.event_dispatcher, self)
+        self._inventory_manager = InventoryManager(self.event_dispatcher)
+        self._battle_manager = BattleManager(self.event_dispatcher)
+        self._level_manager = LevelManager(self.event_dispatcher, self)
+        self._conversation_manager = ConversationManager(self.event_dispatcher)
 
     def _register_listeners(self):
         event_manager.listen(event_manager.BATTLE_EVENT, self._battle_started_handler)
@@ -54,7 +57,7 @@ class GameManager(ManagerBase):
         event_manager.listen(event_manager.OPEN_INVENTORY_EVENT, self._inventory_opened_handler)
         event_manager.listen(event_manager.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
 
-        event_manager.listen(event_manager.QUIT_EVENT, self._quit_event_handler)
+        self.event_dispatcher.receive(GameEvent.QUIT_EVENT, self._quit_event_handler)
         event_manager.listen(event_manager.GAME_FINISH_EVENT, self._game_finish_event_handler)
 
     def _unregister_listeners(self):
@@ -118,7 +121,7 @@ class GameManager(ManagerBase):
     def _conversation_ended_handler(self, event, data):
         self._set_state(State.STATE_MOVEMENT, data)
 
-    def _quit_event_handler(self, event_name, data):
+    def _quit_event_handler(self, _event):
         self._quit()
 
     def _game_finish_event_handler(self, event_name, data):

@@ -6,8 +6,8 @@ from managers.manager_base import ManagerBase
 from models.state import State
 
 class ConversationManager(ManagerBase):
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
 
     # private methods
 

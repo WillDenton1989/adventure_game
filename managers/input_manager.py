@@ -2,11 +2,12 @@ import event_manager
 
 from managers.manager_base import ManagerBase
 
+from models.events.game_event import GameEvent
 from models.state import State
 
 class InputManager(ManagerBase):
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
 
     # private methods
 
@@ -98,7 +99,7 @@ Type 'quit' or 'q' to quit out of the game.""")
         elif(input == "inventory" or input == "i"):
             event_manager.trigger_event(event_manager.OPEN_INVENTORY_EVENT, data)
         elif(input == "quit" or input == "q"):
-            event_manager.trigger_event(event_manager.QUIT_EVENT, data)
+            self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         else:
             self._parse_input()
 
@@ -110,7 +111,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
     def _parse_battle_input(self, input):
         data = {}
         if(input == "quit" or input == "q"):
-            event_manager.trigger_event(event_manager.QUIT_EVENT, data)
+            self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         elif(input == "attack" or input == "a"):
             data["command"] = "attack"
             event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
@@ -126,7 +127,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
     def _parse_conversation_input(self, input):
         data = {}
         if(input == "quit" or input == "q"):
-            event_manager.trigger_event(event_manager.QUIT_EVENT, data)
+            self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         elif(input == "1"):
             pass
         elif(input == "2"):
@@ -142,7 +143,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
     def _parse_inventory_input(self, input):
         data = {}
         if(input == "quit" or input == "q"):
-            event_manager.trigger_event(event_manager.QUIT_EVENT, data)
+            self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         elif(input.isdigit() == True):
             data["choice"] = int(input) - 1
             event_manager.trigger_event(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, data)

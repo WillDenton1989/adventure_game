@@ -8,8 +8,8 @@ from models.effects.heal import Heal
 from models.item import Item
 
 class ItemManager(ManagerBase):
-    def __init__(self, game_manager):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher, game_manager):
+        ManagerBase.__init__(self, event_dispatcher)
         self._game_manager = game_manager
         self._item_templates = self._load_items("data/items.yaml")
 

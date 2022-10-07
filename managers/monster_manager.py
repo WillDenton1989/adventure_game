@@ -5,8 +5,8 @@ from models.entities.monster import Monster
 from models.name_generator import NameGenerator
 
 class MonsterManager(ManagerBase):
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
         self._monsters = []
 
     # public methods

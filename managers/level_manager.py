@@ -7,8 +7,8 @@ from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 class LevelManager(ManagerBase):
-    def __init__(self, game_manager):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher, game_manager):
+        ManagerBase.__init__(self, event_dispatcher)
         self._game_manager = game_manager
         self._level = None
 

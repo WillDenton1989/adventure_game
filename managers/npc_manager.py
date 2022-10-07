@@ -4,8 +4,8 @@ from models.entities.npc import Npc
 from models.name_generator import NameGenerator
 
 class NpcManager(ManagerBase):
-    def __init__(self):
-        ManagerBase.__init__(self)
+    def __init__(self, event_dispatcher):
+        ManagerBase.__init__(self, event_dispatcher)
         self._npcs = []
 
     # public methods
