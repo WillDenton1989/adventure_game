@@ -6,6 +6,7 @@ from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.battle import Battle
+from models.events.battle_event import BattleEvent
 from models.events.input_event import InputEvent
 from models.state import State
 
@@ -27,13 +28,13 @@ class BattleManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.BATTLE_COMMAND_EVENT, self._battle_command_event_handler)
+        self.event_dispatcher.receive(BattleEvent.BATTLE_COMMAND_EVENT, self._battle_command_event_handler)
 
     def _unregister_listeners(self):
         pass
 
     def _initialize_battle(self, data):
-        player, monster = data["player"], data["entity"]
+        player, monster = data["player"], data["monster"]
         if(self._check_for_loot(monster) == True): return
 
         player.prepare_for_battle()
@@ -46,7 +47,7 @@ class BattleManager(ManagerBase):
 
     def _check_for_loot(self, monster):
         if(self.is_someone_dead(monster) == True):
-            event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
+            self.event_dispatcher.dispatch(BattleEvent(BattleEvent.END_BATTLE_EVENT))
             print(f"\nThe corpse of {monster.name} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
             return True
         return False
@@ -111,7 +112,7 @@ class BattleManager(ManagerBase):
         if(self.is_someone_dead(monster) == True):
             print(f"\n\n{monster.name} has been slain")
             monster.symbol = SYMBOL_DEAD
-            event_manager.trigger_event(event_manager.END_BATTLE_EVENT)
+            self.event_dispatcher.dispatch(BattleEvent(BattleEvent.END_BATTLE_EVENT))
             return True
         return False
 
@@ -128,8 +129,7 @@ class BattleManager(ManagerBase):
 
     def _state_change_event_handler(self, event_name, data):
         if(data["new_state"] == State.STATE_BATTLE):
-            battle_data = data["event_data"]
             self._initialize_battle(data["event_data"])
 
-    def _battle_command_event_handler(self, event_name, data):
-        self._handle_player_decision(data["command"])
+    def _battle_command_event_handler(self, event):
+        self._handle_player_decision(event.command)

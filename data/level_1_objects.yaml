@@ -11,28 +11,28 @@ objects:
       column: 2
       row: 2
     events:
-      - battle_event
+      - BattleEvent#BATTLE_EVENT
   - object_name: monster
     key: goblin
     location:
       column: 8
       row: 10
     events:
-      - battle_event
+      - BattleEvent#BATTLE_EVENT
   - object_name: monster
     key: bandit
     location:
       column: 6
       row: 5
     events:
-      - battle_event
+      - BattleEvent#BATTLE_EVENT
   - object_name: monster
     key: goblin
     location:
       column: 2
       row: 9
     events:
-      - battle_event
+      - BattleEvent#BATTLE_EVENT
   - object_name: npc
     key: dwarf
     location:
@@ -45,8 +45,7 @@ objects:
     location:
       column: 5
       row: 6
-    events:
-      - find_loot_event
+    events: null
   - object_name: finish_line
     key: finish_line
     location:

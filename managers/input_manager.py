@@ -2,6 +2,7 @@ import event_manager
 
 from managers.manager_base import ManagerBase
 
+from models.events.battle_event import BattleEvent
 from models.events.game_event import GameEvent
 from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
@@ -116,10 +117,10 @@ Type 'quit' or 'q' to exit the adventure game.""")
             self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         elif(input == "attack" or input == "a"):
             data["command"] = "attack"
-            event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
+            self.event_dispatcher.dispatch(BattleEvent(BattleEvent.BATTLE_COMMAND_EVENT, data))
         elif(input == "defend" or input == "d"):
             data["command"] = "defend"
-            event_manager.trigger_event(event_manager.BATTLE_COMMAND_EVENT, data)
+            self.event_dispatcher.dispatch(BattleEvent(BattleEvent.BATTLE_COMMAND_EVENT, data))
         else:
             self._parse_input()
 

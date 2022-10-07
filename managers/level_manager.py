@@ -55,8 +55,15 @@ class LevelManager(ManagerBase):
 
     def _trigger_level_events(self, column, row):
         triggered_events = self._level.events_for(column, row)
-        for event in triggered_events:
-            event_manager.trigger_event(event["event_name"], event["data"])
+        for event_data in triggered_events:
+            event_name = event_data["event_name"]
+            data = event_data["data"]
+
+            if(event_name == "BattleEvent#BATTLE_EVENT"):
+                event = self.event_dispatcher.event_from_string(event_name, data)
+                self.event_dispatcher.dispatch(event)
+            else:
+                event_manager.trigger_event(event_name, event_data["data"])
 
     def _determine_new_coordinates(self, direction, column, row):
         if(direction == "right"):

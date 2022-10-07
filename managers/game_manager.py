@@ -10,6 +10,7 @@ from managers.level_manager import LevelManager
 from managers.manager_base import ManagerBase
 
 from models.event_dispatcher import EventDispatcher
+from models.events.battle_event import BattleEvent
 from models.events.game_event import GameEvent
 from models.events.inventory_event import InventoryEvent
 from models.state import State
@@ -49,8 +50,8 @@ class GameManager(ManagerBase):
         self._conversation_manager = ConversationManager(self.event_dispatcher)
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.BATTLE_EVENT, self._battle_started_handler)
-        event_manager.listen(event_manager.END_BATTLE_EVENT, self._battle_ended_handler)
+        self.event_dispatcher.receive(BattleEvent.BATTLE_EVENT, self._battle_started_handler)
+        self.event_dispatcher.receive(BattleEvent.END_BATTLE_EVENT, self._battle_ended_handler)
 
         event_manager.listen(event_manager.CONVERSATION_EVENT, self._conversation_started_handler)
         event_manager.listen(event_manager.END_CONVERSATION_EVENT, self._conversation_ended_handler)
@@ -94,9 +95,9 @@ class GameManager(ManagerBase):
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
-    def _start_battle(self, battle_data):
-        battle_data.update({ "player": self.player })
-        self._set_state(State.STATE_BATTLE, battle_data)
+    def _start_battle(self, monster):
+        data = { "player": self.player, "monster": monster }
+        self._set_state(State.STATE_BATTLE, data)
 
     def _start_conversation(self, conversation_data):
         conversation_data.update({ "player": self.player })
@@ -104,11 +105,11 @@ class GameManager(ManagerBase):
 
     # event handlers
 
-    def _battle_started_handler(self, event, data):
-        self._start_battle(data)
+    def _battle_started_handler(self, event):
+        self._start_battle(event.monster)
 
-    def _battle_ended_handler(self, event, data):
-        self._set_state(State.STATE_MOVEMENT, data)
+    def _battle_ended_handler(self, _event):
+        self._set_state(State.STATE_MOVEMENT)
 
     def _inventory_opened_handler(self, _event):
         self._set_state(State.STATE_INVENTORY)
