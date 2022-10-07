@@ -3,6 +3,7 @@ import event_manager
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
+from models.events.conversation_event import ConversationEvent
 from models.events.input_event import InputEvent
 from models.state import State
 
@@ -13,7 +14,7 @@ class ConversationManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.CONVERSATION_EVENT, self._conversation_command_event_handler)
+        self.event_dispatcher.receive(ConversationEvent.CONVERSATION_EVENT, self._conversation_command_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -35,5 +36,5 @@ class ConversationManager(ManagerBase):
 
     # event handlers
 
-    def _conversation_command_event_handler(self, event_name, data):
+    def _conversation_command_event_handler(self, _event):
         pass

@@ -11,6 +11,7 @@ from managers.manager_base import ManagerBase
 
 from models.event_dispatcher import EventDispatcher
 from models.events.battle_event import BattleEvent
+from models.events.conversation_event import ConversationEvent
 from models.events.game_event import GameEvent
 from models.events.inventory_event import InventoryEvent
 from models.state import State
@@ -53,8 +54,8 @@ class GameManager(ManagerBase):
         self.event_dispatcher.receive(BattleEvent.BATTLE_EVENT, self._battle_started_handler)
         self.event_dispatcher.receive(BattleEvent.END_BATTLE_EVENT, self._battle_ended_handler)
 
-        event_manager.listen(event_manager.CONVERSATION_EVENT, self._conversation_started_handler)
-        event_manager.listen(event_manager.END_CONVERSATION_EVENT, self._conversation_ended_handler)
+        self.event_dispatcher.receive(ConversationEvent.CONVERSATION_EVENT, self._conversation_started_handler)
+        self.event_dispatcher.receive(ConversationEvent.END_CONVERSATION_EVENT, self._conversation_ended_handler)
 
         self.event_dispatcher.receive(InventoryEvent.OPEN_INVENTORY_EVENT, self._inventory_opened_handler)
         self.event_dispatcher.receive(InventoryEvent.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
@@ -117,11 +118,11 @@ class GameManager(ManagerBase):
     def _inventory_closed_handler(self, _event):
         self._set_state(State.STATE_MOVEMENT)
 
-    def _conversation_started_handler(self, event, data):
-        self._start_conversation(data)
+    def _conversation_started_handler(self, event):
+        self._start_conversation(event.data)
 
-    def _conversation_ended_handler(self, event, data):
-        self._set_state(State.STATE_MOVEMENT, data)
+    def _conversation_ended_handler(self, _event):
+        self._set_state(State.STATE_MOVEMENT)
 
     def _quit_event_handler(self, _event):
         self._quit()

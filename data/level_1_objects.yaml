@@ -39,7 +39,7 @@ objects:
       column: 10
       row: 1
     events:
-      - conversation_event
+      - ConversationEvent#CONVERSATION_EVENT
   - object_name: treasure
     key: loot_chest
     location:

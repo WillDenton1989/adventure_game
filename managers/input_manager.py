@@ -3,6 +3,7 @@ import event_manager
 from managers.manager_base import ManagerBase
 
 from models.events.battle_event import BattleEvent
+from models.events.conversation_event import ConversationEvent
 from models.events.game_event import GameEvent
 from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
@@ -136,7 +137,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
         elif(input == "2"):
             pass
         elif(input == "3"):
-            event_manager.trigger_event(event_manager.END_CONVERSATION_EVENT, data)
+            self.event_dispatcher.dispatch(ConversationEvent(ConversationEvent.END_CONVERSATION_EVENT, data))
         else:
             pass
 

@@ -59,11 +59,8 @@ class LevelManager(ManagerBase):
             event_name = event_data["event_name"]
             data = event_data["data"]
 
-            if(event_name == "BattleEvent#BATTLE_EVENT" or event_name == "GameEvent#GAME_FINISH_EVENT"):
-                event = self.event_dispatcher.event_from_string(event_name, data)
-                self.event_dispatcher.dispatch(event)
-            else:
-                event_manager.trigger_event(event_name, event_data["data"])
+            event = self.event_dispatcher.event_from_string(event_name, data)
+            self.event_dispatcher.dispatch(event)
 
     def _determine_new_coordinates(self, direction, column, row):
         if(direction == "right"):

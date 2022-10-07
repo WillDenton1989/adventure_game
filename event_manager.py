@@ -8,11 +8,6 @@ STATE_CHANGE_EVENT = "state_change_event"
 MOVEMENT_EVENT = "movement_event"
 UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
 
-CONVERSATION_EVENT = "conversation_event"
-CONVERSATION_INPUT_EVENT = "conversation_input_event"
-END_CONVERSATION_EVENT = "end_conversation_event"
-
-
 # private variables
 
 _event_listeners = []
