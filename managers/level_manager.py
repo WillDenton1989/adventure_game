@@ -23,7 +23,7 @@ class LevelManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.MOVEMENT_EVENT, self._movement_event_handler)
+        self.event_dispatcher.receive(LevelEvent.MOVEMENT_EVENT, self._movement_event_handler)
         event_manager.listen(event_manager.ENTITIES_UPDATED_EVENT, self._entities_updated_event_handler)
         self.event_dispatcher.receive(LevelEvent.DRAW_LEVEL_EVENT, self._draw_level_event_handler)
 
@@ -82,8 +82,8 @@ class LevelManager(ManagerBase):
 
     # event handlers
 
-    def _movement_event_handler(self, event_name, data):
-        self._move(data["direction"])
+    def _movement_event_handler(self, event):
+        self._move(event.direction)
 
     def _entities_updated_event_handler(self, event_name, data):
         self._update_entities(data["updated_entities"])

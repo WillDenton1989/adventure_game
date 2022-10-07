@@ -7,6 +7,7 @@ from models.events.conversation_event import ConversationEvent
 from models.events.game_event import GameEvent
 from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
+from models.events.level_event import LevelEvent
 from models.events.player_event import PlayerEvent
 from models.state import State
 
@@ -90,16 +91,16 @@ Type 'quit' or 'q' to quit out of the game.""")
 
         if(input == "k"):
             data["direction"] = "up"
-            event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
+            self.event_dispatcher.dispatch(LevelEvent(LevelEvent.MOVEMENT_EVENT, data))
         elif(input == "j"):
             data["direction"] = "down"
-            event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
+            self.event_dispatcher.dispatch(LevelEvent(LevelEvent.MOVEMENT_EVENT, data))
         elif(input == "h"):
             data["direction"] = "left"
-            event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
+            self.event_dispatcher.dispatch(LevelEvent(LevelEvent.MOVEMENT_EVENT, data))
         elif(input == "l"):
             data["direction"] = "right"
-            event_manager.trigger_event(event_manager.MOVEMENT_EVENT, data)
+            self.event_dispatcher.dispatch(LevelEvent(LevelEvent.MOVEMENT_EVENT, data))
         elif(input == "inventory" or input == "i"):
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.OPEN_INVENTORY_EVENT, data))
         elif(input == "quit" or input == "q"):
