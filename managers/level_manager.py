@@ -1,6 +1,8 @@
 import yaml
+
 import event_manager
 import level_parser
+
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 

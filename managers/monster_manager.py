@@ -1,4 +1,5 @@
 from managers.manager_base import ManagerBase
+
 from models.catchphrase_generator import CatchphraseGenerator
 from models.entities.monster import Monster
 from models.name_generator import NameGenerator

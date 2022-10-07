@@ -1,5 +1,7 @@
 import event_manager
+
 from managers.manager_base import ManagerBase
+
 from models.state import State
 
 class InputManager(ManagerBase):

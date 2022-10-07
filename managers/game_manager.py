@@ -1,12 +1,14 @@
+import event_manager
+
 from managers.battle_manager import BattleManager
 from managers.conversation_manager import ConversationManager
 from managers.entity_manager import EntityManager
-import event_manager
 from managers.input_manager import InputManager
 from managers.inventory_manager import InventoryManager
 from managers.item_manager import ItemManager
 from managers.level_manager import LevelManager
 from managers.manager_base import ManagerBase
+
 from models.state import State
 
 class GameManager(ManagerBase):

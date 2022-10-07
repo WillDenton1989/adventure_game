@@ -1,4 +1,5 @@
 from managers.manager_base import ManagerBase
+
 from models.entities.npc import Npc
 from models.name_generator import NameGenerator
 

@@ -1,7 +1,9 @@
 import yaml
+
 import event_manager
-from managers.input_manager import InputManager
+
 from managers.manager_base import ManagerBase
+
 from models.entities.player import Player
 from models.item import Item
 

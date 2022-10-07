@@ -1,6 +1,8 @@
 import event_manager
+
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
+
 from models.state import State
 
 class ConversationManager(ManagerBase):

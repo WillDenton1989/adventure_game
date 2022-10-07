@@ -1,10 +1,11 @@
 from random import randint
+
 import event_manager
+
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
+
 from models.battle import Battle
-from models.catchphrase_generator import CatchphraseGenerator
-from models.name_generator import NameGenerator
 from models.state import State
 
 SYMBOL_DEAD = "corpse"

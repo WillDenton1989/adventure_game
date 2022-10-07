@@ -1,6 +1,9 @@
 import yaml
+
 import event_manager
+
 from managers.manager_base import ManagerBase
+
 from models.effects.heal import Heal
 from models.item import Item
 
@@ -67,7 +70,7 @@ class ItemManager(ManagerBase):
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
-        
+
     # event handlers
 
     def _trigger_item_effect_event_handler(self, event_name, data):
