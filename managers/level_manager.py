@@ -1,9 +1,10 @@
-# where the map lives.
-from managers.input_manager import InputManager
 import yaml
 import event_manager
 import level_parser
+from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
+
+"a b c d e f g h i j k l m n o p q r s t u v w x y z"
 
 class LevelManager(ManagerBase):
     def __init__(self, game_manager):
