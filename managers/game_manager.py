@@ -73,7 +73,7 @@ class GameManager(ManagerBase):
 
     def _dispatch_state_change(self, previous_state, new_state, event_data):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
-        event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
+        self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
 
     def _start(self):
         self._entity_manager.player_manager.set_item_manager(self._item_manager)

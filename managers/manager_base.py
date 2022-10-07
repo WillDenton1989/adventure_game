@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-import event_manager
+from models.events.game_event import GameEvent
 
 ALLOWED_CLASS = "GameManager"
 
@@ -10,8 +10,9 @@ class ManagerBase(ABC):
     _game_state = None
 
     def __init__(self, event_dispatcher):
-        event_manager.listen(event_manager.STATE_CHANGE_EVENT, self._state_change_event_handler)
         self._event_dispatcher = event_dispatcher
+        self.event_dispatcher.receive(GameEvent.STATE_CHANGE_EVENT, self._state_change_event_handler)
+
         self._register_listeners()
 
     # attribute accessors
@@ -49,5 +50,5 @@ class ManagerBase(ABC):
 
     # event handlers
 
-    def _state_change_event_handler(self, event_name, data):
-        self._handle_game_state_change(data["previous_state"], data["new_state"], data)
+    def _state_change_event_handler(self, event):
+        self._handle_game_state_change(event.previous_state, event.new_state, event.data)

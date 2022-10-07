@@ -2,8 +2,6 @@
 CREATE_ENTITY_EVENT = "create_entity_event"
 ENTITIES_UPDATED_EVENT = "entities_updated_event"
 
-STATE_CHANGE_EVENT = "state_change_event"
-
 # private variables
 
 _event_listeners = []

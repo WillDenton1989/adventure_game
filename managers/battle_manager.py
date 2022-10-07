@@ -123,13 +123,10 @@ class BattleManager(ManagerBase):
         return False
 
     def _handle_game_state_change(self, previous_state, new_state, data):
-        pass
-
-    # event handlers
-
-    def _state_change_event_handler(self, event_name, data):
         if(data["new_state"] == State.STATE_BATTLE):
             self._initialize_battle(data["event_data"])
+
+    # event handlers
 
     def _battle_command_event_handler(self, event):
         self._handle_player_decision(event.command)
