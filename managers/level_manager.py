@@ -6,6 +6,8 @@ import level_parser
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
+from models.events.level_event import LevelEvent
+
 class LevelManager(ManagerBase):
     def __init__(self, event_dispatcher, game_manager):
         ManagerBase.__init__(self, event_dispatcher)
@@ -23,7 +25,7 @@ class LevelManager(ManagerBase):
     def _register_listeners(self):
         event_manager.listen(event_manager.MOVEMENT_EVENT, self._movement_event_handler)
         event_manager.listen(event_manager.ENTITIES_UPDATED_EVENT, self._entities_updated_event_handler)
-        event_manager.listen(event_manager.DRAW_LEVEL_EVENT, self._draw_level_event_handler)
+        self.event_dispatcher.receive(LevelEvent.DRAW_LEVEL_EVENT, self._draw_level_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -82,5 +84,5 @@ class LevelManager(ManagerBase):
     def _entities_updated_event_handler(self, event_name, data):
         self._update_entities(data["updated_entities"])
 
-    def _draw_level_event_handler(self, event_name, data):
+    def _draw_level_event_handler(self, _event):
         self._draw_level()

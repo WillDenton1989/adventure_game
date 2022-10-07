@@ -35,8 +35,6 @@ GAME_FINISH_EVENT = "game_finish_event"
 
 PLAYER_NAME_CHANGE_EVENT = "player_name_change_event"
 
-DRAW_LEVEL_EVENT = "draw_level_event"
-
 # private variables
 
 _event_listeners = []
