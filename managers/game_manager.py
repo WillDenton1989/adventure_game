@@ -56,7 +56,7 @@ class GameManager(ManagerBase):
         event_manager.listen(event_manager.END_CONVERSATION_EVENT, self._conversation_ended_handler)
 
         self.event_dispatcher.receive(InventoryEvent.OPEN_INVENTORY_EVENT, self._inventory_opened_handler)
-        event_manager.listen(event_manager.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
+        self.event_dispatcher.receive(InventoryEvent.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
 
         self.event_dispatcher.receive(GameEvent.QUIT_EVENT, self._quit_event_handler)
         event_manager.listen(event_manager.GAME_FINISH_EVENT, self._game_finish_event_handler)
@@ -113,8 +113,8 @@ class GameManager(ManagerBase):
     def _inventory_opened_handler(self, _event):
         self._set_state(State.STATE_INVENTORY)
 
-    def _inventory_closed_handler(self, event, data):
-        self._set_state(State.STATE_MOVEMENT, data)
+    def _inventory_closed_handler(self, _event):
+        self._set_state(State.STATE_MOVEMENT)
 
     def _conversation_started_handler(self, event, data):
         self._start_conversation(data)

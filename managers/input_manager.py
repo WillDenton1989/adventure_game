@@ -149,7 +149,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
             data["choice"] = int(input) - 1
             event_manager.trigger_event(event_manager.SELECT_ITEM_IN_INVENTORY_EVENT, data)
         elif(input == "i"):
-            event_manager.trigger_event(event_manager.CLOSE_INVENTORY_EVENT, data)
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:
             self._parse_input()
 
