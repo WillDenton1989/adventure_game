@@ -1,4 +1,3 @@
-#where the inventory lives.
 import yaml
 import event_manager
 from managers.input_manager import InputManager
@@ -10,8 +9,6 @@ class InventoryManager(ManagerBase):
     def __init__(self):
         ManagerBase.__init__(self)
         self._player_inventory = []
-
-    # public methods
 
     # private methods
 

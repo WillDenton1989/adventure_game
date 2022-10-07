@@ -55,6 +55,8 @@ class EntityBase(ABC):
     def events(self):
         return self._events
 
+    # public methods
+
     # private methods
 
     @abstractmethod

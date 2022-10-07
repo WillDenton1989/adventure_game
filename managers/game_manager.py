@@ -9,16 +9,12 @@ from managers.level_manager import LevelManager
 from managers.manager_base import ManagerBase
 from models.state import State
 
-"a b c d e f g h i j k l m n o p q r s t u v w x y z"
-
 class GameManager(ManagerBase):
     """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
     def __init__(self):
         ManagerBase.__init__(self)
-
         self.game_state = State.STATE_CHARACTER_CREATION
-
         self._initialize_managers()
         self._start()
 
@@ -69,7 +65,6 @@ class GameManager(ManagerBase):
 
     def _dispatch_state_change(self, previous_state, new_state, event_data):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
-
         event_manager.trigger_event(event_manager.STATE_CHANGE_EVENT, data)
 
     def _start(self):

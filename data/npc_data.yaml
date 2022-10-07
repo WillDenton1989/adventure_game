@@ -1,4 +1,4 @@
-#where the npc data shall live.
+# base stats for the various npcs in the game. 
 ---
 goblin:
   entity_type: monster

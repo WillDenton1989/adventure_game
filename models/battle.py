@@ -1,4 +1,3 @@
-
 class Battle:
     def __init__(self, player, monster):
         self._player = player
@@ -8,8 +7,6 @@ class Battle:
         self._monster_decision = None
 
     def __str__(self):
-        # return f"\n\nRound {self.round}: {self.player.name} - {self.player.hit_points}, {self.monster.name} - {self.monster.hit_points}
-        #          \n{self.player.name}: defense: {self.player.defense} attack: {self.player.attack_power}, {self.monster.name}: defense: {self.monster.defense} attack: {self.monster.attack_power}"
         return '''\
             \n\nRound {round}: {p_name} - {p_hp}, {m_name} - {m_hp}
             \n{p_name}: defense: {p_def} attack: {p_attack}, {m_name}: defense: {m_def} attack: {m_attack}"
@@ -61,3 +58,5 @@ class Battle:
 
     def decision_text(self):
         return f"\n{self.player.name} chooses to {self.player_decision}, {self.monster.name} chooses to {self.monster_decision}"
+
+    # private methods

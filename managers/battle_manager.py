@@ -1,12 +1,11 @@
-#battle manager
 from random import randint
-from managers.input_manager import InputManager
 import event_manager
-from models.name_generator import NameGenerator
-from models.catchphrase_generator import CatchphraseGenerator
-from models.state import State
+from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 from models.battle import Battle
+from models.catchphrase_generator import CatchphraseGenerator
+from models.name_generator import NameGenerator
+from models.state import State
 
 SYMBOL_DEAD = "corpse"
 

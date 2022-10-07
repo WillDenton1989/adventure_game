@@ -1,12 +1,10 @@
 import event_manager
-from models.state import State
 from managers.manager_base import ManagerBase
+from models.state import State
 
 class InputManager(ManagerBase):
     def __init__(self):
         ManagerBase.__init__(self)
-
-    # public methods
 
     # private methods
 
@@ -19,8 +17,8 @@ class InputManager(ManagerBase):
 
     def _parse_input(self):
         self._show_controls()
-
         player_input = input(self._prompt()).strip()
+
         if(self.game_state == State.STATE_CHARACTER_CREATION):
             return self._parse_player_creation(player_input)
         elif(self.game_state == State.STATE_MOVEMENT):
@@ -49,17 +47,6 @@ class InputManager(ManagerBase):
             exception_string = f"cannot show controls for your current game state: {self.game_state}"
             raise Exception(exception_string)
 
-    def _show_player_creation_controls(self):
-        print("Type in your name and your adventure shall begin!\n")
-
-    def _parse_player_creation(self, input):
-        if(input == "dood"):
-            print(f"\nSup {input}.\n\nAlright then, lets go!\n")
-        else:
-            print(f"\nAlright {input}, lets go!\n")
-
-        event_manager.trigger_event(event_manager.PLAYER_NAME_CHANGE_EVENT, { "name": input })
-
     def _prompt(self):
         if(self.game_state == State.STATE_CHARACTER_CREATION):
             return "A name, liege? "
@@ -73,6 +60,17 @@ class InputManager(ManagerBase):
             return "Select the item you wish to use, dude. "
         else:
             raise Exception("there is no prompt for your current game state.")
+
+    def _show_player_creation_controls(self):
+        print("Type in your name and your adventure shall begin!\n")
+
+    def _parse_player_creation(self, input):
+        if(input == "dood"):
+            print(f"\nSup {input}.\n\nAlright then, lets go!\n")
+        else:
+            print(f"\nAlright {input}, lets go!\n")
+
+        event_manager.trigger_event(event_manager.PLAYER_NAME_CHANGE_EVENT, { "name": input })
 
     def _show_movement_controls(self):
         print(f"""Use the 'k' and 'j' keys to move up and down;

@@ -1,7 +1,6 @@
-# this is where the item model shall live.
 
 class Item:
-    """builds the basics for items"""
+    """Builds the basic Item class. This was also my first class. :D"""
 
     VALID_TYPES = ["junk", "consumable", "weapon", "armor", "treasure"]
 
@@ -13,7 +12,6 @@ class Item:
         self._value = value
         self._consumable = consumable
         self._equipable = equipable
-
 
     def __str__(self):
         return f"{self._display_name}"
@@ -35,3 +33,7 @@ class Item:
     @property
     def weight(self):
         return self._weight
+
+    # public methods
+
+    # private methods

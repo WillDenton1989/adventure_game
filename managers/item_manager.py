@@ -1,14 +1,12 @@
-# the item manager.
 import yaml
 import event_manager
-from models.item import Item
-from models.effects.heal import Heal
 from managers.manager_base import ManagerBase
+from models.effects.heal import Heal
+from models.item import Item
 
 class ItemManager(ManagerBase):
     def __init__(self, game_manager):
         ManagerBase.__init__(self)
-
         self._game_manager = game_manager
         self._item_templates = self._load_items("data/items.yaml")
 
@@ -23,7 +21,6 @@ class ItemManager(ManagerBase):
     def _register_listeners(self):
         event_manager.listen(event_manager.TRIGGER_CONSUME_ITEM_EFFECT_EVENT, self._trigger_item_effect_event_handler)
 
-
     def _unregister_listeners(self):
         pass
 
@@ -36,7 +33,6 @@ class ItemManager(ManagerBase):
 
     def _execute_effects(self, item_choice):
         effects = item_choice.effects
-
         for effect_key in effects:
             if(effect_key == "heal"):
                 max_heal = effects[effect_key]
@@ -71,6 +67,7 @@ class ItemManager(ManagerBase):
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
+        
     # event handlers
 
     def _trigger_item_effect_event_handler(self, event_name, data):

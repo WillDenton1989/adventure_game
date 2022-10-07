@@ -1,16 +1,15 @@
 import yaml
 import event_manager
-from models.item import Item
-from models.entities.player import Player
-from managers.manager_base import ManagerBase
 from managers.input_manager import InputManager
+from managers.manager_base import ManagerBase
+from models.entities.player import Player
+from models.item import Item
 
 class PlayerManager(ManagerBase):
     def __init__(self):
         ManagerBase.__init__(self)
         event_manager.listen(event_manager.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
         player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
-
         self._item_manager = None
         self._set_player(player_data)
 

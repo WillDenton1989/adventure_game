@@ -8,7 +8,6 @@ class Level:
         self._symbols = symbols
         self._entities = []
         self._events = []
-
         self._check_map(self._map)
 
     # attribute accessors

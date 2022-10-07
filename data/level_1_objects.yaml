@@ -1,4 +1,4 @@
-# #where the level one objects shall live.
+# the entities for a particular level, in this case, level_1
 ---
 objects:
   - object_name: player_start

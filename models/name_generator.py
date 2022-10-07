@@ -1,15 +1,17 @@
 from random import randint
 
 class NameGenerator:
-    """the basics of name genrator"""
+    """Class to generate random names for npcs."""
 
     def __init__(self):
         pass
 
+    # attribute accessors
+    
     # public methods
 
     def new_name(self, character_class):
-        y = 0# randint(0, 3)
+        y = 0
         x = randint(0, 16)
         names = [
             "Bob",
@@ -42,9 +44,11 @@ class NameGenerator:
 
         if("goblin" in character_class):
             generated_name = names[x]
-        elif(character_class == "dwarf"):
+        elif("dwarf" in character_class):
             generated_name = dwarf_names[y]
         else:
             generated_name = names[x]
 
         return generated_name + " the " + character_class
+
+    # private methods

@@ -1,6 +1,5 @@
 import yaml
 import event_manager
-
 from managers.manager_base import ManagerBase
 from managers.monster_manager import MonsterManager
 from managers.npc_manager import NpcManager
@@ -9,13 +8,11 @@ from models.entities.exit import Exit
 from models.entities.treasure import Treasure
 
 class EntityManager(ManagerBase):
-    """the basics of the entity manager"""
+    """This manages all entities in the game."""
 
     def __init__(self):
         ManagerBase.__init__(self)
-
         self._entities = []
-
         self._load_entity_templates()
         self._create_sub_managers()
 

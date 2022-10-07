@@ -1,4 +1,4 @@
-# dis is the items yaml.
+# base information for the various items in the adventure game.
 ---
 item_data:
   red_potion:

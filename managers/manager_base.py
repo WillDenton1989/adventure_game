@@ -4,6 +4,8 @@ import event_manager
 ALLOWED_CLASS = "GameManager"
 
 class ManagerBase(ABC):
+    """this is the base class for all managers in the game"""
+    
     _game_state = "FOOBAR"
 
     def __init__(self):

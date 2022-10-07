@@ -4,8 +4,6 @@ import level_parser
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
-"a b c d e f g h i j k l m n o p q r s t u v w x y z"
-
 class LevelManager(ManagerBase):
     def __init__(self, game_manager):
         ManagerBase.__init__(self)
@@ -24,7 +22,6 @@ class LevelManager(ManagerBase):
         event_manager.listen(event_manager.MOVEMENT_EVENT, self._movement_event_handler)
         event_manager.listen(event_manager.ENTITIES_UPDATED_EVENT, self._entities_updated_event_handler)
         event_manager.listen(event_manager.DRAW_LEVEL_EVENT, self._draw_level_event_handler)
-
 
     def _unregister_listeners(self):
         pass

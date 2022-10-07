@@ -1,4 +1,4 @@
-#where the player information shall live.
+# yaml for the player base stats
 ---
 player:
   max_hit_points: 10

@@ -1,12 +1,11 @@
-from models.entities.monster import Monster
 from managers.manager_base import ManagerBase
-from models.name_generator import NameGenerator
 from models.catchphrase_generator import CatchphraseGenerator
+from models.entities.monster import Monster
+from models.name_generator import NameGenerator
 
 class MonsterManager(ManagerBase):
     def __init__(self):
         ManagerBase.__init__(self)
-
         self._monsters = []
 
     # public methods

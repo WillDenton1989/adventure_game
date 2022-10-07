@@ -1,4 +1,3 @@
-#this is tha map reader boi.
 import yaml
 import event_manager
 from models.level import Level

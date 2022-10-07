@@ -1,5 +1,3 @@
-#where the events live.
-
 # Events. probably need to clean this up in the near future.
 CREATE_ENTITY_EVENT = "create_entity_event"
 ENTITIES_UPDATED_EVENT = "entities_updated_event"
@@ -23,12 +21,11 @@ OPEN_INVENTORY_EVENT = "open_inventory event"
 CLOSE_INVENTORY_EVENT = "close_inventory_event"
 
 SELECT_ITEM_IN_INVENTORY_EVENT = "select_item_in_inventory_event"
+ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
+REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
 
 TRIGGER_CONSUME_ITEM_EFFECT_EVENT = "trigger_consume_item_effect_event"
 TRIGGER_EQUIP_ITEM_EFFECT_EVENT = "trigger_equip_item_effect_event"
-
-ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
-REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
 
 CONVERSATION_EVENT = "conversation_event"
 CONVERSATION_INPUT_EVENT = "conversation_input_event"
@@ -40,6 +37,8 @@ GAME_FINISH_EVENT = "game_finish_event"
 PLAYER_NAME_CHANGE_EVENT = "player_name_change_event"
 
 DRAW_LEVEL_EVENT = "draw_level_event"
+
+# private variables
 
 _event_listeners = []
 _callbacks = set([])

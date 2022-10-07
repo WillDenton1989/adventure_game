@@ -1,13 +1,9 @@
-
 class CatchphraseGenerator:
-    """makes soup"""
-
     def __init__(self):
         pass
 
     def new_phrase(self, name):
         intro = "\nAs your foe engages you in glorious combat they cry out...\n"
-
         return intro + self._phrase_for_name(name)
 
     def _phrase_for_name(self, name):

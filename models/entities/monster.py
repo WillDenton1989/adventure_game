@@ -1,9 +1,7 @@
-from models.entities.entity_base import EntityBase
 from models.entities.battleable import Battleable
+from models.entities.entity_base import EntityBase
 
 class Monster(EntityBase, Battleable):
-    """basic monster class"""
-
     def __init__(self, data):
         EntityBase.__init__(self, data)
         Battleable.__init__(self, data)
@@ -15,6 +13,8 @@ class Monster(EntityBase, Battleable):
     def catchphrase(self):
         return self._catchphrase
 
+    # public methods
+    
     # private method
 
     def _sort_index(self):
