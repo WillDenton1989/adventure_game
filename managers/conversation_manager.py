@@ -1,5 +1,3 @@
-import event_manager
-
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 

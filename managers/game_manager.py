@@ -1,5 +1,3 @@
-import event_manager
-
 from managers.battle_manager import BattleManager
 from managers.conversation_manager import ConversationManager
 from managers.entity_manager import EntityManager

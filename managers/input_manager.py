@@ -1,5 +1,3 @@
-import event_manager
-
 from managers.manager_base import ManagerBase
 
 from models.events.battle_event import BattleEvent

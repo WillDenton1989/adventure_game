@@ -1,7 +1,5 @@
 import yaml
 
-import event_manager
-
 from managers.manager_base import ManagerBase
 
 from models.effects.heal import Heal
