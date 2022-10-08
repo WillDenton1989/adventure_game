@@ -15,12 +15,12 @@ class InventoryManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(InventoryEvent.ADD_ITEM_TO_INVENTORY_EVENT, self._add_item_to_inventory_event_handler)
         self.event_dispatcher.receive(InventoryEvent.REMOVE_ITEM_FROM_INVENTORY_EVENT, self._remove_item_from_inventory_event_handler)
         self.event_dispatcher.receive(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, self._select_item_in_inventory_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _show_inventory(self):

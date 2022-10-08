@@ -11,10 +11,10 @@ class ConversationManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(ConversationEvent.CONVERSATION_EVENT, self._conversation_command_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _run_conversation(self):

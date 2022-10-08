@@ -48,7 +48,7 @@ class GameManager(ManagerBase):
         self._level_manager = LevelManager(self.event_dispatcher, self)
         self._conversation_manager = ConversationManager(self.event_dispatcher)
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(BattleEvent.BATTLE_EVENT, self._battle_started_handler)
         self.event_dispatcher.receive(BattleEvent.END_BATTLE_EVENT, self._battle_ended_handler)
 
@@ -61,7 +61,7 @@ class GameManager(ManagerBase):
         self.event_dispatcher.receive(GameEvent.QUIT_EVENT, self._quit_event_handler)
         self.event_dispatcher.receive(GameEvent.GAME_FINISH_EVENT, self._game_finish_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _set_state(self, new_state, event_data = []):

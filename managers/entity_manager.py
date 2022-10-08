@@ -35,10 +35,10 @@ class EntityManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(EntityEvent.CREATE_ENTITY_EVENT, self._create_entity_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _load_entity_templates(self):

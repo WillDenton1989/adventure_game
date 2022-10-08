@@ -15,10 +15,10 @@ class InputManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(InputEvent.INPUT_PARSE_EVENT, self._input_parse_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _parse_input(self):

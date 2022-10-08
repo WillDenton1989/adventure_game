@@ -22,11 +22,11 @@ class ItemManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(ItemEvent.USE_ITEM_EVENT, self._use_item_event_handler)
 
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _load_item_templates(self, filename):

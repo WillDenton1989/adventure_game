@@ -25,10 +25,10 @@ class BattleManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(BattleEvent.BATTLE_COMMAND_EVENT, self._battle_command_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _initialize_battle(self, data):

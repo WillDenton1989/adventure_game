@@ -34,11 +34,11 @@ class PlayerManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, self._update_player_location_event_handler)
         self.event_dispatcher.receive(PlayerEvent.PLAYER_NAME_CHANGE_EVENT, self._player_name_change_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _load_player_default_data(self, file_name):

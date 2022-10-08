@@ -13,7 +13,7 @@ class ManagerBase(ABC):
         self._event_dispatcher = event_dispatcher
         self.event_dispatcher.receive(GameEvent.STATE_CHANGE_EVENT, self._state_change_event_handler)
 
-        self._register_listeners()
+        self._register_receivers()
 
     # attribute accessors
 
@@ -37,11 +37,11 @@ class ManagerBase(ABC):
     # private methods
 
     @abstractmethod
-    def _register_listeners(self):
+    def _register_receivers(self):
         pass
 
     @abstractmethod
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     @abstractmethod

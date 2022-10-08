@@ -22,10 +22,10 @@ class MonsterManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         pass
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _handle_game_state_change(self, previous_state, new_state, data):

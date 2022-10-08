@@ -23,12 +23,12 @@ class LevelManager(ManagerBase):
 
     # private methods
 
-    def _register_listeners(self):
+    def _register_receivers(self):
         self.event_dispatcher.receive(LevelEvent.MOVEMENT_EVENT, self._movement_event_handler)
         self.event_dispatcher.receive(EntityEvent.ENTITIES_UPDATED_EVENT, self._entities_updated_event_handler)
         self.event_dispatcher.receive(LevelEvent.DRAW_LEVEL_EVENT, self._draw_level_event_handler)
 
-    def _unregister_listeners(self):
+    def _unregister_receivers(self):
         pass
 
     def _draw_level(self):
