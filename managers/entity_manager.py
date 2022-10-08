@@ -6,8 +6,10 @@ from managers.manager_base import ManagerBase
 from managers.monster_manager import MonsterManager
 from managers.npc_manager import NpcManager
 from managers.player_manager import PlayerManager
+
 from models.entities.exit import Exit
 from models.entities.treasure import Treasure
+from models.events.entity_event import EntityEvent
 
 class EntityManager(ManagerBase):
     """This manages all entities in the game."""
@@ -36,7 +38,7 @@ class EntityManager(ManagerBase):
     # private methods
 
     def _register_listeners(self):
-        event_manager.listen(event_manager.CREATE_ENTITY_EVENT, self._create_entity_event_handler)
+        self.event_dispatcher.receive(EntityEvent.CREATE_ENTITY_EVENT, self._create_entity_event_handler)
 
     def _unregister_listeners(self):
         pass
@@ -82,12 +84,12 @@ class EntityManager(ManagerBase):
     def _add_entity(self, entity):
         self._entities.append(entity)
         updated_entities = self._entities.copy()
-        event_manager.trigger_event(event_manager.ENTITIES_UPDATED_EVENT, { "updated_entities": updated_entities })
+        self.event_dispatcher.dispatch(EntityEvent(EntityEvent.ENTITIES_UPDATED_EVENT, { "updated_entities": updated_entities }))
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     # event handlers
 
-    def _create_entity_event_handler(self, event_name, data):
-        self._create_entity(data["entity_data"])
+    def _create_entity_event_handler(self, event):
+        self._create_entity(event.entity_data)

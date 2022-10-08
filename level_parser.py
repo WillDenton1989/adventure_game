@@ -1,6 +1,6 @@
 import yaml
-import event_manager
 
+from models.events.entity_event import EntityEvent
 from models.events.level_event import LevelEvent
 from models.level import Level
 
@@ -44,7 +44,7 @@ def _add_player(object):
 
 def _add_entity(entity_data):
     data = { "entity_data": entity_data }
-    event_manager.trigger_event(event_manager.CREATE_ENTITY_EVENT, data)
+    _event_dispatcher.dispatch(EntityEvent(EntityEvent.CREATE_ENTITY_EVENT, data))
 
 def _load_map(filename):
     map_list = []

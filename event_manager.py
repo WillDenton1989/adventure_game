@@ -1,6 +1,4 @@
 # Events. probably need to clean this up in the near future.
-CREATE_ENTITY_EVENT = "create_entity_event"
-ENTITIES_UPDATED_EVENT = "entities_updated_event"
 
 # private variables
 
