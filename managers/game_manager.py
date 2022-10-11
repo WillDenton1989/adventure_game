@@ -15,7 +15,7 @@ from models.events.inventory_event import InventoryEvent
 from models.state import State
 
 class GameManager(ManagerBase):
-    """Herald ye, i am the god of this game. All shall tremeble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
+    """Herald ye, i am the god of this game. All shall tremble at mine approach. My gaze pierces cloud, shadow, earth and flesh."""
 
     def __init__(self):
         event_dispatcher = EventDispatcher()
