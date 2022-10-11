@@ -1,25 +1,24 @@
-import yaml
-
-import level_parser
-
 from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.events.entity_event import EntityEvent
 from models.events.level_event import LevelEvent
+from models.level_parser import LevelParser
 
 class LevelManager(ManagerBase):
     def __init__(self, event_dispatcher, game_manager):
         ManagerBase.__init__(self, event_dispatcher)
         self._game_manager = game_manager
+        self._level_parser = LevelParser()
         self._level = None
-        level_parser.initialize(self.event_dispatcher)
+        self._level_objects = None
 
     # public methods
 
     def set_level(self, level_name, symbol_dict):
-        self._level = level_parser.build_the_level(level_name, symbol_dict)
-        level_parser.build_the_objects(level_name)
+        self._level = self._level_parser.build_the_level(level_name, symbol_dict)
+        self._level_objects = self._level_parser.build_the_objects(level_name)
+        self._add_objects()
 
     # private methods
 
@@ -77,6 +76,23 @@ class LevelManager(ManagerBase):
 
     def _update_entities(self, updated_entities):
         self._level.update_entities(updated_entities)
+
+    def _add_objects(self):
+        object_data = self._level_objects
+
+        for object in object_data["objects"]:
+            if(object["object_name"] == "player_start"):
+                self._add_player(object)
+            else:
+                self._add_entity(object)
+
+    def _add_player(self, object):
+        data = { "location": object["location"] }
+        self._event_dispatcher.dispatch(LevelEvent(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, data))
+
+    def _add_entity(self, entity_data):
+        data = { "entity_data": entity_data }
+        self._event_dispatcher.dispatch(EntityEvent(EntityEvent.CREATE_ENTITY_EVENT, data))
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
