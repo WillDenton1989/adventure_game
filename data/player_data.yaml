@@ -1,8 +1,7 @@
-# yaml for the player base stats
 ---
 player:
-  max_hit_points: 10
-  hit_points: 10
+  max_hit_points: 12
+  hit_points: 12
   attack_power: 5
   defense: 1
   defense_scalar: 1
