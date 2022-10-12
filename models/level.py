@@ -3,14 +3,20 @@ import copy
 class Level:
     PASSABLE_SPACE = "EE"
 
-    def __init__(self, raw_map, symbols):
+    def __init__(self, raw_map, symbols, entity_templates):
         self._map = self._build_map(raw_map, symbols)
         self._symbols = symbols
+        self._entity_templates = entity_templates
         self._entities = []
         self._events = []
+
         self._check_map(self._map)
 
     # attribute accessors
+
+    @property
+    def entity_templates(self):
+        return self._entity_templates
 
     # public methods
 

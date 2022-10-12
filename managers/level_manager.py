@@ -11,13 +11,11 @@ class LevelManager(ManagerBase):
         self._game_manager = game_manager
         self._level_parser = LevelParser()
         self._level = None
-        self._level_objects = None
 
     # public methods
 
     def set_level(self, level_name, symbol_dict):
         self._level = self._level_parser.build_the_level(level_name, symbol_dict)
-        self._level_objects = self._level_parser.build_the_objects(level_name)
         self._add_objects()
 
     # private methods
@@ -78,13 +76,13 @@ class LevelManager(ManagerBase):
         self._level.update_entities(updated_entities)
 
     def _add_objects(self):
-        object_data = self._level_objects
+        entity_templates = self._level.entity_templates
 
-        for object in object_data["objects"]:
-            if(object["object_name"] == "player_start"):
-                self._add_player(object)
+        for entity_template in entity_templates["objects"]:
+            if(entity_template["object_name"] == "player_start"):
+                self._add_player(entity_template)
             else:
-                self._add_entity(object)
+                self._add_entity(entity_template)
 
     def _add_player(self, object):
         data = { "location": object["location"] }

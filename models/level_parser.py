@@ -15,11 +15,10 @@ class LevelParser:
     def build_the_level(self, level_name, symbol_dict):
         string_map = self._load_map("data/" + level_name + ".txt")
         map_key_dict = self._load_dictionary_yaml(symbol_dict)
-        level = Level(string_map, map_key_dict)
-        return level
+        entity_templates = self._load_level_objects("data/" + level_name + "_objects.yaml")
+        level = Level(string_map, map_key_dict, entity_templates)
 
-    def build_the_objects(self, level_name):
-        return self._load_level_objects("data/" + level_name + "_objects.yaml")
+        return level
 
     # private methods
 
