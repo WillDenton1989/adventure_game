@@ -16,7 +16,7 @@ class LevelManager(ManagerBase):
 
     def set_level(self, level_name, symbol_dict):
         self._level = self._level_parser.build_the_level(level_name, symbol_dict)
-        self._add_objects()
+        self._add_entities()
 
     # private methods
 
@@ -75,17 +75,17 @@ class LevelManager(ManagerBase):
     def _update_entities(self, updated_entities):
         self._level.update_entities(updated_entities)
 
-    def _add_objects(self):
+    def _add_entities(self):
         entity_templates = self._level.entity_templates
 
-        for entity_template in entity_templates["objects"]:
-            if(entity_template["object_name"] == "player_start"):
+        for entity_template in entity_templates["templates"]:
+            if(entity_template["template_name"] == "player_start"):
                 self._add_player(entity_template)
             else:
                 self._add_entity(entity_template)
 
-    def _add_player(self, object):
-        data = { "location": object["location"] }
+    def _add_player(self, template):
+        data = { "location": template["location"] }
         self._event_dispatcher.dispatch(LevelEvent(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, data))
 
     def _add_entity(self, entity_data):

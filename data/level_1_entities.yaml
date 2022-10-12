@@ -1,55 +1,55 @@
-# the entities for a particular level, in this case, level_1
 ---
-objects:
-  - object_name: player_start
+templates:
+  - template_name: player_start
     location:
       column: 1
       row: 1
-  - object_name: monster
+  - template_name: monster
     key: goblin
     location:
       column: 2
       row: 2
     events:
       - BattleEvent#BATTLE_EVENT
-  - object_name: monster
+  - template_name: monster
     key: goblin
     location:
       column: 8
       row: 10
     events:
       - BattleEvent#BATTLE_EVENT
-  - object_name: monster
+  - template_name: monster
     key: bandit
     location:
       column: 6
       row: 5
     events:
       - BattleEvent#BATTLE_EVENT
-  - object_name: monster
+  - template_name: monster
     key: goblin
     location:
       column: 2
       row: 9
     events:
       - BattleEvent#BATTLE_EVENT
-  - object_name: npc
+  - template_name: npc
     key: dwarf
     location:
       column: 10
       row: 1
     events:
       - ConversationEvent#CONVERSATION_EVENT
-  - object_name: treasure
+  - template_name: treasure
     key: loot_chest
     location:
       column: 5
       row: 6
     events: null
-  - object_name: finish_line
+  - template_name: finish_line
     key: finish_line
     location:
       column: 10
       row: 10
     events:
       - GameEvent#GAME_FINISH_EVENT
+...
