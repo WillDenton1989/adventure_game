@@ -14,6 +14,12 @@ class ItemManager(ManagerBase):
         self._game_manager = game_manager
         self._item_templates = self._load_item_templates("data/items.yaml")
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # public methods
 
     def item_from_key(self, key):
@@ -66,16 +72,16 @@ class ItemManager(ManagerBase):
                 print("There is no effect for this item. This could be an error.")
 
     def _damage_user(self, damage_amount):
-        print(damage_amount)
+        print(f"Damage amount: {damage_amount}")
 
     def _increase_user_attack_damage(self, ad_amount):
-        print(ad_amount)
+        print(f"Attack damage amount: {ad_amount}")
 
     def _increase_user_defense(self, defense_amount):
-        print(defense_amount)
+        print(f"Defense amount: {defense_amount}")
 
     def _restore_user_mana(self, mana_amount):
-        print(mana_amount)
+        print(f"Mana amount: {mana_amount}")
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass

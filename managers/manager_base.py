@@ -12,8 +12,19 @@ class ManagerBase(ABC):
     def __init__(self, event_dispatcher):
         self._event_dispatcher = event_dispatcher
         self.event_dispatcher.receive(GameEvent.STATE_CHANGE_EVENT, self._state_change_event_handler)
-
         self._register_receivers()
+
+    @abstractmethod
+    def start(self):
+        # this is where any one time operation is run.
+        pass
+
+    @abstractmethod
+    def process(self):
+        # looks at the game state, if the game state aligns
+        # with the manager then run code here.
+        # otherwise pass, may need a loop
+        pass
 
     # attribute accessors
 

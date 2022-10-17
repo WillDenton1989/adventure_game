@@ -2,6 +2,7 @@ from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.events.entity_event import EntityEvent
+# from models.events.input_event import InputEvent
 from models.events.level_event import LevelEvent
 from models.level_parser import LevelParser
 
@@ -11,6 +12,16 @@ class LevelManager(ManagerBase):
         self._game_manager = game_manager
         self._level_parser = LevelParser()
         self._level = None
+
+    def start(self):
+        pass
+
+    def process(self):
+        # while(self.game_state != "state_game_end"):
+        if(self.game_state == "state_movement"):
+            self._draw_level()
+        else:
+            pass
 
     # public methods
 
@@ -30,6 +41,8 @@ class LevelManager(ManagerBase):
 
     def _draw_level(self):
         map = self._level.drawable_map()
+        print("------------------------------------------------------------------------")
+
         for row in map:
             for column in row:
                 print(chr(column), end = "")
@@ -49,7 +62,7 @@ class LevelManager(ManagerBase):
             self.event_dispatcher.dispatch(LevelEvent(LevelEvent.UPDATE_PLAYER_LOCATION_EVENT, data))
             self._trigger_level_events(new_column, new_row)
         else:
-            print("You can't move there, hoe")
+            print("That is not passable terrain my friend.")
 
     def _trigger_level_events(self, column, row):
         triggered_events = self._level.events_for(column, row)

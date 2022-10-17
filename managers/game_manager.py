@@ -11,18 +11,44 @@ from models.event_dispatcher import EventDispatcher
 from models.events.battle_event import BattleEvent
 from models.events.conversation_event import ConversationEvent
 from models.events.game_event import GameEvent
+from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
+from models.events.level_event import LevelEvent
 from models.state import State
 
 class GameManager(ManagerBase):
-    """All shall tremble at mine approach. My gaze pierces cloud, shadow, earth and file."""
+    """The Great Eye, ever watchful. Its gaze pierces cloud, shadow, earth and game_file."""
 
     def __init__(self):
         event_dispatcher = EventDispatcher()
         ManagerBase.__init__(self, event_dispatcher)
         self.game_state = State.STATE_CHARACTER_CREATION
         self._initialize_managers()
-        self._start()
+        self._initialize_player() # was self._start(), this was named that before the new start() was introduced.
+        self._rounds = 0
+
+    def start(self):
+        self._entity_manager.start()
+        self._input_manager.start()
+        self._item_manager.start()
+        self._inventory_manager.start()
+        self._battle_manager.start()
+        self._level_manager.start()
+        self._conversation_manager.start()
+        self.process()
+
+    def process(self):
+        while(self.game_state != "state_game_end"):
+            self._rounds += 1
+            
+            self._level_manager.process()
+            self._entity_manager.process()
+            self._item_manager.process()
+            self._inventory_manager.process()
+            self._battle_manager.process()
+            self._conversation_manager.process()
+            self._input_manager.process() # this can proc the _parse_input. probably just wanna use events but its still cool.
+            self._game_board()
 
     # attribute accessors
 
@@ -73,10 +99,21 @@ class GameManager(ManagerBase):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
         self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
 
-    def _start(self):
+    # does this belong in the new start() method?
+    def _initialize_player(self): # was _start
         self._entity_manager.player_manager.set_item_manager(self._item_manager)
         self._entity_manager.create_player()
         self._transition_to_movement()
+
+    def _game_board(self):
+        self._game_board_hud()
+        self._game_board_input_event()
+
+    def _game_board_hud(self):
+        print(f"{self.player.name} Hit-Points: {self.player.hit_points} | Round: {self._rounds} | STATE:  {self.game_state}\n")
+
+    def _game_board_input_event(self):
+        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
     def _transition_to_movement(self):
         self._set_state(State.STATE_MOVEMENT)
@@ -86,8 +123,8 @@ class GameManager(ManagerBase):
         print(f"Farewell {self.player.name}")
         exit()
 
-    def _game_end(self):
-        print(f"\nCongratulations {self.player.name}!\n\nYou have escaped the bleak and terrible dungeon!\n")
+    def _game_finish_line(self):
+        print(f"\nCongratulations {self.player.name}!\n\nYou escaped the bleak and terrible dungeon in {self._rounds} rounds!\n")
         print(f"\n{self.player.name} has finished their Adventure! So far...\n")
         exit()
 
@@ -126,4 +163,4 @@ class GameManager(ManagerBase):
         self._quit()
 
     def _game_finish_event_handler(self, event):
-        self._game_end()
+        self._game_finish_line()

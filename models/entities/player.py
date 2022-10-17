@@ -7,6 +7,7 @@ class Player(EntityBase, Battleable):
     def __init__(self, data):
         EntityBase.__init__(self, data)
         Battleable.__init__(self, data)
+
         self._speed = data["speed"]
 
     # attribute accessors

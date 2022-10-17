@@ -13,6 +13,12 @@ class InventoryManager(ManagerBase):
 
         self._player_inventory = []
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # private methods
 
     def _register_receivers(self):

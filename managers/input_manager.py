@@ -13,6 +13,16 @@ class InputManager(ManagerBase):
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
 
+    def start(self):
+        pass
+
+    def process(self):
+        # if(self.game_state != "state_game_end"):
+        #     self._parse_input()
+        # else:
+        #     pass
+        pass
+
     # private methods
 
     def _register_receivers(self):
@@ -132,13 +142,13 @@ Type 'quit' or 'q' to exit the adventure game.""")
         if(input == "quit" or input == "q"):
             self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
         elif(input == "1"):
-            pass
+            self.event_dispatcher.dispatch(ConversationEvent(ConversationEvent.END_CONVERSATION_EVENT, data))
         elif(input == "2"):
-            pass
+            self.event_dispatcher.dispatch(ConversationEvent(ConversationEvent.END_CONVERSATION_EVENT, data))
         elif(input == "3"):
             self.event_dispatcher.dispatch(ConversationEvent(ConversationEvent.END_CONVERSATION_EVENT, data))
         else:
-            pass
+            self._parse_input()
 
     def _show_inventory_controls(self):
         print("Press 'i' to close your inventory.")

@@ -8,6 +8,12 @@ class NpcManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
         self._npcs = []
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # public methods
 
     def create_npc(self, npc_data):

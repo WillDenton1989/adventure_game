@@ -9,6 +9,12 @@ class MonsterManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
         self._monsters = []
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # public methods
 
     def create_monster(self, monster_data):

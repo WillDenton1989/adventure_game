@@ -16,7 +16,20 @@ class EntityManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
         self._entities = []
         self._load_entity_templates()
-        self._create_sub_managers()
+        self._initialize_sub_managers()
+
+    def start(self):
+        # self._load_entity_templates()
+        # self._initialize_sub_managers()
+
+        self._monster_manager.start()
+        self._npc_manager.start()
+        self._player_manager.start()
+
+    def process(self):
+        self._monster_manager.process()
+        self._npc_manager.process()
+        self._player_manager.process()
 
     # attribute accessors
 
@@ -41,16 +54,16 @@ class EntityManager(ManagerBase):
     def _unregister_receivers(self):
         pass
 
-    def _load_entity_templates(self):
-        with open("data/npc_data.yaml") as f: # hardcoded filename no bueno
-            self._entity_templates = yaml.safe_load(f)
-
-    def _create_sub_managers(self):
+    def _initialize_sub_managers(self):
         self._monster_manager = MonsterManager(self.event_dispatcher)
         self._npc_manager = NpcManager(self.event_dispatcher)
         self._player_manager = PlayerManager(self.event_dispatcher)
 
         self._add_entity(self._player_manager.player)
+
+    def _load_entity_templates(self):
+        with open("data/npc_data.yaml") as f: # hardcoded filename no bueno
+            self._entity_templates = yaml.safe_load(f)
 
     def _create_entity(self, entity_data):
         template = self._entity_templates[entity_data["key"]]

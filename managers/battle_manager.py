@@ -15,6 +15,12 @@ class BattleManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
         self._battle = None
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # public methods
 
     def is_someone_dead(self, character):
@@ -54,6 +60,7 @@ class BattleManager(ManagerBase):
         self._battle.round += 1
 
         print(self._battle)
+        print(f"Game state: {self.game_state}") # DEBUG
         self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
     def _handle_player_decision(self, decision):

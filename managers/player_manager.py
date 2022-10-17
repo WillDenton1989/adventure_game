@@ -17,6 +17,12 @@ class PlayerManager(ManagerBase):
         self._item_manager = None
         self._set_player(player_data)
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # attribute accessor bois.
 
     @property

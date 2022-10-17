@@ -9,6 +9,9 @@ class EventDispatcher:
         self._event_listeners = []
         self._callbacks = set([])
 
+    def __str__(self):
+        return f" Event listeners: {self._event_listeners}"
+
     # public methods
 
     def dispatch(self, event):
@@ -19,6 +22,9 @@ class EventDispatcher:
     def receive(self, event_name, callback):
         self._ensure_unique_callback(event_name, callback)
         self._event_listeners.append({ "event_name": event_name, "callback": callback })
+
+    def clear_receivers(self):
+        self._event_listeners.clear()
 
     def event_from_string(self, event_string, data):
         classname, event_constant = event_string.split("#")

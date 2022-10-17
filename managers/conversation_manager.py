@@ -9,6 +9,12 @@ class ConversationManager(ManagerBase):
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
 
+    def start(self):
+        pass
+
+    def process(self):
+        pass
+
     # private methods
 
     def _register_receivers(self):

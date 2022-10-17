@@ -4,7 +4,7 @@ class Heal(EffectBase):
     """this is a class for healing effect"""
 
     def __init__(self, max_heal, game_manager):
-        super().__init__(game_manager) # ask Mike about if we're still using this right?
+        EffectBase.__init__(self, game_manager)
         self._max_heal = max_heal
 
     # public methods
@@ -17,9 +17,9 @@ class Heal(EffectBase):
 
         if(new_hp > max_hp):
             player.hit_points = max_hp
-            print(f"{old_hp}, {max_hp}")
+            print(f"HP before: {old_hp}, HP after: {max_hp}")
         else:
             player.hit_points = new_hp
-            print(f"{old_hp}, {new_hp}")
+            print(f"HP before: {old_hp}, HP after: {new_hp}")
 
     # private methods
