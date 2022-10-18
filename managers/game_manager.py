@@ -114,6 +114,7 @@ class GameManager(ManagerBase):
         self._entity_manager.create_player()
         self._transition_to_movement()
 
+    # once theres a hud class and a hud manager the hud can be called in the hud_manager process.
     def _draw_game_hud(self):
         if(self.game_state == State.STATE_MOVEMENT):
             self._line_formating()
