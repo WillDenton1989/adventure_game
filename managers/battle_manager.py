@@ -5,7 +5,6 @@ from managers.manager_base import ManagerBase
 
 from models.battle import Battle
 from models.events.battle_event import BattleEvent
-from models.events.input_event import InputEvent
 from models.state import State
 
 SYMBOL_DEAD = "corpse"
