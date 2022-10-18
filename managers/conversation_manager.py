@@ -2,7 +2,6 @@ from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.events.conversation_event import ConversationEvent
-from models.events.input_event import InputEvent
 from models.state import State
 
 class ConversationManager(ManagerBase):
@@ -13,6 +12,8 @@ class ConversationManager(ManagerBase):
         pass
 
     def process(self):
+        if(self.game_state == State.STATE_CONVERSATION):
+            self._run_conversation()
         pass
 
     # private methods
@@ -24,8 +25,8 @@ class ConversationManager(ManagerBase):
         pass
 
     def _run_conversation(self):
+        # this is where the code for a conversation will live.
         print("hello buddy! Whats your name?")
-        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
     def _initialize_conversation(self, data):
         npc = data["entity"]
