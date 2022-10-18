@@ -3,7 +3,6 @@ from managers.manager_base import ManagerBase
 from models.events.battle_event import BattleEvent
 from models.events.conversation_event import ConversationEvent
 from models.events.game_event import GameEvent
-from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
 from models.events.level_event import LevelEvent
 from models.events.player_event import PlayerEvent
@@ -23,7 +22,7 @@ class InputManager(ManagerBase):
     # private methods
 
     def _register_receivers(self):
-        self.event_dispatcher.receive(InputEvent.INPUT_PARSE_EVENT, self._input_parse_event_handler)
+        pass
 
     def _unregister_receivers(self):
         pass
