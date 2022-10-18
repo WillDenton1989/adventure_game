@@ -17,7 +17,8 @@ class InventoryManager(ManagerBase):
         pass
 
     def process(self):
-        pass
+        if(self.game_state == State.STATE_INVENTORY):
+            self._show_inventory()
 
     # private methods
 
@@ -74,7 +75,8 @@ class InventoryManager(ManagerBase):
         return (inventory_position < len(self._player_inventory) - 1)
 
     def _handle_game_state_change(self, previous_state, new_state, data):
-        self._show_inventory()
+        # _initialize_inventory
+        pass
 
     # event handlers
 

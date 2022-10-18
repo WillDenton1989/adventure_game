@@ -2,6 +2,7 @@ import yaml
 
 from managers.manager_base import ManagerBase
 
+from models.effects.damage import Damage
 from models.effects.heal import Heal
 from models.events.inventory_event import InventoryEvent
 from models.events.item_event import ItemEvent
@@ -54,12 +55,13 @@ class ItemManager(ManagerBase):
         for effect_key in effects:
             if(effect_key == "heal"):
                 max_heal = effects[effect_key]
+                print(f"Max heal: {max_heal}")
                 effect = Heal(max_heal, self._game_manager)
                 effect.execute()
             elif(effect_key == "damage"):
-                # damage effect goes here.
-                damage_amount = effects[effect_key]
-                self._damage_user(damage_amount)
+                max_damage = effects[effect_key]
+                effect = Damage(max_damage, self._game_manager)
+                effect.execute()
             elif(effect_key == "attack_damage"):
                 ad_amount = effects[effect_key]
                 self._increase_user_attack_damage(ad_amount)
@@ -71,9 +73,6 @@ class ItemManager(ManagerBase):
                 self._restore_user_mana(mana_amount)
             else:
                 print("There is no effect for this item. This could be an error.")
-
-    def _damage_user(self, damage_amount):
-        print(f"Damage amount: {damage_amount}")
 
     def _increase_user_attack_damage(self, ad_amount):
         print(f"Attack damage amount: {ad_amount}")
