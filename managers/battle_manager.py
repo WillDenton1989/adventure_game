@@ -19,7 +19,8 @@ class BattleManager(ManagerBase):
         pass
 
     def process(self):
-        pass
+        if(self.game_state == State.STATE_BATTLE):
+            self._run_battle()
 
     # public methods
 
@@ -47,7 +48,6 @@ class BattleManager(ManagerBase):
 
         print(f"\n{player.name} is fighting the legendary {monster.name}!!!\n")
         print(monster.catchphrase)
-        self._run_battle()
 
     def _check_for_loot(self, monster):
         if(self.is_someone_dead(monster) == True):
@@ -59,10 +59,11 @@ class BattleManager(ManagerBase):
     def _run_battle(self):
         self._battle.round += 1
 
+        # this is the ghetto battle hud. replace this once HUD is a class.
         print(self._battle)
         print(f"Game state: {self.game_state}") # DEBUG
-        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
 
+    # possibly need renamed. now this is what runs after battle cmd event is handled.
     def _handle_player_decision(self, decision):
         self._battle.player_decision = decision
         self._battle.monster_decision = self._enemy_npc_choice()

@@ -23,7 +23,7 @@ class PlayerManager(ManagerBase):
     def process(self):
         pass
 
-    # attribute accessor bois.
+    # attribute accessors.
 
     @property
     def player(self):

@@ -63,14 +63,14 @@ class InputManager(ManagerBase):
     def _prompt(self):
         if(self.game_state == State.STATE_CHARACTER_CREATION):
             return "A name, liege? "
-        elif(self.game_state == State.STATE_MOVEMENT):
+        elif(self.game_state == State.STATE_MOVEMENT or State.STATE_INVENTORY):
             return "? "
         elif(self.game_state == State.STATE_BATTLE):
             return f"\nI await your command: "
         elif(self.game_state == State.STATE_CONVERSATION):
             return "What is your response? "
-        elif(self.game_state == State.STATE_INVENTORY):
-            return "Select the item you wish to use, dude. "
+        # elif(self.game_state == State.STATE_INVENTORY):
+        #     return "? "
         else:
             raise Exception("there is no prompt for your current game state.")
 
@@ -86,9 +86,9 @@ class InputManager(ManagerBase):
         self.event_dispatcher.dispatch(PlayerEvent(PlayerEvent.PLAYER_NAME_CHANGE_EVENT, { "new_name": input }))
 
     def _show_movement_controls(self):
-        print(f"""Use the 'k' and 'j' keys to move up and down;
-Use the 'h' and 'l' keys to move left and right.
-Use 'i' to open the inventory screen. Use 'q' to exit the game.""")
+        print(f"""Press 'k' and 'j' to move up or down.
+Press 'h' and 'l' to move left or right.
+Press 'i' to open your inventory. Press 'q' to exit the game.""")
 
     def _parse_player_movement(self, input):
         data = {}
@@ -147,7 +147,7 @@ Type 'quit' or 'q' to exit the adventure game.""")
             self._parse_input()
 
     def _show_inventory_controls(self):
-        print("Press 'i' to close your inventory.")
+        print("Select an item.\nPress 'i' to close your inventory.")
 
     def _parse_inventory_input(self, input):
         data = {}

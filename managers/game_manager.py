@@ -28,7 +28,6 @@ class GameManager(ManagerBase):
         self._turns = 0
 
         self._initialize_managers()
-        # self._initialize_player() # was self._start(), this was named that before the new start() was introduced.
 
     def start(self):
         self._initialize_player()
@@ -39,6 +38,7 @@ class GameManager(ManagerBase):
         while(self.game_state != State.STATE_GAME_END):
             self._turns += 1
 
+            self._player_death()
             self._draw_game_hud()
             self._register_manager_processes()
 
@@ -117,12 +117,9 @@ class GameManager(ManagerBase):
 
     def _draw_game_hud(self):
         if(self.game_state == State.STATE_MOVEMENT):
-            print("------------------------------------------------------------------------")
+            self._line_formating()
             print(f"Player: {self.player.name} | Hit-Points: {self.player.hit_points} | Turn: {self._turns} | STATE:  {self.game_state}")
-            print("------------------------------------------------------------------------")
-
-    def _game_board_input_event(self):
-        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
+            self._line_formating()
 
     def _transition_to_movement(self):
         self._set_state(State.STATE_MOVEMENT)
@@ -132,10 +129,21 @@ class GameManager(ManagerBase):
         print(f"Farewell {self.player.name}")
         sys.exit(0)
 
+    def _player_death(self):
+        # maybe make this event driven so that whenver the player hp hits zero the game instantly ends.
+        if(self.player.hit_points <= 0):
+            self._line_formating()
+            print(f"\n{self.player.name} has been lost in the depths of the dungeon, succumbing to its evil.")
+            print(f"\nAnd only took {self.player.name} {self._turns} turns to perish miserably.\n")
+            self._line_formating()
+            self._set_state(State.STATE_GAME_END, {})
+
     def _game_finish_line(self):
+        self._line_formating()
         print(f"\nCongratulations {self.player.name}!\n\nYou escaped the bleak and terrible dungeon in {self._turns} turns!\n")
-        print(f"\n{self.player.name} has finished their Adventure! So far...\n")
-        sys.exit(0)
+        print(f"{self.player.name} has finished their Adventure! So far...\n")
+        self._line_formating()
+        self._set_state(State.STATE_GAME_END, {})
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
@@ -147,6 +155,10 @@ class GameManager(ManagerBase):
     def _start_conversation(self, conversation_data):
         conversation_data.update({ "player": self.player })
         self._set_state(State.STATE_CONVERSATION, conversation_data)
+
+    def _line_formating(self):
+        # probaly just need something like curses. but for now this helps.
+        print("------------------------------------------------------------------------")
 
     # event handlers
 
