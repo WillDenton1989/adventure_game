@@ -57,6 +57,7 @@ class ItemManager(ManagerBase):
                 effect = Heal(max_heal, self._game_manager)
                 effect.execute()
             elif(effect_key == "damage"):
+                # damage effect goes here.
                 damage_amount = effects[effect_key]
                 self._damage_user(damage_amount)
             elif(effect_key == "attack_damage"):
