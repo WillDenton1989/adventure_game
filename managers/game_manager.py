@@ -97,7 +97,6 @@ class GameManager(ManagerBase):
         self._item_manager.process()
         self._battle_manager.process()
         self._conversation_manager.process()
-        self._player_death() # this is a little weird. DEBUG
         self._input_manager.process()
 
     def _set_state(self, new_state, event_data = []):

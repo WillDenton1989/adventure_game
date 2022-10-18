@@ -3,7 +3,6 @@ import yaml
 from managers.manager_base import ManagerBase
 
 from models.events.inventory_event import InventoryEvent
-from models.events.input_event import InputEvent
 from models.events.item_event import ItemEvent
 from models.state import State
 
@@ -31,11 +30,6 @@ class InventoryManager(ManagerBase):
         pass
 
     def _show_inventory(self):
-        while(self.game_state == State.STATE_INVENTORY):
-            self._show_inventory_text()
-            self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
-
-    def _show_inventory_text(self):
         print("\n------------------------------------------------------------------------\n")
         print("Here is your inventory:\n")
         element_number = 1

@@ -35,6 +35,7 @@ class PlayerManager(ManagerBase):
         self._item_manager = item_manager
 
     def create_player(self):
+        # this will only be here until a create player manager exists.
         self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
         self._create_starting_inventory(self._inventory_data)
 
