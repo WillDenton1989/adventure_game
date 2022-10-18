@@ -10,7 +10,7 @@ EE: 8901
 
 # ENTITY SYMBOLS
 
-player: 9791
+player: 9791 # 9822
 goblin: 9785
 bandit: 9792
 dwarf: 9786

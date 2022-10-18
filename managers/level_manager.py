@@ -2,9 +2,9 @@ from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.events.entity_event import EntityEvent
-# from models.events.input_event import InputEvent
 from models.events.level_event import LevelEvent
 from models.level_parser import LevelParser
+from models.state import State
 
 class LevelManager(ManagerBase):
     def __init__(self, event_dispatcher, game_manager):
@@ -17,11 +17,8 @@ class LevelManager(ManagerBase):
         pass
 
     def process(self):
-        # while(self.game_state != "state_game_end"):
-        if(self.game_state == "state_movement"):
+        if(self.game_state == State.STATE_MOVEMENT):
             self._draw_level()
-        else:
-            pass
 
     # public methods
 
@@ -41,12 +38,12 @@ class LevelManager(ManagerBase):
 
     def _draw_level(self):
         map = self._level.drawable_map()
-        print("------------------------------------------------------------------------")
 
         for row in map:
             for column in row:
                 print(chr(column), end = "")
             print("\r")
+        print("------------------------------------------------------------------------")
 
     def _trigger_level_events(self, column, row):
         triggered_events = self._level.events_for(column, row)

@@ -10,7 +10,7 @@ from models.entities.treasure import Treasure
 from models.events.entity_event import EntityEvent
 
 class EntityManager(ManagerBase):
-    """This manages all entities in the game."""
+    """This manages all entities in the game and sub managers."""
 
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
@@ -19,9 +19,6 @@ class EntityManager(ManagerBase):
         self._initialize_sub_managers()
 
     def start(self):
-        # self._load_entity_templates()
-        # self._initialize_sub_managers()
-
         self._monster_manager.start()
         self._npc_manager.start()
         self._player_manager.start()

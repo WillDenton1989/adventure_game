@@ -17,11 +17,8 @@ class InputManager(ManagerBase):
         pass
 
     def process(self):
-        # if(self.game_state != "state_game_end"):
-        #     self._parse_input()
-        # else:
-        #     pass
-        pass
+        if(self.game_state != State.STATE_GAME_END):
+            self._parse_input()
 
     # private methods
 
@@ -91,8 +88,7 @@ class InputManager(ManagerBase):
     def _show_movement_controls(self):
         print(f"""Use the 'k' and 'j' keys to move up and down;
 Use the 'h' and 'l' keys to move left and right.
-Type 'inventory' or 'i' to open the inventory screen.
-Type 'quit' or 'q' to quit out of the game.""")
+Use 'i' to open the inventory screen. Use 'q' to exit the game.""")
 
     def _parse_player_movement(self, input):
         data = {}

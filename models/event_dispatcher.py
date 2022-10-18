@@ -23,9 +23,6 @@ class EventDispatcher:
         self._ensure_unique_callback(event_name, callback)
         self._event_listeners.append({ "event_name": event_name, "callback": callback })
 
-    def clear_receivers(self):
-        self._event_listeners.clear()
-
     def event_from_string(self, event_string, data):
         classname, event_constant = event_string.split("#")
         klass = self._constantize(classname)
