@@ -13,7 +13,7 @@ class HudManager(ManagerBase):
         pass
 
     def process(self):
-        if(self.game_state != State.STATE_GAME_END):
+        if(self.game_state != State.STATE_GAME_END and self.game_state != State.STATE_CHARACTER_CREATION):
             self.hud.display_hud()
 
     # attribute accessors

@@ -17,9 +17,9 @@ class Heal(EffectBase):
 
         if(new_hp > max_hp):
             player.hit_points = max_hp
-            print(f"HP before: {old_hp}, HP after: {max_hp}")
+            print(f"\nHP restored: {self._max_heal} | Previous HP: {old_hp} | Max HP: {max_hp}\n")
         else:
             player.hit_points = new_hp
-            print(f"HP before: {old_hp}, HP after: {new_hp}")
+            print(f"\nHP restored: {self._max_heal} | Previous HP: {old_hp} | Max HP: {max_hp}\n")
 
     # private methods

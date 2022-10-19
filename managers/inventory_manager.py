@@ -50,7 +50,6 @@ class InventoryManager(ManagerBase):
         if(self._is_selected_item_in_inventory_range(inventory_position) == True):
             item = self._player_inventory[inventory_position]
 
-            print("here is where something would happen with the item you chose")
             self._use_item(item, inventory_position)
         else:
             print("Please select a valid item")

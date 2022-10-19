@@ -19,14 +19,10 @@ class EntityManager(ManagerBase):
         self._initialize_sub_managers()
 
     def start(self):
-        self._monster_manager.start()
-        self._npc_manager.start()
-        self._player_manager.start()
+        self._register_manager_starts()
 
     def process(self):
-        self._monster_manager.process()
-        self._npc_manager.process()
-        self._player_manager.process()
+        self._run_manager_processes()
 
     # attribute accessors
 
@@ -39,9 +35,6 @@ class EntityManager(ManagerBase):
         return self._player_manager.player
 
     # public methods
-
-    def create_player(self):
-        self._player_manager.create_player()
 
     # private methods
 
@@ -57,6 +50,16 @@ class EntityManager(ManagerBase):
         self._player_manager = PlayerManager(self.event_dispatcher)
 
         self._add_entity(self._player_manager.player)
+
+    def _register_manager_starts(self):
+        self._monster_manager.start()
+        self._npc_manager.start()
+        self._player_manager.start()
+
+    def _run_manager_processes(self):
+        self._player_manager.process()
+        self._monster_manager.process()
+        self._npc_manager.process()
 
     def _load_entity_templates(self):
         with open("data/npc_data.yaml") as f: # hardcoded filename no bueno, manager config refactor DEBUG

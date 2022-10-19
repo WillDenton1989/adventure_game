@@ -54,7 +54,6 @@ class ItemManager(ManagerBase):
         for effect_key in effects:
             if(effect_key == "heal"):
                 max_heal = effects[effect_key]
-                print(f"Max heal: {max_heal}")
                 effect = Heal(max_heal, self._game_manager)
                 effect.execute()
             elif(effect_key == "damage"):

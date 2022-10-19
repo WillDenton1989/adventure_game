@@ -3,11 +3,11 @@ import yaml
 from managers.manager_base import ManagerBase
 
 from models.entities.player import Player
-from models.events.input_event import InputEvent
 from models.events.inventory_event import InventoryEvent
 from models.events.level_event import LevelEvent
 from models.events.player_event import PlayerEvent
 from models.item import Item
+from models.state import State
 
 class PlayerManager(ManagerBase):
     def __init__(self, event_dispatcher):
@@ -15,13 +15,15 @@ class PlayerManager(ManagerBase):
 
         player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
         self._item_manager = None
-        self._set_player(player_data)
+
+        self._player = Player(player_data)
 
     def start(self):
         pass
 
     def process(self):
-        pass
+        if(self.game_state == State.STATE_CHARACTER_CREATION):
+            self._create_starting_inventory(self._inventory_data)
 
     # attribute accessors.
 
@@ -34,11 +36,6 @@ class PlayerManager(ManagerBase):
     def set_item_manager(self, item_manager):
         self._item_manager = item_manager
 
-    def create_player(self): # player creation refactor
-        # this will only be here until a create player manager exists. player creation refactor DEBUG
-        self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
-        self._create_starting_inventory(self._inventory_data)
-
     # private methods
 
     def _register_receivers(self):
@@ -48,10 +45,7 @@ class PlayerManager(ManagerBase):
     def _unregister_receivers(self):
         pass
 
-    def _set_player(self, player_data):
-        self._player = Player(player_data)
-
-    def _change_player_name(self, new_name): # player creation refactor DEBUG
+    def _change_player_name(self, new_name):
         self._player.name = new_name
 
     def _load_player_default_data(self, file_name):

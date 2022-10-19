@@ -30,7 +30,7 @@ class GameManager(ManagerBase):
         self._initialize_managers()
 
     def start(self):
-        self._initialize_player()
+        self._initialize_player_inventory()
         self._register_manager_starts()
         self.process()
 
@@ -39,7 +39,9 @@ class GameManager(ManagerBase):
             self._increment_turn()
 
             self._player_death()
-            self._register_manager_processes()
+            self._run_manager_processes()
+            if(self.game_state == State.STATE_CHARACTER_CREATION):
+                self._transition_to_movement()
 
     # attribute accessors
 
@@ -89,7 +91,7 @@ class GameManager(ManagerBase):
         self._input_manager.start()
         self._hud_manager.start()
 
-    def _register_manager_processes(self):
+    def _run_manager_processes(self):
         self._hud_manager.process()
         self._level_manager.process()
         self._entity_manager.process()
@@ -108,10 +110,9 @@ class GameManager(ManagerBase):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
         self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
 
-    def _initialize_player(self):
+    def _initialize_player_inventory(self):
         self._entity_manager.player_manager.set_item_manager(self._item_manager)
-        self._entity_manager.create_player()
-        self._transition_to_movement()
+
 
     def _transition_to_movement(self):
         # this will likely be part of the game config refactor. DEBUG
@@ -130,13 +131,16 @@ class GameManager(ManagerBase):
         if(self.player.hit_points <= 0):
             self._line_formating()
             print(f"\n{self.player.name} has been lost in the depths of the dungeon, succumbing to its evil.")
-            print(f"\nAnd only took {self.player.name} {self._turns} turns to perish miserably.\n")
+            if(self.turns <=1):
+                print(f"\nAnd it only took {self.player.name} {self._turns} turn to perish miserably.\n")
+            else:
+                print(f"\nAnd it only took {self.player.name} {self._turns} turns to perish miserably.\n")
             self._line_formating()
             self._set_state(State.STATE_GAME_END, {})
 
     def _game_finish_line(self):
         self._line_formating()
-        print(f"\nCongratulations {self.player.name}!\n\nYou escaped the bleak and terrible dungeon in {self._turns} turns!\n")
+        print(f"\nCongratulations {self.player.name}!\n\n{self.player.name} escaped the bleak and terrible dungeon in {self._turns} turns!\n")
         print(f"{self.player.name} has finished their Adventure! So far...\n")
         self._line_formating()
         self._set_state(State.STATE_GAME_END, {})
