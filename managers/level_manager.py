@@ -1,4 +1,3 @@
-from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.events.entity_event import EntityEvent

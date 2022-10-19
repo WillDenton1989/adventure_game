@@ -58,6 +58,6 @@ class Battle:
     # public methods
 
     def decision_text(self):
-        return f"\n{self.player.name} chooses to {self.player_decision}, {self.monster.name} chooses to {self.monster_decision}"
+        return f"\n{self.player.name} chooses to {self.player_decision} | {self.monster.name} chooses to {self.monster_decision}"
 
     # private methods

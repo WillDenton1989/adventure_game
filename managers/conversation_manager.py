@@ -1,4 +1,3 @@
-from managers.input_manager import InputManager
 from managers.manager_base import ManagerBase
 
 from models.events.conversation_event import ConversationEvent
@@ -26,13 +25,27 @@ class ConversationManager(ManagerBase):
 
     def _run_conversation(self):
         # this is where the code for a conversation will live.
+        self._line_formating()
         print("hello buddy! Whats your name?")
+        self._load_txt_file()
+        self._line_formating()
 
     def _initialize_conversation(self, data):
         npc = data["entity"]
         player = data["player"]
         print(f"\n{player.name} has encountered the legendary {npc.name}!!!\n")
-        self._run_conversation()
+
+    def _load_txt_file(self):
+        name = open("data/dwarf_name.txt")
+        list = []
+        for line in name:
+            print(line, end="")
+
+
+    def _line_formating(self):
+        # probaly just need something like curses. but for now this helps.
+        print("------------------------------------------------------------------------\n")
+
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(new_state == State.STATE_CONVERSATION):

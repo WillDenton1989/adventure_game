@@ -1,4 +1,3 @@
-
 class Item:
     """Builds the basic Item class. This was also my first class. :D"""
 

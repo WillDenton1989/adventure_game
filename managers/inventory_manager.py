@@ -30,7 +30,7 @@ class InventoryManager(ManagerBase):
         pass
 
     def _show_inventory(self):
-        print("\n------------------------------------------------------------------------\n")
+        print("------------------------------------------------------------------------\n")
         print("Here is your inventory:\n")
         element_number = 1
 

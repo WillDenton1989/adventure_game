@@ -66,11 +66,11 @@ class PlayerManager(ManagerBase):
         self._player.column = new_column
         self._player.row = new_row
 
-    def _handle_game_state_change(self, previous_state, new_state, data):
-        pass
-
     def _change_player_name(self, new_name):
         self._player.name = new_name
+
+    def _handle_game_state_change(self, previous_state, new_state, data):
+        pass
 
     # event handlers
 

@@ -3,6 +3,7 @@ import sys
 from managers.battle_manager import BattleManager
 from managers.conversation_manager import ConversationManager
 from managers.entity_manager import EntityManager
+from managers.hud_manager import HudManager
 from managers.input_manager import InputManager
 from managers.inventory_manager import InventoryManager
 from managers.item_manager import ItemManager
@@ -38,17 +39,13 @@ class GameManager(ManagerBase):
             self._turns += 1
 
             self._player_death()
-            self._draw_game_hud()
             self._register_manager_processes()
 
     # attribute accessors
 
-    def get_player_manager(self):
-        return self.player
-
     @property
-    def battle_manager(self):
-        return self._battle_manager
+    def turns(self):
+        return self._turns
 
     @property
     def player(self):
@@ -64,6 +61,7 @@ class GameManager(ManagerBase):
         self._battle_manager = BattleManager(self.event_dispatcher)
         self._level_manager = LevelManager(self.event_dispatcher, self)
         self._conversation_manager = ConversationManager(self.event_dispatcher)
+        self._hud_manager = HudManager(self.event_dispatcher, self)
 
     def _register_receivers(self):
         self.event_dispatcher.receive(BattleEvent.BATTLE_EVENT, self._battle_started_handler)
@@ -89,15 +87,17 @@ class GameManager(ManagerBase):
         self._level_manager.start()
         self._conversation_manager.start()
         self._input_manager.start()
+        self._hud_manager.start()
 
     def _register_manager_processes(self):
+        self._hud_manager.process()
         self._level_manager.process()
         self._entity_manager.process()
         self._inventory_manager.process()
         self._item_manager.process()
         self._battle_manager.process()
         self._conversation_manager.process()
-        self._input_manager.process()
+        self._input_manager.process() # this should always be last in the order.
 
     def _set_state(self, new_state, event_data = []):
         previous_state = self.game_state
@@ -114,14 +114,8 @@ class GameManager(ManagerBase):
         self._entity_manager.create_player()
         self._transition_to_movement()
 
-    # once theres a hud class and a hud manager the hud can be called in the hud_manager process.
-    def _draw_game_hud(self):
-        if(self.game_state == State.STATE_MOVEMENT):
-            self._line_formating()
-            print(f"Player: {self.player.name} | Hit-Points: {self.player.hit_points} | Turn: {self._turns} | STATE:  {self.game_state}")
-            self._line_formating()
-
     def _transition_to_movement(self):
+        # this will likely be part of the game config refactor. DEBUG
         self._set_state(State.STATE_MOVEMENT)
         self._level_manager.set_level('level_1', 'data/symbols_dictionary.yaml')
 
@@ -145,6 +139,10 @@ class GameManager(ManagerBase):
         self._line_formating()
         self._set_state(State.STATE_GAME_END, {})
 
+    def _line_formating(self):
+        # probaly just need something like curses. but for now this helps.
+        print("------------------------------------------------------------------------")
+
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
@@ -155,10 +153,6 @@ class GameManager(ManagerBase):
     def _start_conversation(self, conversation_data):
         conversation_data.update({ "player": self.player })
         self._set_state(State.STATE_CONVERSATION, conversation_data)
-
-    def _line_formating(self):
-        # probaly just need something like curses. but for now this helps.
-        print("------------------------------------------------------------------------")
 
     # event handlers
 

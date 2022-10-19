@@ -23,7 +23,6 @@ class ManagerBase(ABC):
     def process(self):
         # looks at the game state, if the game state aligns
         # with the manager then run code here.
-        # otherwise pass, may need a loop
         pass
 
     # attribute accessors
