@@ -7,10 +7,10 @@ class NameGenerator:
         pass
 
     # attribute accessors
-    
+
     # public methods
 
-    def new_name(self, character_class):
+    def new_name(self, character_class): # DEBUG
         y = 0
         x = randint(0, 16)
         names = [

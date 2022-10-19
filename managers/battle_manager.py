@@ -57,11 +57,10 @@ class BattleManager(ManagerBase):
     def _run_battle(self):
         self._battle.round += 1
 
-        # this is the ghetto battle hud. replace this once HUD is a class.
-        # this is also where any battle are would go.
+        # this is where any battle art would go.
+        # also maybe refactor the battle display for better clarity
         print(self._battle)
 
-    # possibly need renamed. now this is what runs after battle cmd event is handled.
     def _handle_player_decision(self, decision):
         self._battle.player_decision = decision
         self._battle.monster_decision = self._enemy_npc_choice()
@@ -128,7 +127,6 @@ class BattleManager(ManagerBase):
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_BATTLE):
-            print(data)
             self._initialize_battle(data["event_data"])
 
     # event handlers

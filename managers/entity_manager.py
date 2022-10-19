@@ -59,7 +59,7 @@ class EntityManager(ManagerBase):
         self._add_entity(self._player_manager.player)
 
     def _load_entity_templates(self):
-        with open("data/npc_data.yaml") as f: # hardcoded filename no bueno
+        with open("data/npc_data.yaml") as f: # hardcoded filename no bueno, manager config refactor DEBUG
             self._entity_templates = yaml.safe_load(f)
 
     def _create_entity(self, entity_data):

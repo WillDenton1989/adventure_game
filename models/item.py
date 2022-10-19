@@ -3,6 +3,7 @@ class Item:
 
     VALID_TYPES = ["junk", "consumable", "weapon", "armor", "treasure"]
 
+    # this init should be refactored # DEBUG
     def __init__(self, display_name = None, VALID_TYPES = 0, effects = None, weight = 1, value = 1, consumable = False, equipable = False):
         self._display_name = display_name
         self._type = VALID_TYPES

@@ -10,7 +10,7 @@ class CatchphraseGenerator:
         if("Mike" in name):
             return "Why am I even in here, man? Making this was a waste of your time..."
         elif("Scott" in name):
-            return "Is that 'THE' father linux?"
+            return "Is that THE father linux?"
         elif("Gary" in name):
             return "It's Gary UwU XD"
         elif("Theo" in name):

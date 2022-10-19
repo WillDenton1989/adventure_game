@@ -21,8 +21,7 @@ class ManagerBase(ABC):
 
     @abstractmethod
     def process(self):
-        # looks at the game state, if the game state aligns
-        # with the manager then run code here.
+        # access to the main loop, based on game state
         pass
 
     # attribute accessors

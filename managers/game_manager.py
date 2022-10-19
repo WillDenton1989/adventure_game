@@ -36,7 +36,7 @@ class GameManager(ManagerBase):
 
     def process(self):
         while(self.game_state != State.STATE_GAME_END):
-            self._turns += 1
+            self._increment_turn()
 
             self._player_death()
             self._register_manager_processes()
@@ -108,8 +108,7 @@ class GameManager(ManagerBase):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
         self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
 
-    # does this belong in the new start() method?
-    def _initialize_player(self): # was _start
+    def _initialize_player(self):
         self._entity_manager.player_manager.set_item_manager(self._item_manager)
         self._entity_manager.create_player()
         self._transition_to_movement()
@@ -119,12 +118,15 @@ class GameManager(ManagerBase):
         self._set_state(State.STATE_MOVEMENT)
         self._level_manager.set_level('level_1', 'data/symbols_dictionary.yaml')
 
+    def _increment_turn(self):
+        if(self.game_state == State.STATE_MOVEMENT):
+            self._turns += 1
+
     def _quit(self):
         print(f"Farewell {self.player.name}")
         sys.exit(0)
 
     def _player_death(self):
-        # maybe make this event driven so that whenver the player hp hits zero the game instantly ends.
         if(self.player.hit_points <= 0):
             self._line_formating()
             print(f"\n{self.player.name} has been lost in the depths of the dungeon, succumbing to its evil.")

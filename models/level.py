@@ -1,6 +1,8 @@
 import copy
 
 class Level:
+    """Level gets a raw_map, symbols and entity_templates from level parser and builds a useable level. """
+
     PASSABLE_SPACE = "EE"
 
     def __init__(self, raw_map, symbols, entity_templates):

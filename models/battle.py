@@ -6,7 +6,7 @@ class Battle:
         self._player_decision = None
         self._monster_decision = None
 
-    # eventually wont need this when the HUD is working.
+    # refactor this in the battle display refactor DEBUG
     def __str__(self):
         return '''\
             \n\nRound {round}: {p_name} - {p_hp}, {m_name} - {m_hp}

@@ -24,7 +24,6 @@ class ConversationManager(ManagerBase):
         pass
 
     def _run_conversation(self):
-        # this is where the code for a conversation will live.
         self._line_formating()
         print("hello buddy! Whats your name?")
         self._load_txt_file()

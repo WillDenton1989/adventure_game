@@ -32,7 +32,6 @@ class ItemManager(ManagerBase):
     def _register_receivers(self):
         self.event_dispatcher.receive(ItemEvent.USE_ITEM_EVENT, self._use_item_event_handler)
 
-
     def _unregister_receivers(self):
         pass
 
