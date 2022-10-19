@@ -1,6 +1,6 @@
 from models.events.event_base import EventBase
 
-class PlayerEvent(EventBase):
+class PlayerEvent(EventBase): # player creation refactor DEBUG
     PLAYER_NAME_CHANGE_EVENT = "player_name_change_event"
 
     def __init__(self, name, data = {}):

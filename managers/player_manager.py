@@ -34,7 +34,7 @@ class PlayerManager(ManagerBase):
     def set_item_manager(self, item_manager):
         self._item_manager = item_manager
 
-    def create_player(self):
+    def create_player(self): # player creation refactor
         # this will only be here until a create player manager exists. player creation refactor DEBUG
         self.event_dispatcher.dispatch(InputEvent(InputEvent.INPUT_PARSE_EVENT, {}))
         self._create_starting_inventory(self._inventory_data)
@@ -48,14 +48,17 @@ class PlayerManager(ManagerBase):
     def _unregister_receivers(self):
         pass
 
+    def _set_player(self, player_data):
+        self._player = Player(player_data)
+
+    def _change_player_name(self, new_name): # player creation refactor DEBUG
+        self._player.name = new_name
+
     def _load_player_default_data(self, file_name):
         with open(file_name) as f:
             data = yaml.safe_load(f)
 
         return data["player"], data["starting_inventory"]
-
-    def _set_player(self, player_data):
-        self._player = Player(player_data)
 
     def _create_starting_inventory(self, inventory_data):
         for item_key in inventory_data:
@@ -66,9 +69,6 @@ class PlayerManager(ManagerBase):
         self._player.column = new_column
         self._player.row = new_row
 
-    def _change_player_name(self, new_name):
-        self._player.name = new_name
-
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
@@ -77,5 +77,5 @@ class PlayerManager(ManagerBase):
     def _update_player_location_event_handler(self, event):
         self._execute_player_move(event.column, event.row)
 
-    def _player_name_change_event_handler(self, event):
+    def _player_name_change_event_handler(self, event): # DEBUG
         self._change_player_name(event.new_name)
