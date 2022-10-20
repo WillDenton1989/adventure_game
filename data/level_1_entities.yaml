@@ -29,7 +29,7 @@ templates:
     key: goblin
     location:
       column: 2
-      row: 9
+      row: 10
     events:
       - BattleEvent#BATTLE_EVENT
   - template_name: npc
