@@ -54,6 +54,7 @@ class PlayerManager(ManagerBase):
 
         return data["player"], data["starting_inventory"]
 
+    # inventory manager not player manager shoud be responsible for creating the player inventory.
     def _create_starting_inventory(self, inventory_data):
         for item_key in inventory_data:
             item = self._item_manager.item_from_key(item_key)
