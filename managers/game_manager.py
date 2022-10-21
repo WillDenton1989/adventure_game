@@ -30,8 +30,8 @@ class GameManager(ManagerBase):
         self._initialize_managers()
 
     def start(self):
-        self._initialize_player_inventory()
         self._register_manager_starts()
+
         self.process()
 
     def process(self):
@@ -56,10 +56,10 @@ class GameManager(ManagerBase):
     # private methods
 
     def _initialize_managers(self):
+        self._item_manager = ItemManager(self.event_dispatcher, self)
+        self._inventory_manager = InventoryManager(self.event_dispatcher, self._item_manager)
         self._entity_manager = EntityManager(self.event_dispatcher)
         self._input_manager = InputManager(self.event_dispatcher)
-        self._item_manager = ItemManager(self.event_dispatcher, self)
-        self._inventory_manager = InventoryManager(self.event_dispatcher)
         self._battle_manager = BattleManager(self.event_dispatcher)
         self._level_manager = LevelManager(self.event_dispatcher, self)
         self._conversation_manager = ConversationManager(self.event_dispatcher)
@@ -109,10 +109,6 @@ class GameManager(ManagerBase):
     def _dispatch_state_change(self, previous_state, new_state, event_data):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
         self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
-
-    def _initialize_player_inventory(self):
-        self._entity_manager.player_manager.set_item_manager(self._item_manager)
-
 
     def _transition_to_movement(self):
         # this will likely be part of the game config refactor. DEBUG

@@ -7,11 +7,10 @@ player:
   defense_scalar: 1
   speed: 5
   symbol: player
-starting_inventory:
-  - red_potion
-  - rock
-  - death_root
-  - iron_sword
-  - red_potion
-  - gold_bar
+  inventory:
+    - red_potion
+    - death_root
+    - iron_sword
+    - red_potion
+    - gold_bar
 ...

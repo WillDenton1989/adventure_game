@@ -1,4 +1,4 @@
-# base stats for the various npcs in the game. 
+# base templates for the various entities in the game.
 ---
 goblin:
   entity_type: monster
@@ -10,6 +10,9 @@ goblin:
   defense_scalar: .5
   speed: 6
   symbol: goblin
+  inventory:
+    - rock
+    - red_potion
 bandit:
   entity_type: monster
   character_class: bandit
@@ -20,6 +23,10 @@ bandit:
   defense_scalar: 1
   speed: 5
   symbol: bandit
+  inventory:
+    - rock
+    - red_potion
+    - red_potion
 dwarf:
   entity_type: npc
   character_class: dwarf
@@ -30,9 +37,16 @@ dwarf:
   defense_scalar: 1
   speed: 3
   symbol: dwarf
+  inventory:
+    - rock
+    - red_potion
+    - rock
 loot_chest:
   entity_type: treasure
   symbol: loot_chest
+  inventory:
+    - gold_bar
+    - red_potion
 finish_line:
   entity_type: exit
   symbol: finish_line

@@ -10,20 +10,17 @@ from models.item import Item
 from models.state import State
 
 class PlayerManager(ManagerBase):
-    def __init__(self, event_dispatcher):
+    def __init__(self, event_dispatcher, player_template):
         ManagerBase.__init__(self, event_dispatcher)
-
-        player_data, self._inventory_data = self._load_player_default_data("data/player_data.yaml")
         self._item_manager = None
 
-        self._player = Player(player_data)
+        self.create_player(player_template["player"])
 
     def start(self):
         pass
 
     def process(self):
-        if(self.game_state == State.STATE_CHARACTER_CREATION):
-            self._create_starting_inventory(self._inventory_data)
+        pass
 
     # attribute accessors.
 
@@ -33,8 +30,13 @@ class PlayerManager(ManagerBase):
 
     # public methods
 
-    def set_item_manager(self, item_manager):
-        self._item_manager = item_manager
+    def create_player(self, player_template):
+        self._player = Player(player_template)
+
+        player_id = id(self.player)
+
+        data = { "id" : player_id, "inventory" : player_template["inventory"] }
+        self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CREATE_INVENTORY_EVENT, data))
 
     # private methods
 
@@ -47,18 +49,6 @@ class PlayerManager(ManagerBase):
 
     def _change_player_name(self, new_name):
         self._player.name = new_name
-
-    def _load_player_default_data(self, file_name):
-        with open(file_name) as f:
-            data = yaml.safe_load(f)
-
-        return data["player"], data["starting_inventory"]
-
-    # inventory manager not player manager shoud be responsible for creating the player inventory.
-    def _create_starting_inventory(self, inventory_data):
-        for item_key in inventory_data:
-            item = self._item_manager.item_from_key(item_key)
-            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.ADD_ITEM_TO_INVENTORY_EVENT, { "item": item }))
 
     def _execute_player_move(self, new_column, new_row):
         self._player.column = new_column

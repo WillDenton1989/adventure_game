@@ -10,7 +10,7 @@ class NameGenerator:
 
     # public methods
 
-    def new_name(self, character_class): # DEBUG
+    def new_name(self, character_class):
         y = 0
         x = randint(0, 16)
         names = [
