@@ -58,8 +58,12 @@ class BattleManager(ManagerBase):
         self._battle.round += 1
 
         # this is where any battle art would go.
+        self._line_formating()
+        self._load_txt_file()
+
         # also maybe refactor the battle display for better clarity
         print(self._battle)
+        self._line_formating()
 
     def _handle_player_decision(self, decision):
         self._battle.player_decision = decision
@@ -124,6 +128,16 @@ class BattleManager(ManagerBase):
             print(f"\n\n{player.name} has been slain by {monster.name}")
             return True
         return False
+
+    def _load_txt_file(self):
+        name = open("data/battle_screen.txt")
+        list = []
+        for line in name:
+            print(line, end="")
+
+    def _line_formating(self):
+        # probaly just need something like curses. but for now this helps.
+        print("------------------------------------------------------------------------\n")
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_BATTLE):

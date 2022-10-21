@@ -45,7 +45,6 @@ class ConversationManager(ManagerBase):
         # probaly just need something like curses. but for now this helps.
         print("------------------------------------------------------------------------\n")
 
-
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(new_state == State.STATE_CONVERSATION):
             conversation_data = data["event_data"]

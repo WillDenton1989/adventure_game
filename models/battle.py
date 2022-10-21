@@ -8,10 +8,8 @@ class Battle:
 
     # refactor this in the battle display refactor DEBUG
     def __str__(self):
-        return '''\
-            \n\nRound {round}: {p_name} - {p_hp}, {m_name} - {m_hp}
-            \n{p_name}: defense: {p_def} attack: {p_attack}, {m_name}: defense: {m_def} attack: {m_attack}
-        '''.format(round=self.round, p_name=self.player.name, p_hp=self.player.hit_points, p_attack=self.player.attack_power, p_def=self.player.defense, m_name=self.monster.name, m_hp = self.monster.hit_points, m_attack=self.monster.attack_power, m_def = self.monster.defense)
+        return f"""\nRound: {self.round}: {self.player.name} HP: {self.player.hit_points} | {self.monster.name} HP: {self.monster.hit_points}
+{self.player.name} Attack: {self.player.attack_power} Defense: {self.player.defense} | {self.monster.name} Attack: {self.monster.attack_power} Defense: {self.monster.defense}\n"""
 
     # attribute accessors
 
