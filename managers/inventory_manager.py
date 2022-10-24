@@ -1,3 +1,4 @@
+import ctypes
 import yaml
 
 from managers.manager_base import ManagerBase
@@ -11,6 +12,10 @@ class InventoryManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
         self._item_manager = item_manager
         self._inventories = {}
+
+        self._monster_ids = []
+        self._treasure_ids = []
+        self._entity_ids = []
 
     def start(self):
         pass
@@ -33,8 +38,21 @@ class InventoryManager(ManagerBase):
 
     def _create_inventory(self, id, inventory_data):
         starting_inventory = self._create_starting_inventory(inventory_data)
-        self._player_id = str(id)
-        self._inventories.update({ self._player_id : starting_inventory })
+        if("player_id" in id):
+            self._player_id = str(id["player_id"])
+            self._inventories.update({ self._player_id : starting_inventory })
+        elif("monster_id" in id):
+            self._monster_ids.append(id["monster_id"])
+            monster_id = str(id["monster_id"])
+            self._inventories.update({ monster_id : starting_inventory })
+        elif("treasure_id" in id):
+            self._treasure_ids.append(id["treasure_id"])
+            chest_id = str(id["treasure_id"])
+            self._inventories.update({ chest_id : starting_inventory })
+        else:
+            self._entity_ids.append(id)
+            entity_id = str(id)
+            self._inventories.update({ entity_id : starting_inventory })
 
     def _create_starting_inventory(self, inventory_data):
         starting_inventory = []
@@ -49,7 +67,7 @@ class InventoryManager(ManagerBase):
         print("------------------------------------------------------------------------\n")
         print("Here is your inventory:\n")
         element_number = 1
-
+        # print(self._inventories) #DEBUG
         if(len(self._inventories[id]) == 0):
             print("Your inventory is empty.")
         else:

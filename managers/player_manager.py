@@ -32,11 +32,7 @@ class PlayerManager(ManagerBase):
 
     def create_player(self, player_template):
         self._player = Player(player_template)
-
-        player_id = id(self.player)
-
-        data = { "id" : player_id, "inventory" : player_template["inventory"] }
-        self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CREATE_INVENTORY_EVENT, data))
+        self._dispatch_inventory_data(self.player, player_template)
 
     # private methods
 
@@ -49,6 +45,11 @@ class PlayerManager(ManagerBase):
 
     def _change_player_name(self, new_name):
         self._player.name = new_name
+
+    def _dispatch_inventory_data(self, player, player_template):
+        player_id = id(self.player)
+        data = { "id" : { "player_id" : player_id }, "inventory" : player_template["inventory"] }
+        self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CREATE_INVENTORY_EVENT, data))
 
     def _execute_player_move(self, new_column, new_row):
         self._player.column = new_column

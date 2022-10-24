@@ -8,6 +8,7 @@ from managers.player_manager import PlayerManager
 from models.entities.exit import Exit
 from models.entities.treasure import Treasure
 from models.events.entity_event import EntityEvent
+from models.events.inventory_event import InventoryEvent
 
 class EntityManager(ManagerBase):
     """This manages all entities in the game and entity sub managers."""
@@ -85,6 +86,7 @@ class EntityManager(ManagerBase):
             new_entity = Exit(create_data)
         elif(template["entity_type"] == "treasure"):
             new_entity = Treasure(create_data)
+            self._create_treasure_inventory(new_entity, create_data)
         elif(template["entity_type"] == "npc"):
             new_entity = self._npc_manager.create_npc(create_data)
         else:
@@ -105,6 +107,11 @@ class EntityManager(ManagerBase):
         self._entities.append(entity)
         updated_entities = self._entities.copy()
         self.event_dispatcher.dispatch(EntityEvent(EntityEvent.ENTITIES_UPDATED_EVENT, { "updated_entities": updated_entities }))
+
+    def _create_treasure_inventory(self, treasure, treasure_data):
+        treasure_id = id(treasure)
+        data = { "id" : { "treasure_id" : treasure_id }, "inventory" : treasure_data["inventory"] }
+        self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CREATE_INVENTORY_EVENT, data))
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass

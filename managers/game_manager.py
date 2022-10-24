@@ -37,7 +37,7 @@ class GameManager(ManagerBase):
     def process(self):
         while(self.game_state != State.STATE_GAME_END):
             self._increment_turn()
-
+            # print(f"Player ID in GM: {id(self._entity_manager._player_manager.player)}") # DEBUG
             self._player_death()
             self._run_manager_processes()
             if(self.game_state == State.STATE_CHARACTER_CREATION):
@@ -136,7 +136,7 @@ class GameManager(ManagerBase):
 
     def _game_finish_line(self):
         self._line_formating()
-        print(f"\nCongratulations {self.player.name}!\n\n{self.player.name} escaped the bleak and terrible dungeon in {self._turns} turns!\n")
+        print(f"\nCongratulations {self.player.name}!\n\nYou escaped the bleak and terrible dungeon in {self._turns} turns!\n")
         print(f"{self.player.name} has finished their Adventure! So far...\n")
         self._line_formating()
         self._set_state(State.STATE_GAME_END, {})

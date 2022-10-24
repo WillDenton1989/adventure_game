@@ -110,7 +110,7 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
             self._parse_input()
 
     def _show_battle_controls(self):
-        print("""Press 'a' to attack. Press 'd' to defend. (max 3). Press 'q' to quit.""")
+        print("""Press 'a' to attack. Press 'd' to defend (max 3). Press 'q' to quit.""")
 
     def _parse_battle_input(self, input):
         data = {}

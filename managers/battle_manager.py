@@ -130,14 +130,14 @@ class BattleManager(ManagerBase):
         return False
 
     def _load_txt_file(self):
-        name = open("data/battle_screen.txt")
+        name = open("data/battle_display.txt")
         list = []
         for line in name:
             print(line, end="")
 
     def _line_formating(self):
         # probaly just need something like curses. but for now this helps.
-        print("------------------------------------------------------------------------\n")
+        print("------------------------------------------------------------------------")
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_BATTLE):
