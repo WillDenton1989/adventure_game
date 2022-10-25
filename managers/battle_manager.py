@@ -1,9 +1,12 @@
+import time
+
 from random import randint
 
 from managers.manager_base import ManagerBase
 
 from models.battle import Battle
 from models.events.battle_event import BattleEvent
+from models.events.inventory_event import InventoryEvent
 from models.state import State
 
 SYMBOL_DEAD = "corpse"
@@ -49,8 +52,9 @@ class BattleManager(ManagerBase):
 
     def _check_for_loot(self, monster):
         if(self.is_someone_dead(monster) == True):
-            self.event_dispatcher.dispatch(BattleEvent(BattleEvent.END_BATTLE_EVENT))
-            print(f"\nThe corpse of {monster.name} lies before you, broken and shamed\nFor now there is no loot to be had... begone!")
+            print("You invenstigate the corpse of your defeated foe.")
+            time.sleep(1.5)
+            self._dispatch_inventory_event(monster)
             return True
         return False
 
@@ -61,7 +65,6 @@ class BattleManager(ManagerBase):
         self._line_formating()
         self._load_txt_file()
 
-        # also maybe refactor the battle display for better clarity
         print(self._battle)
         self._line_formating()
 
@@ -119,7 +122,11 @@ class BattleManager(ManagerBase):
         if(self.is_someone_dead(monster) == True):
             print(f"\n\n{monster.name} has been slain")
             monster.symbol = SYMBOL_DEAD
-            self.event_dispatcher.dispatch(BattleEvent(BattleEvent.END_BATTLE_EVENT))
+
+            print("You invenstigate the corpse of your defeated foe.")
+            time.sleep(1.5)
+            self._dispatch_inventory_event(monster)
+
             return True
         return False
 
@@ -130,7 +137,7 @@ class BattleManager(ManagerBase):
         return False
 
     def _load_txt_file(self):
-        name = open("data/battle_display.txt")
+        name = open("data/battle_display.txt") # hardcoded file anti bueno
         list = []
         for line in name:
             print(line, end="")
@@ -138,6 +145,10 @@ class BattleManager(ManagerBase):
     def _line_formating(self):
         # probaly just need something like curses. but for now this helps.
         print("------------------------------------------------------------------------")
+
+    def _dispatch_inventory_event(self, monster):
+        data = { "entity" : monster }
+        self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.LOOT_EVENT, data))
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_BATTLE):

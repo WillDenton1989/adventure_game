@@ -21,7 +21,7 @@ templates:
   - template_name: monster
     key: bandit
     location:
-      column: 6
+      column: 5
       row: 5
     events:
       - BattleEvent#BATTLE_EVENT
@@ -44,7 +44,8 @@ templates:
     location:
       column: 5
       row: 6
-    events: null
+    events:
+      - InventoryEvent#LOOT_EVENT
   - template_name: finish_line
     key: finish_line
     location:

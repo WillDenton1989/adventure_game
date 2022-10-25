@@ -4,9 +4,10 @@ class InventoryEvent(EventBase):
     OPEN_INVENTORY_EVENT = "open_inventory_event"
     CLOSE_INVENTORY_EVENT = "close_inventory_event"
     SELECT_ITEM_IN_INVENTORY_EVENT = "select_item_in_inventory_event"
-    ADD_ITEM_TO_INVENTORY_EVENT = "add_item_to_inventory_event"
+    LOOT_ITEM_IN_INVENTORY_EVENT = "loot_item_in_inventory_event"
     REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
     CREATE_INVENTORY_EVENT = "create_inventory_event"
+    LOOT_EVENT = "loot_event"
 
     def __init__(self, name, data = {}):
         EventBase.__init__(self, name, data)
@@ -28,3 +29,7 @@ class InventoryEvent(EventBase):
     @property
     def item(self):
         return self.data["item"]
+
+    @property
+    def entity(self):
+        return self.data["entity"]

@@ -8,3 +8,4 @@ class State:
     STATE_CONVERSATION = "state_conversation"
     STATE_INVENTORY = "state_inventory"
     STATE_GAME_END = "state_game_end"
+    STATE_LOOT = "state_loot"

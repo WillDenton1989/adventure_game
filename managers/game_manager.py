@@ -74,6 +74,7 @@ class GameManager(ManagerBase):
 
         self.event_dispatcher.receive(InventoryEvent.OPEN_INVENTORY_EVENT, self._inventory_opened_handler)
         self.event_dispatcher.receive(InventoryEvent.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
+        self.event_dispatcher.receive(InventoryEvent.LOOT_EVENT, self._loot_event_handler)
 
         self.event_dispatcher.receive(GameEvent.QUIT_EVENT, self._quit_event_handler)
         self.event_dispatcher.receive(GameEvent.GAME_FINISH_EVENT, self._game_finish_event_handler)
@@ -156,6 +157,9 @@ class GameManager(ManagerBase):
         conversation_data.update({ "player": self.player })
         self._set_state(State.STATE_CONVERSATION, conversation_data)
 
+    def _start_loot(self, entity_loot_data):
+        self._set_state(State.STATE_LOOT, entity_loot_data)
+
     # event handlers
 
     def _battle_started_handler(self, event):
@@ -169,6 +173,9 @@ class GameManager(ManagerBase):
 
     def _inventory_closed_handler(self, _event):
         self._set_state(State.STATE_MOVEMENT)
+
+    def _loot_event_handler(self, event):
+        self._start_loot(event.entity)
 
     def _conversation_started_handler(self, event):
         self._start_conversation(event.data)
