@@ -192,6 +192,21 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
         else:
             self._parse_input()
 
+    def _show_loot_inventory_controls(self):
+        print("Select an item you wish to take.")
+
+    def _parse_loot_inventory_input(self, input):
+        data = {}
+        if(input == "quit" or input == "q"):
+            self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
+        elif(input.isdigit() == True):
+            data["inventory_position"] = int(input) - 1
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.LOOT_ITEM_IN_INVENTORY_EVENT, data))
+        elif(input == "i"):
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
+        else:
+            self._parse_input()
+
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 

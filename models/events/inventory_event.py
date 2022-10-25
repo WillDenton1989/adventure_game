@@ -8,10 +8,7 @@ class InventoryEvent(EventBase):
     REMOVE_ITEM_FROM_INVENTORY_EVENT = "remove_item_from_inventory_event"
     CREATE_INVENTORY_EVENT = "create_inventory_event"
     LOOT_EVENT = "loot_event"
-<<<<<<< HEAD
     SORT_INVENTORY_EVENT = "sort_inventory_event"
-=======
->>>>>>> a99a85f (adds loot events)
 
     def __init__(self, name, data = {}):
         EventBase.__init__(self, name, data)
