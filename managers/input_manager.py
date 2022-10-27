@@ -187,13 +187,12 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
         elif(input.isdigit() == True):
             data["inventory_position"] = int(input) - 1
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.LOOT_ITEM_IN_INVENTORY_EVENT, data))
-        elif(input == "i"):
-            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
+        elif(input == "i"):            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:
             self._parse_input()
 
     def _show_loot_inventory_controls(self):
-        print("Select an item you wish to take.")
+        print("Select an item you wish to take. Press 'i' to close this event.")
 
     def _parse_loot_inventory_input(self, input):
         data = {}
@@ -202,7 +201,7 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
         elif(input.isdigit() == True):
             data["inventory_position"] = int(input) - 1
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.LOOT_ITEM_IN_INVENTORY_EVENT, data))
-        elif(input == "i"):
+        elif(input == "i" or input == "close"): # this will be c in the future but for now i is nicer.
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:
             self._parse_input()

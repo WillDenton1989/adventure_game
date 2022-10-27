@@ -24,10 +24,9 @@ item_data:
     equipable: True
   leather_armor:
     display_name: Leather Armor
-    modifier:
-      max_hit_points
-    modifier_value:
-      10
+    type: 3 # armor
+    effects:
+      defense_scale: 2
     weight: 8
     value: 150
     consumable: False
