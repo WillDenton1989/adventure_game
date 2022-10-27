@@ -15,6 +15,6 @@ class Damage(EffectBase):
         new_hp = old_hp - self._max_damage
 
         player.hit_points = new_hp
-        print(f"Damage taken: {self._max_damage}")
+        print(f"\nDamage taken: {self._max_damage}\n")
 
     # private methods

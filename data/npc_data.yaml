@@ -11,8 +11,8 @@ goblin:
   speed: 6
   symbol: goblin
   inventory:
+    - torch
     - rock
-    - red_potion
 bandit:
   entity_type: monster
   character_class: bandit
@@ -24,9 +24,9 @@ bandit:
   speed: 5
   symbol: bandit
   inventory:
-    - rock
     - red_potion
     - red_potion
+    - torch
 dwarf:
   entity_type: npc
   character_class: dwarf
@@ -38,8 +38,9 @@ dwarf:
   speed: 3
   symbol: dwarf
   inventory:
-    - rock
+    - gold_bar
     - red_potion
+    - torch
     - rock
 loot_chest:
   entity_type: treasure
@@ -47,6 +48,8 @@ loot_chest:
   inventory:
     - gold_bar
     - red_potion
+    - torch
+    - the_last_word
 finish_line:
   entity_type: exit
   symbol: finish_line

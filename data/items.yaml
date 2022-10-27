@@ -7,7 +7,7 @@ item_data:
     effects:
       heal: 5
     weight: 1
-    value: 10
+    value: 50
     consumable: True
     equipable: False
   iron_sword:
@@ -23,7 +23,7 @@ item_data:
     display_name: Leather Armor
     type: 3 # armor
     effects:
-      defense: 2
+      defense_scale: 2
     weight: 8
     value: 150
     consumable: False
@@ -50,7 +50,7 @@ item_data:
     display_name: Death Root
     type: 1 # consumable
     effects:
-      damage: 15 # was 100.
+      damage: 100
     weight: 1
     value: 5000
     consumable: True
@@ -64,6 +64,15 @@ item_data:
     value: 15000
     consumable: False
     equipable: False
+  torch:
+    display_name: Torch
+    type: 2
+    effects:
+      light: 5
+    weight: 2
+    value: 10
+    consumable: False
+    equipable: True
   the_last_word:
     display_name: The Last Word
     type: 2 # weapon

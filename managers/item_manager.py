@@ -1,8 +1,11 @@
 import yaml
+from playsound import playsound
 
 from managers.manager_base import ManagerBase
 
+from models.effects.attack_power import AttackPower
 from models.effects.damage import Damage
+from models.effects.defense import Defense
 from models.effects.heal import Heal
 from models.events.inventory_event import InventoryEvent
 from models.events.item_event import ItemEvent
@@ -25,12 +28,14 @@ class ItemManager(ManagerBase):
 
     def item_from_key(self, key):
         template = self._item_templates[key]
-        return Item(template["display_name"], template["type"], template["effects"], template["weight"], template["value"], template["consumable"], template["equipable"])
+        return Item(template)
 
     # private methods
 
     def _register_receivers(self):
         self.event_dispatcher.receive(ItemEvent.USE_ITEM_EVENT, self._use_item_event_handler)
+        self.event_dispatcher.receive(ItemEvent.EQUIP_ITEM_EVENT, self._equip_item_event_handler)
+        self.event_dispatcher.receive(ItemEvent.UNEQUIP_ITEM_EVENT, self._unequip_item_event_handler)
 
     def _unregister_receivers(self):
         pass
@@ -42,11 +47,19 @@ class ItemManager(ManagerBase):
 
         return item_templates
 
-    def _use_item(self, item, inventory_position):
+    def _use_item_effect(self, item, inventory_position):
         self._execute_effects(item.effects)
         if(item.consumable == True):
             data = { "item": item, "inventory_position": inventory_position }
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.REMOVE_ITEM_FROM_INVENTORY_EVENT, data))
+
+    def _execute_equiped_item_effect(self, item):
+        if(item.equiped == True):
+            self._execute_effects(item.effects)
+
+    def _remove_equiped_item_effect(self, item):
+        if(item.equiped == False):
+            self._remove_effects(item.effects)
 
     def _execute_effects(self, effects):
         if(effects == None): return
@@ -56,35 +69,48 @@ class ItemManager(ManagerBase):
                 max_heal = effects[effect_key]
                 effect = Heal(max_heal, self._game_manager)
                 effect.execute()
+                playsound("/Users/williamdenton/Projects/adventure_game/data/sounds/I GOT YOU HOMIE.MP4.wav")
             elif(effect_key == "damage"):
                 max_damage = effects[effect_key]
                 effect = Damage(max_damage, self._game_manager)
                 effect.execute()
+                playsound("/Users/williamdenton/Projects/adventure_game/data/sounds/CDI Ganon says die!.wav")
             elif(effect_key == "attack_damage"):
-                ad_amount = effects[effect_key]
-                self._increase_user_attack_damage(ad_amount)
+                max_attack_power = effects[effect_key]
+                effect = AttackPower(max_attack_power, self._game_manager)
+                effect.execute()
             elif(effect_key == "defense"):
-                defense_amount = effects[effect_key]
-                self._increase_user_defense(defense_amount)
-            elif(effect_key == "mana"):
-                mana_amount = effects[effect_key]
-                self._restore_user_mana(mana_amount)
+                max_defense = effects[effect_key]
+                effect = Defense(max_defense, self._game_manager)
+                effect.execute()
             else:
                 print("There is no effect for this item. This could be an error.")
 
-    def _increase_user_attack_damage(self, ad_amount):
-        print(f"Attack damage amount: {ad_amount}")
+    def _remove_effects(self, effects):
+        if(effects == None): return
 
-    def _increase_user_defense(self, defense_amount):
-        print(f"Defense amount: {defense_amount}")
-
-    def _restore_user_mana(self, mana_amount):
-        print(f"Mana amount: {mana_amount}")
+        for effect_key in effects:
+            if(effect_key == "attack_damage"):
+                ad_amount = effects[effect_key]
+                effect = AttackPower(ad_amount, self._game_manager)
+                effect.remove()
+            elif(effect_key == "defense"):
+                max_defense = effects[effect_key]
+                effect = Defense(max_defense, self._game_manager)
+                effect.remove()
+            else:
+                print("There is no effect to remove from this item")
 
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     # event handlers
 
+    def _equip_item_event_handler(self, event):
+        self._execute_equiped_item_effect(event.item)
+
+    def _unequip_item_event_handler(self, event):
+        self._remove_equiped_item_effect(event.item)
+
     def _use_item_event_handler(self, event):
-        self._use_item(event.item, event.inventory_position)
+        self._use_item_effect(event.item, event.inventory_position)

@@ -44,7 +44,7 @@ class InputManager(ManagerBase):
         elif(self.game_state == State.STATE_LOOT):
             return self._parse_loot_inventory_input(player_input)
         else:
-            raise Exception(f"cannot parse input for your current game state: {self.game_state}")
+            raise Exception(f"Cannot parse input for your current game state: {self.game_state}")
 
     def _show_controls(self):
         if(self.game_state == State.STATE_CHARACTER_CREATION):
@@ -60,7 +60,7 @@ class InputManager(ManagerBase):
         elif(self.game_state == State.STATE_LOOT):
             self._show_loot_inventory_controls()
         else:
-            exception_string = f"cannot show controls for your current game state: {self.game_state}"
+            exception_string = f"Cannot show controls for your current game state: {self.game_state}"
             raise Exception(exception_string)
 
     def _prompt(self):
@@ -73,7 +73,7 @@ class InputManager(ManagerBase):
         elif(self.game_state == State.STATE_CONVERSATION):
             return "What is your response? "
         else:
-            raise Exception("there is no prompt for your current game state.")
+            raise Exception("There is no prompt for your current game state.")
 
     def _show_player_creation_controls(self):
         print("Type in your name and your adventure shall begin!\n")
@@ -146,7 +146,7 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
             self._parse_input()
 
     def _show_inventory_controls(self):
-        print("Select an item.\nPress 'i' to close your inventory.")
+        print("To select an item press its corresponding number.\nPress 's' to sort your inventory. Press 'i' to close your inventory.")
 
     def _parse_inventory_input(self, input):
         data = {}
@@ -155,13 +155,15 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
         elif(input.isdigit() == True):
             data["inventory_position"] = int(input) - 1
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, data))
-        elif(input == "i"):
+        elif(input == "s" or input == "sort"):
+            self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.SORT_INVENTORY_EVENT, data))
+        elif(input == "i" or input == "inventory"):
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:
             self._parse_input()
 
     def _show_loot_inventory_controls(self):
-        print("Select an item you wish to take.")
+        print("Select an item you wish to take. Press 'i' to close this event.")
 
     def _parse_loot_inventory_input(self, input):
         data = {}
@@ -170,7 +172,7 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
         elif(input.isdigit() == True):
             data["inventory_position"] = int(input) - 1
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.LOOT_ITEM_IN_INVENTORY_EVENT, data))
-        elif(input == "i"):
+        elif(input == "i" or input == "close"): # this will be c in the future but for now i is nicer.
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:
             self._parse_input()
