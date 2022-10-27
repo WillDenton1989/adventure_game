@@ -53,13 +53,15 @@ class ItemManager(ManagerBase):
             data = { "item": item, "inventory_position": inventory_position }
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.REMOVE_ITEM_FROM_INVENTORY_EVENT, data))
 
-    def _execute_equiped_item_effect(self, item):
+    def _execute_equiped_item_stat_modifier(self, item):
         if(item.equiped == True):
-            self._execute_effects(item.effects)
+            item_id = id(item)
+            self._game_manager.player.add_modifier(item_id, item.modifier, item.modifier_value)
 
-    def _remove_equiped_item_effect(self, item):
+    def _remove_equiped_item_stat_modifier(self, item):
         if(item.equiped == False):
-            self._remove_effects(item.effects)
+            item_id = id(item)
+            self._game_manager.player.remove_modifier(item_id)
 
     def _execute_effects(self, effects):
         if(effects == None): return
@@ -86,31 +88,16 @@ class ItemManager(ManagerBase):
             else:
                 print("There is no effect for this item. This could be an error.")
 
-    def _remove_effects(self, effects):
-        if(effects == None): return
-
-        for effect_key in effects:
-            if(effect_key == "attack_damage"):
-                ad_amount = effects[effect_key]
-                effect = AttackPower(ad_amount, self._game_manager)
-                effect.remove()
-            elif(effect_key == "defense"):
-                max_defense = effects[effect_key]
-                effect = Defense(max_defense, self._game_manager)
-                effect.remove()
-            else:
-                print("There is no effect to remove from this item")
-
     def _handle_game_state_change(self, previous_state, new_state, data):
         pass
 
     # event handlers
 
     def _equip_item_event_handler(self, event):
-        self._execute_equiped_item_effect(event.item)
+        self._execute_equiped_item_stat_modifier(event.item)
 
     def _unequip_item_event_handler(self, event):
-        self._remove_equiped_item_effect(event.item)
+        self._remove_equiped_item_stat_modifier(event.item)
 
     def _use_item_event_handler(self, event):
         self._use_item_effect(event.item, event.inventory_position)

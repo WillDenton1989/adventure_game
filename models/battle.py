@@ -6,7 +6,6 @@ class Battle:
         self._player_decision = None
         self._monster_decision = None
 
-    # refactor this in the battle display refactor DEBUG
     def __str__(self):
         return f"""\nRound {self.round}: {self.player.name} HP: {self.player.hit_points} | {self.monster.name} HP: {self.monster.hit_points}
 {self.player.name}: Attack: {self.player.attack_power} Defense: {self.player.defense} | {self.monster.name}: Attack: {self.monster.attack_power} Defense: {self.monster.defense}"""

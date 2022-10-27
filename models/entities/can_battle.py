@@ -1,5 +1,9 @@
-class CanBattle:
+from models.entities.can_be_modified import CanBeModified
+
+class CanBattle(CanBeModified):
     def __init__(self, data):
+        CanBeModified.__init__(self, data)
+
         self._max_hit_points = data["max_hit_points"]
         self._hit_points = data["hit_points"]
         self._attack_power = data["attack_power"]
@@ -10,6 +14,7 @@ class CanBattle:
     # attribute accessors
 
     @property
+    @CanBeModified.modifiable_attribute
     def max_hit_points(self):
         return self._max_hit_points
 
@@ -22,6 +27,7 @@ class CanBattle:
         self._hit_points = value
 
     @property
+    @CanBeModified.modifiable_attribute
     def attack_power(self):
         return self._attack_power
 

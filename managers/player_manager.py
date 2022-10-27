@@ -49,7 +49,7 @@ class PlayerManager(ManagerBase):
     def _dispatch_inventory_data(self, player, player_template):
         player = self.player
         player_id = id(self.player)
-        data = { "id" : { "player_id" : player_id }, "inventory" : player_template["inventory"]} # "player_object" : player
+        data = { "id" : { "player_id" : player_id }, "inventory" : player_template["inventory"], "player_object" : player} # "player_object" : player
         self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CREATE_INVENTORY_EVENT, data))
 
     def _execute_player_move(self, new_column, new_row):
@@ -64,5 +64,5 @@ class PlayerManager(ManagerBase):
     def _update_player_location_event_handler(self, event):
         self._execute_player_move(event.column, event.row)
 
-    def _player_name_change_event_handler(self, event): # DEBUG
+    def _player_name_change_event_handler(self, event):
         self._change_player_name(event.new_name)
