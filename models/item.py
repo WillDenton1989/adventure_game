@@ -3,20 +3,30 @@ class Item:
 
     VALID_TYPES = ["junk", "consumable", "weapon", "armor", "treasure"]
 
-    # this init should be refactored # DEBUG
-    def __init__(self, display_name = None, VALID_TYPES = 0, effects = None, weight = 1, value = 1, consumable = False, equipable = False):
-        self._display_name = display_name
-        self._type = VALID_TYPES
-        self._effects = effects
-        self._weight = weight
-        self._value = value
-        self._consumable = consumable
-        self._equipable = equipable
+    def __init__(self, item_data):
+        self._display_name = item_data["display_name"]
+        self._type = item_data["type"]
+        self._effects = item_data["effects"]
+        self._weight = item_data["weight"]
+        self._value = item_data["value"]
+        self._consumable = item_data["consumable"]
+        self._equipable = item_data["equipable"]
+        self._equiped = False
 
     def __str__(self):
-        return f"{self._display_name}"
+        if(self.equiped == True):
+            return f"{self._display_name} - Equiped"
+        else:
+            return f"{self._display_name}"
+
+    def __lt__(self, other):
+        pass
 
     # Attribute accessors
+
+    @property
+    def display_name(self):
+        return self._display_name
 
     @property
     def consumable(self):
@@ -25,6 +35,14 @@ class Item:
     @property
     def equipable(self):
         return self._equipable
+
+    @property
+    def equiped(self):
+        return self._equiped
+
+    @equiped.setter
+    def equiped(self, value):
+        self._equiped = value
 
     @property
     def effects(self):

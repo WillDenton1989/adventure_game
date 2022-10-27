@@ -53,7 +53,6 @@ class BattleManager(ManagerBase):
     def _check_for_loot(self, monster):
         if(self.is_someone_dead(monster) == True):
             print("You invenstigate the corpse of your defeated foe.")
-            time.sleep(1.5)
             self._dispatch_inventory_event(monster)
             return True
         return False
@@ -124,7 +123,7 @@ class BattleManager(ManagerBase):
             monster.symbol = SYMBOL_DEAD
 
             print("You invenstigate the corpse of your defeated foe.")
-            time.sleep(1.5)
+            time.sleep(2)
             self._dispatch_inventory_event(monster)
 
             return True

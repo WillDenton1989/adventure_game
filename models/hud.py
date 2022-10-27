@@ -21,12 +21,20 @@ class Hud:
     # public methods
 
     def display_hud(self):
-        self._line_formating()
-        print(f"Player: {self.player.name} | Hit-Points: {self.player.hit_points} | Turn: {self.turns} | STATE:  {self.game_state}")
-        self._line_formating()
+        self._line_formating_a()
+        print(f"Player: {self.player.name} | Hit-Points: {self.player.hit_points} | Attack Power: {self.player.attack_power} | Defense: {self.player.defense} | Turn: {self.turns}\nSTATE: {self.game_state}")
+        self._line_formating_a()
 
     # private methods
 
-    def _line_formating(self):
-        # probaly just need something like curses. but for now this helps.
+    def _line_formating_a(self):
         print("------------------------------------------------------------------------")
+
+    def _line_formating_b(self):
+        print("\n------------------------------------------------------------------------")
+
+    def _line_formating_c(self):
+        print("------------------------------------------------------------------------\n")
+
+    def _line_formating_d(self):
+        print("\n------------------------------------------------------------------------\n")

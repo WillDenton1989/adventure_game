@@ -1,12 +1,12 @@
-from models.entities.battleable import Battleable
+from models.entities.can_battle import CanBattle
 from models.entities.entity_base import EntityBase
 
-class Player(EntityBase, Battleable):
+class Player(EntityBase, CanBattle):
     """builds the player class. will have mix-ins to add functionality"""
 
     def __init__(self, data):
         EntityBase.__init__(self, data)
-        Battleable.__init__(self, data)
+        CanBattle.__init__(self, data)
 
         self._speed = data["speed"]
 

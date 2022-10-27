@@ -1,4 +1,4 @@
-class Battleable:
+class CanBattle:
     def __init__(self, data):
         self._max_hit_points = data["max_hit_points"]
         self._hit_points = data["hit_points"]
@@ -24,6 +24,10 @@ class Battleable:
     @property
     def attack_power(self):
         return self._attack_power
+
+    @attack_power.setter
+    def attack_power(self, value):
+        self._attack_power = value
 
     @property
     def defense(self):

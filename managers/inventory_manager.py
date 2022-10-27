@@ -13,10 +13,6 @@ class InventoryManager(ManagerBase):
         self._item_manager = item_manager
         self._inventories = {}
 
-        self._monster_ids = []
-        self._treasure_ids = []
-        self._entity_ids = []
-
     def start(self):
         pass
 
@@ -25,13 +21,14 @@ class InventoryManager(ManagerBase):
             self._show_inventory(self._player_id)
         elif(self.game_state == State.STATE_LOOT):
             self._show_inventory(self._player_id)
-            self._inspect_entities_inventory(self._lootable_entity)
+            self._inspect_entities_inventory(self._lootable_entity_id)
 
     # private methods
 
     def _register_receivers(self):
         self.event_dispatcher.receive(InventoryEvent.CREATE_INVENTORY_EVENT, self._create_inventory_event_handler)
         self.event_dispatcher.receive(InventoryEvent.LOOT_ITEM_IN_INVENTORY_EVENT, self._select_entities_item_event_handler)
+        self.event_dispatcher.receive(InventoryEvent.SORT_INVENTORY_EVENT, self._sort_inventory_event_handler)
 
         self.event_dispatcher.receive(InventoryEvent.REMOVE_ITEM_FROM_INVENTORY_EVENT, self._remove_item_from_inventory_event_handler)
         self.event_dispatcher.receive(InventoryEvent.SELECT_ITEM_IN_INVENTORY_EVENT, self._select_item_in_inventory_event_handler)
@@ -40,8 +37,9 @@ class InventoryManager(ManagerBase):
         pass
 
     def _initialize_loot_event(self, lootable_entity):
+        self._lootable_entity = lootable_entity
         entity_id = id(lootable_entity)
-        self._lootable_entity = str(entity_id)
+        self._lootable_entity_id = str(entity_id)
 
     def _create_inventory(self, id, inventory_data):
         starting_inventory = self._create_starting_inventory(inventory_data)
@@ -49,20 +47,17 @@ class InventoryManager(ManagerBase):
             self._player_id = str(id["player_id"])
             self._inventories.update({ self._player_id : starting_inventory })
         elif("monster_id" in id):
-            self._monster_ids.append(id["monster_id"])
             monster_id = str(id["monster_id"])
             self._inventories.update({ monster_id : starting_inventory })
         elif("treasure_id" in id):
-            self._treasure_ids.append(id["treasure_id"])
             chest_id = str(id["treasure_id"])
             self._inventories.update({ chest_id : starting_inventory })
         else:
-            self._entity_ids.append(id)
-            entity_id = str(id)
-            self._inventories.update({ entity_id : starting_inventory })
+            raise Exception(f"Issue with creating an inventory for this entity ID: {id}, Inventory data: {inventory_data}")
 
     def _create_starting_inventory(self, inventory_data):
         starting_inventory = []
+        if(inventory_data == None): return starting_inventory
 
         for item_key in inventory_data:
             item = self._item_manager.item_from_key(item_key)
@@ -97,14 +92,38 @@ class InventoryManager(ManagerBase):
     def _select_item(self, inventory_position, id):
         if(self._is_selected_item_in_inventory_range(inventory_position, id) == True):
             item = self._inventories[id][inventory_position]
-
-            self._use_item(item, inventory_position)
+            if(item.consumable == True):
+                self._use_item(item, inventory_position)
+            elif(item.equipable == True):
+                if(item.equiped == False):
+                    self._equip_item(item, inventory_position)
+                elif(item.equiped == True):
+                    self._unequip_item(item, inventory_position)
+                else:
+                    raise Exception("Issue with equipment in select item.")
+            else:
+                print("This item is neither consumable nor equipable.")
         else:
             print("Please select a valid item")
 
     def _use_item(self, item, inventory_position):
+        print(f"You consume {item}")
         data = { "item": item, "inventory_position": inventory_position }
         self.event_dispatcher.dispatch(ItemEvent(ItemEvent.USE_ITEM_EVENT, data))
+
+    def _equip_item(self, item, inventory_position):
+        print(f"You equiped: {item}")
+        item.equiped = True
+
+        data = { "item": item }
+        self.event_dispatcher.dispatch(ItemEvent(ItemEvent.EQUIP_ITEM_EVENT, data))
+
+    def _unequip_item(self, item, inventory_position):
+        item.equiped = False
+        print(f"You un-equiped: {item}")
+
+        data = { "item": item }
+        self.event_dispatcher.dispatch(ItemEvent(ItemEvent.UNEQUIP_ITEM_EVENT, data))
 
     def _remove_item(self, item, inventory_position, id):
         if(item.consumable == True):
@@ -130,6 +149,9 @@ class InventoryManager(ManagerBase):
     def _store_selected_item(self):
         pass
 
+    def _sort_player_inventory(self, id):
+        self._inventories[id].sort(reverse=True, key=lambda x: x.display_name)
+
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_LOOT):
             self._initialize_loot_event(data["event_data"])
@@ -145,5 +167,8 @@ class InventoryManager(ManagerBase):
     def _remove_item_from_inventory_event_handler(self, event):
         self._remove_item(event.item, event.inventory_position, self._player_id)
 
+    def _sort_inventory_event_handler(self, _event):
+        self._sort_player_inventory(self._player_id)
+
     def _select_entities_item_event_handler(self, event):
-        self._select_entities_item(event.inventory_position, self._lootable_entity)
+        self._select_entities_item(event.inventory_position, self._lootable_entity_id)
