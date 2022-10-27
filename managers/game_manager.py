@@ -37,7 +37,6 @@ class GameManager(ManagerBase):
     def process(self):
         while(self.game_state != State.STATE_GAME_END):
             self._increment_turn()
-            # print(f"Player ID in GM: {id(self._entity_manager._player_manager.player)}") # DEBUG
             self._player_death()
             self._run_manager_processes()
             if(self.game_state == State.STATE_CHARACTER_CREATION):
@@ -112,7 +111,6 @@ class GameManager(ManagerBase):
         self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
 
     def _transition_to_movement(self):
-        # this will likely be part of the game config refactor. DEBUG
         self._set_state(State.STATE_MOVEMENT)
         self._level_manager.set_level('level_1', 'data/symbols_dictionary.yaml')
 

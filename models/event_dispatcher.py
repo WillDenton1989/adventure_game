@@ -10,9 +10,6 @@ class EventDispatcher:
         self._event_listeners = []
         self._callbacks = set([])
 
-    def __str__(self): # DEBUG
-        return f" Event listeners: {self._event_listeners}"
-
     # public methods
 
     def dispatch(self, event):

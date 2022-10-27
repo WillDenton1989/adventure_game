@@ -1,12 +1,11 @@
 class Item:
     """Builds the basic Item class. This was also my first class. :D"""
 
-    VALID_TYPES = ["junk", "consumable", "weapon", "armor", "treasure"]
-
     def __init__(self, item_data):
         self._display_name = item_data["display_name"]
-        self._type = item_data["type"]
-        self._effects = item_data["effects"]
+        self._effects = item_data.get("effects")
+        self._modifier = item_data.get("modifier")
+        self._modifier_value = item_data.get("modifier_value")
         self._weight = item_data["weight"]
         self._value = item_data["value"]
         self._consumable = item_data["consumable"]
@@ -47,6 +46,14 @@ class Item:
     @property
     def effects(self):
         return self._effects
+
+    @property
+    def modifier(self):
+        return self._modifier
+
+    @property
+    def modifier_value(self):
+        return self._modifier_value
 
     @property
     def weight(self):

@@ -115,6 +115,7 @@ class BattleManager(ManagerBase):
     def _attack(self, attack_power, hit_points, defense):
         attack_roll = randint(1, attack_power)
         attack_value =  max(0, attack_roll - defense)
+
         return hit_points - attack_value
 
     def _monster_death(self, player, monster):

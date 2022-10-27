@@ -1,37 +1,42 @@
-# base information for the various items in the adventure game.
 ---
 item_data:
   red_potion:
     display_name: Red Potion
-    type: 1 # consumable
     effects:
       heal: 5
+    modifier:
+      hit_points
+    modifier_value:
+      10
     weight: 1
     value: 50
     consumable: True
     equipable: False
   iron_sword:
     display_name: Iron Sword
-    type: 2 # weapon
-    effects:
-      attack_damage: 3
+    modifier:
+      attack_power
+    modifier_value:
+      1
     weight: 4
     value: 100
     consumable: False
     equipable: True
   leather_armor:
     display_name: Leather Armor
-    type: 3 # armor
-    effects:
-      defense_scale: 2
+    modifier:
+      max_hit_points
+    modifier_value:
+      10
     weight: 8
     value: 150
     consumable: False
     equipable: True
   rock:
     display_name: Small Rock
-    type: 0 # junk
-    effects:
+    modifier:
+      null
+    modifier_value:
       null
     weight: 5
     value: 1
@@ -39,26 +44,31 @@ item_data:
     equipable: False
   blue_potion:
     display_name: Blue Potion
-    type: 1 # consumable
-    effects:
-      mana: 10
+    modifier:
+      null
+    modifier_value:
+      null
     weight: 1
     value: 1000
     consumable: True
     equipable: False
   death_root:
     display_name: Death Root
-    type: 1 # consumable
     effects:
       damage: 100
+    modifier:
+      null
+    modifier_value:
+      null
     weight: 1
     value: 5000
     consumable: True
     equipable: False
   gold_bar:
     display_name: Gold Bar
-    type: 4 # treasure
-    effects:
+    modifier:
+      null
+    modifier_value:
       null
     weight: 20
     value: 15000
@@ -66,18 +76,20 @@ item_data:
     equipable: False
   torch:
     display_name: Torch
-    type: 2
-    effects:
-      light: 5
+    modifier:
+      hit_points
+    modifier_value:
+      10
     weight: 2
     value: 10
     consumable: False
     equipable: True
   the_last_word:
     display_name: The Last Word
-    type: 2 # weapon
-    effects:
-      attack_damage: 50
+    modifier:
+      hit_points
+    modifier_value:
+      10
     weight: 2
     value: 100000
     consumable: False
