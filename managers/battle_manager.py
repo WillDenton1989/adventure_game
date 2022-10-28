@@ -83,40 +83,49 @@ class BattleManager(ManagerBase):
         player, monster = self._battle.player, self._battle.monster
         player_decision, monster_decision = self._battle.player_decision, self._battle.monster_decision
 
+        print(self._battle.decision_text())
+
         self._execute_defends(player, monster, player_decision, monster_decision)
         self._execute_attacks(player, monster, player_decision, monster_decision)
 
-        print(self._battle.decision_text())
-
+        # this is is literally the linchpin of battle for right now. probably need to refactor with battle.
         if(self._player_death(player, monster) == False and self._monster_death(player, monster) == False):
-            self._run_battle()
+            pass
 
     def _execute_defends(self, player, monster, player_decision, monster_decision):
         if(player_decision == "defend"):
-            player.defense = self._defend(player.defense, player.defense_scalar)
+            defense_value = self._defend(player.defense, player.defense_scalar)
+            print(f"{player.name} increases defense to {defense_value}.")
+            player.defense = defense_value
 
         if(monster_decision == "defend"):
-            monster.defense = self._defend(monster.defense, monster.defense_scalar)
+            defense_value = self._defend(monster.defense, monster.defense_scalar)
+            print(f"{monster.name} increases defense to {defense_value}.")
+            monster.defense = defense_value
 
     def _execute_attacks(self, player, monster, player_decision, monster_decision):
         if(player_decision == "attack"):
-            monster.hit_points = self._attack(player.attack_power, monster.hit_points, monster.defense)
+            damage = self._attack(player.attack_power, monster.hit_points, monster.defense)
+            print(f"{player.name} deals {damage} damage.")
+            monster.hit_points = monster.hit_points - damage
 
         if(monster_decision == "attack"):
-            player.hit_points = self._attack(monster.attack_power, player.hit_points, player.defense)
+            damage = self._attack(monster.attack_power, player.hit_points, player.defense)
+            print(f"{monster.name} deals {damage} damage.")
+            player.hit_points = player.hit_points - damage
 
     def _defend(self, original_defense, defense_scalar):
         new_defense = original_defense + defense_scalar
-        if(new_defense == 4):
-            return original_defense
+        if(new_defense >= 3):
+            return 3
         else:
             return new_defense
 
     def _attack(self, attack_power, hit_points, defense):
         attack_roll = randint(1, attack_power)
-        attack_value =  max(0, attack_roll - defense)
+        attack_value =  max(1, attack_roll - defense)
 
-        return hit_points - attack_value
+        return attack_value
 
     def _monster_death(self, player, monster):
         if(self.is_someone_dead(monster) == True):
@@ -124,7 +133,7 @@ class BattleManager(ManagerBase):
             monster.symbol = SYMBOL_DEAD
 
             print("You invenstigate the corpse of your defeated foe.")
-            time.sleep(2)
+            time.sleep(4)
             self._dispatch_inventory_event(monster)
 
             return True
@@ -153,6 +162,7 @@ class BattleManager(ManagerBase):
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_BATTLE):
             self._initialize_battle(data["event_data"])
+
 
     # event handlers
 
