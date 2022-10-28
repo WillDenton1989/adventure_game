@@ -5,9 +5,9 @@ item_data:
     effects:
       heal: 5
     modifier:
-      hit_points
+      null
     modifier_value:
-      10
+      null
     weight: 1
     value: 50
     consumable: True
@@ -17,7 +17,7 @@ item_data:
     modifier:
       attack_power
     modifier_value:
-      1
+      3
     weight: 4
     value: 100
     consumable: False
@@ -34,6 +34,8 @@ item_data:
     equipable: True
   rock:
     display_name: Small Rock
+    effects:
+      null
     modifier:
       null
     modifier_value:
@@ -44,6 +46,8 @@ item_data:
     equipable: False
   blue_potion:
     display_name: Blue Potion
+    effects:
+      null
     modifier:
       null
     modifier_value:
@@ -77,9 +81,9 @@ item_data:
   torch:
     display_name: Torch
     modifier:
-      hit_points
+      defense_scalar
     modifier_value:
-      10
+      1
     weight: 2
     value: 10
     consumable: False
@@ -87,9 +91,9 @@ item_data:
   the_last_word:
     display_name: The Last Word
     modifier:
-      hit_points
+      attack_power
     modifier_value:
-      10
+      69
     weight: 2
     value: 100000
     consumable: False
