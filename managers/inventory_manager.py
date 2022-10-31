@@ -149,9 +149,12 @@ class InventoryManager(ManagerBase):
     def _store_selected_item(self):
         pass
 
+<<<<<<< HEAD
     def _sort_player_inventory(self, id):
         self._inventories[id].sort(reverse=True, key=lambda x: x.display_name)
 
+=======
+>>>>>>> a99a85f (adds loot events)
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_LOOT):
             self._initialize_loot_event(data["event_data"])
@@ -167,8 +170,13 @@ class InventoryManager(ManagerBase):
     def _remove_item_from_inventory_event_handler(self, event):
         self._remove_item(event.item, event.inventory_position, self._player_id)
 
+<<<<<<< HEAD
     def _sort_inventory_event_handler(self, _event):
         self._sort_player_inventory(self._player_id)
 
     def _select_entities_item_event_handler(self, event):
         self._select_entities_item(event.inventory_position, self._lootable_entity_id)
+=======
+    def _select_entities_item_event_handler(self, event):
+        self._select_entities_item(event.inventory_position, self._lootable_entity)
+>>>>>>> a99a85f (adds loot events)
