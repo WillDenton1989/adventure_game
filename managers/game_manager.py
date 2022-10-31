@@ -164,7 +164,6 @@ class GameManager(ManagerBase):
         self._start_battle(event.monster)
 
     def _battle_ended_handler(self, _event):
-        print("Here in battle ended event handler.") # DEBUG
         self._set_state(State.STATE_MOVEMENT)
 
     def _inventory_opened_handler(self, _event):
