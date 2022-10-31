@@ -88,7 +88,6 @@ class BattleManager(ManagerBase):
         self._execute_defends(player, monster, player_decision, monster_decision)
         self._execute_attacks(player, monster, player_decision, monster_decision)
 
-        # this is is literally the linchpin of battle for right now. probably need to refactor with battle.
         if(self._player_death(player, monster) == False and self._monster_death(player, monster) == False):
             pass
 
@@ -133,6 +132,8 @@ class BattleManager(ManagerBase):
             monster.symbol = SYMBOL_DEAD
 
             print("You invenstigate the corpse of your defeated foe.")
+
+            time.sleep(4)
             self._dispatch_inventory_event(monster)
 
             return True
@@ -161,7 +162,6 @@ class BattleManager(ManagerBase):
     def _handle_game_state_change(self, previous_state, new_state, data):
         if(data["new_state"] == State.STATE_BATTLE):
             self._initialize_battle(data["event_data"])
-
 
     # event handlers
 

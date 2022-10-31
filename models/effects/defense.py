@@ -17,12 +17,4 @@ class Defense(EffectBase):
         player.defense = new_defense
         print(f"\nOld Defense: {old_defense} | New Defense: {new_defense}")
 
-    def remove(self):
-        player = self.player
-        old_defense = player.defense
-        new_defense = old_defense - self._max_defense
-
-        player.defense = new_defense
-        print(f"\nOld Defense: {old_defense} | New Defense: {new_defense}")
-
     # private methods

@@ -8,7 +8,7 @@ class Battle:
 
     def __str__(self):
         return f"""\nRound {self.round}: {self.player.name} HP: {self.player.hit_points} | {self.monster.name} HP: {self.monster.hit_points}
-{self.player.name}: Attack: {self.player.attack_power}, Defense: {self.player.defense} | {self.monster.name}: Attack: {self.monster.attack_power}, Defense: {self.monster.defense}"""
+{self.player.name}: AP: {self.player.attack_power}, Def: {self.player.defense} | {self.monster.name}: AP: {self.monster.attack_power}, Def: {self.monster.defense}"""
 
     # attribute accessors
 

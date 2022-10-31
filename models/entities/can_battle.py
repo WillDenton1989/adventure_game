@@ -19,7 +19,7 @@ class CanBattle(CanBeModified):
         return self._max_hit_points
 
     @property
-    def hit_points(self):
+    def hit_points(self): # do not modify this bad boy. things happen.
         return self._hit_points
 
     @hit_points.setter
@@ -36,6 +36,7 @@ class CanBattle(CanBeModified):
         self._attack_power = value
 
     @property
+    @CanBeModified.modifiable_attribute
     def defense(self):
         return self._base_defense + self._accumulated_scale_defense
 
@@ -44,6 +45,7 @@ class CanBattle(CanBeModified):
         self._accumulated_scale_defense = value - self._base_defense
 
     @property
+    @CanBeModified.modifiable_attribute
     def defense_scalar(self):
         return self._defense_scalar
 

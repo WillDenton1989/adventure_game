@@ -40,9 +40,7 @@ class ConversationManager(ManagerBase):
         for line in name:
             print(line, end="")
 
-
     def _line_formating(self):
-        # probaly just need something like curses. but for now this helps.
         print("------------------------------------------------------------------------\n")
 
     def _handle_game_state_change(self, previous_state, new_state, data):

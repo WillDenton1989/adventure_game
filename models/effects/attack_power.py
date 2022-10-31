@@ -17,12 +17,4 @@ class AttackPower(EffectBase):
         player.attack_power = new_attack_power
         print(f"\nOld attack power: {old_attack_power} | New attack power: {new_attack_power}")
 
-    def remove(self):
-        player = self.player
-        old_attack_power = player.attack_power
-        new_attack_power = old_attack_power - self._max_attack_power
-
-        player.attack_power = new_attack_power
-        print(f"\nOld attack power: {old_attack_power} | New attack power: {new_attack_power}")
-
     # private methods
