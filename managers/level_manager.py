@@ -44,11 +44,6 @@ class LevelManager(ManagerBase):
             print("\r")
         print("------------------------------------------------------------------------")
 
-    def _trigger_level_events(self, column, row):
-        triggered_events = self._level.events_for(column, row)
-        for event in triggered_events:
-            event_manager.trigger_event(event["event_name"], event["data"])
-
     def _move(self, direction):
         player = self._game_manager.player
         new_column, new_row = self._determine_new_coordinates(direction, player.column, player.row)

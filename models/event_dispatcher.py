@@ -2,6 +2,7 @@ import sys
 
 from models.events.battle_event import BattleEvent
 from models.events.conversation_event import ConversationEvent
+from models.events.inventory_event import InventoryEvent
 from models.events.game_event import GameEvent
 
 class EventDispatcher:
