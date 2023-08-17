@@ -1,5 +1,5 @@
 import yaml
-from playsound import playsound
+# from playsound import playsound
 
 from managers.manager_base import ManagerBase
 
@@ -16,7 +16,7 @@ class ItemManager(ManagerBase):
         ManagerBase.__init__(self, event_dispatcher)
 
         self._game_manager = game_manager
-        self._item_templates = self._load_item_templates("data/items.yaml")
+        self._item_templates = self._load_item_templates("data/game_data/items.yaml") # DEBUG FILE location
 
     def start(self):
         pass
@@ -71,12 +71,10 @@ class ItemManager(ManagerBase):
                 max_heal = effects[effect_key]
                 effect = Heal(max_heal, self._game_manager)
                 effect.execute()
-                playsound("/Users/williamdenton/Projects/adventure_game/data/sounds/I GOT YOU HOMIE.MP4.wav")
             elif(effect_key == "damage"):
                 max_damage = effects[effect_key]
                 effect = Damage(max_damage, self._game_manager)
                 effect.execute()
-                playsound("/Users/williamdenton/Projects/adventure_game/data/sounds/CDI Ganon says die!.wav")
             elif(effect_key == "attack_damage"):
                 max_attack_power = effects[effect_key]
                 effect = AttackPower(max_attack_power, self._game_manager)

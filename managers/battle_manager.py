@@ -133,7 +133,7 @@ class BattleManager(ManagerBase):
 
             print("You invenstigate the corpse of your defeated foe.")
 
-            time.sleep(4)
+            time.sleep(3)
             self._dispatch_inventory_event(monster)
 
             return True
@@ -146,13 +146,12 @@ class BattleManager(ManagerBase):
         return False
 
     def _load_txt_file(self):
-        name = open("data/battle_display.txt") # hardcoded file anti bueno
-        list = []
-        for line in name:
-            print(line, end="")
+        with open("data/battle_display.txt") as name: # hardcoded file anti bueno DEBUG FILE
+            list = []
+            for line in name:
+                print(line, end="")
 
     def _line_formating(self):
-        # probaly just need something like curses. but for now this helps.
         print("------------------------------------------------------------------------")
 
     def _dispatch_inventory_event(self, monster):

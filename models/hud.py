@@ -22,7 +22,7 @@ class Hud:
 
     def display_hud(self):
         self._line_formating_a()
-        print(f"Player: {self.player.name} | HP/Max-HP: {self.player.hit_points}/{self.player.max_hit_points} | Attack Power: {self.player.attack_power} | Defense: {self.player.defense} | Turn: {self.turns}\nSTATE: {self.game_state}")
+        print(f"Player: {self.player.name} | HP/Max-HP: {self.player.hit_points}/{self.player.max_hit_points} | AttkPwr: {self.player.attack_power} | Def: {self.player.defense} | Turn: {self.turns}\nSTATE: {self.game_state}")
         self._line_formating_a()
 
     # private methods

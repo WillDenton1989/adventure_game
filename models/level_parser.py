@@ -12,9 +12,9 @@ class LevelParser:
 
     # public methods
 
-    def build_the_level(self, level_name, symbol_dict):
+    def build_the_level(self, level_name, symbol_dict): # DEBUG FILE location
         string_map = self._load_map("data/" + level_name + ".txt")
-        map_key_dict = self._load_dictionary_yaml(symbol_dict)
+        map_key_dict = self._load_dictionary_yaml("data/" + symbol_dict + ".yaml")
         entity_templates = self._load_level_objects("data/" + level_name + "_entities.yaml")
         level = Level(string_map, map_key_dict, entity_templates)
 
@@ -30,11 +30,11 @@ class LevelParser:
 
     def _load_map(self, filename):
         map_list = []
-        map = open(filename)
-        for line in map:
-            x = line.split()
-            map_list.append(x)
-        return map_list
+        with open(filename) as map:
+            for line in map:
+                x = line.split()
+                map_list.append(x)
+            return map_list
 
     def _load_dictionary_yaml(self, filename):
         with open(filename) as f:

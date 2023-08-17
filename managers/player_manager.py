@@ -1,5 +1,3 @@
-import yaml
-
 from managers.manager_base import ManagerBase
 
 from models.entities.player import Player

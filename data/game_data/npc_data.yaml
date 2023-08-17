@@ -27,6 +27,22 @@ bandit:
     - red_potion
     - red_potion
     - gold_bar
+ogre:
+  entity_type: monster
+  character_class: ogre
+  max_hit_points: 25
+  hit_points: 25
+  attack_power: 8
+  defense: 3
+  defense_scalar: 0
+  speed: 5
+  symbol: ogre
+  inventory:
+    - red_potion
+    - red_potion
+    - gold_bar
+    - gold_bar
+    - the_incredible_god_slaying_sword_of_slaying_gods
 dwarf:
   entity_type: npc
   character_class: dwarf

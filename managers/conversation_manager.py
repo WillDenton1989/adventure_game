@@ -35,10 +35,10 @@ class ConversationManager(ManagerBase):
         print(f"\n{player.name} has encountered the legendary {npc.name}!!!\n")
 
     def _load_txt_file(self):
-        name = open("data/dwarf_name.txt")
-        list = []
-        for line in name:
-            print(line, end="")
+        with open("data/dwarf_name.txt") as name: # DEBUG FILE
+            list = []
+            for line in name:
+                print(line, end="")
 
     def _line_formating(self):
         print("------------------------------------------------------------------------\n")

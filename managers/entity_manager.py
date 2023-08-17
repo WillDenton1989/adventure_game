@@ -11,14 +11,13 @@ from models.events.entity_event import EntityEvent
 from models.events.inventory_event import InventoryEvent
 
 class EntityManager(ManagerBase):
-    """This manages all entities in the game and entity sub managers."""
-
     def __init__(self, event_dispatcher):
         ManagerBase.__init__(self, event_dispatcher)
         self._entities = []
 
-        self._load_entity_templates()
-        self._player_template = self._load_player_template()
+        self._load_entity_templates("data/game_data/npc_data.yaml") # FILE DEBUG
+        player = self._load_player_template("data/game_data/player_data.yaml") # FILE DEBUG
+        self._player_template = player
 
         self._initialize_sub_managers()
 
@@ -65,14 +64,14 @@ class EntityManager(ManagerBase):
         self._monster_manager.process()
         self._npc_manager.process()
 
-    def _load_player_template(self): # hardcoded filename no bueno, manager config refactor DEBUG
-        with open("data/player_data.yaml") as f:
+    def _load_player_template(self, player_template): # hardcoded filename no bueno, manager config refactor DEBUG FILE
+        with open(player_template) as f:
             player_template = yaml.safe_load(f)
 
         return player_template
 
-    def _load_entity_templates(self):
-        with open("data/npc_data.yaml") as f: # hardcoded filename no bueno, manager config refactor DEBUG
+    def _load_entity_templates(self, entity_template):
+        with open(entity_template) as f: # hardcoded filename no bueno, manager config refactor DEBUG FILE
             self._entity_templates = yaml.safe_load(f)
 
     def _create_entity(self, entity_data):

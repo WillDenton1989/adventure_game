@@ -10,6 +10,7 @@ from managers.item_manager import ItemManager
 from managers.level_manager import LevelManager
 from managers.manager_base import ManagerBase
 
+from models.game_parser import GameParser
 from models.event_dispatcher import EventDispatcher
 from models.events.battle_event import BattleEvent
 from models.events.conversation_event import ConversationEvent
@@ -25,6 +26,7 @@ class GameManager(ManagerBase):
         event_dispatcher = EventDispatcher()
         ManagerBase.__init__(self, event_dispatcher)
         self.game_state = State.STATE_CHARACTER_CREATION
+        self._game_parser = GameParser()
         self._turns = 0
 
         self._initialize_managers()
@@ -41,6 +43,9 @@ class GameManager(ManagerBase):
             self._run_manager_processes()
             if(self.game_state == State.STATE_CHARACTER_CREATION):
                 self._transition_to_movement()
+
+    def game_intro_message():
+        print("\nWelcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
 
     # attribute accessors
 
@@ -112,7 +117,7 @@ class GameManager(ManagerBase):
 
     def _transition_to_movement(self):
         self._set_state(State.STATE_MOVEMENT)
-        self._level_manager.set_level('level_1', 'data/symbols_dictionary.yaml')
+        self._level_manager.set_level('level_one_data/level_1', 'symbols_dictionary') # FILE DEBUG
 
     def _increment_turn(self):
         if(self.game_state == State.STATE_MOVEMENT):
@@ -141,7 +146,7 @@ class GameManager(ManagerBase):
         self._set_state(State.STATE_GAME_END, {})
 
     def _line_formating(self):
-        # probaly just need something like curses. but for now this helps.
+        # probably just need something like curses. but for now this helps.
         print("------------------------------------------------------------------------")
 
     def _handle_game_state_change(self, previous_state, new_state, data):
