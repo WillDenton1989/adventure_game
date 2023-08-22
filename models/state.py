@@ -9,3 +9,4 @@ class State:
     STATE_INVENTORY = "state_inventory"
     STATE_GAME_END = "state_game_end"
     STATE_LOOT = "state_loot"
+    STATE_LEVEL_END = "state_level_end"

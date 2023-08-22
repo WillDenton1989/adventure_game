@@ -2,7 +2,8 @@ from models.events.event_base import EventBase
 
 class GameEvent(EventBase):
     QUIT_EVENT = "quit_event"
-    GAME_FINISH_EVENT = "game_finish_event"
+    GAME_FINSIH_EVENT = "game_finish_event"
+    LEVEL_FINISH_EVENT = "level_finish_event"
     STATE_CHANGE_EVENT = "state_change_event"
 
     def __init__(self, name, data = {}):

@@ -1,0 +1,63 @@
+---
+templates:
+  - template_name: player_start
+    location:
+      column: 1
+      row: 1
+  - template_name: monster
+    key: goblin
+    location:
+      column: 2
+      row: 2
+    events:
+      - BattleEvent#BATTLE_EVENT
+  - template_name: monster
+    key: goblin
+    location:
+      column: 8
+      row: 10
+    events:
+      - BattleEvent#BATTLE_EVENT
+  - template_name: monster
+    key: ogre
+    location:
+      column: 1
+      row: 10
+    events:
+      - BattleEvent#BATTLE_EVENT
+  - template_name: monster
+    key: bandit
+    location:
+      column: 5
+      row: 5
+    events:
+      - BattleEvent#BATTLE_EVENT
+  - template_name: monster
+    key: goblin
+    location:
+      column: 2
+      row: 10
+    events:
+      - BattleEvent#BATTLE_EVENT
+  - template_name: npc
+    key: dwarf
+    location:
+      column: 10
+      row: 1
+    events:
+      - ConversationEvent#CONVERSATION_EVENT
+  - template_name: treasure
+    key: loot_chest
+    location:
+      column: 5
+      row: 6
+    events:
+      - InventoryEvent#LOOT_EVENT
+  - template_name: finish_line
+    key: finish_line
+    location:
+      column: 10
+      row: 10
+    events:
+      - GameEvent#LEVEL_FINISH_EVENT
+...

@@ -28,6 +28,7 @@ class GameManager(ManagerBase):
         self.game_state = State.STATE_CHARACTER_CREATION
         self._game_parser = GameParser()
         self._turns = 0
+        self._level_number = 1
 
         self._initialize_managers()
 
@@ -42,7 +43,7 @@ class GameManager(ManagerBase):
             self._player_death()
             self._run_manager_processes()
             if(self.game_state == State.STATE_CHARACTER_CREATION):
-                self._transition_to_movement()
+                self._transition_to_movement(self.level_number)
 
     def game_intro_message():
         print("\nWelcome intrepid adventurer! \n\nThis is the Adventure Game!(working title, dont laugh)\n\n")
@@ -56,6 +57,10 @@ class GameManager(ManagerBase):
     @property
     def player(self):
         return self._entity_manager.player
+
+    @property
+    def level_number(self):
+        return self._level_number
 
     # private methods
 
@@ -71,7 +76,7 @@ class GameManager(ManagerBase):
 
     def _register_receivers(self):
         self.event_dispatcher.receive(BattleEvent.BATTLE_EVENT, self._battle_started_handler)
-        self.event_dispatcher.receive(BattleEvent.END_BATTLE_EVENT, self._battle_ended_handler)
+        # self.event_dispatcher.receive(BattleEvent.END_BATTLE_EVENT, self._battle_ended_handler)
 
         self.event_dispatcher.receive(ConversationEvent.CONVERSATION_EVENT, self._conversation_started_handler)
         self.event_dispatcher.receive(ConversationEvent.END_CONVERSATION_EVENT, self._conversation_ended_handler)
@@ -80,8 +85,11 @@ class GameManager(ManagerBase):
         self.event_dispatcher.receive(InventoryEvent.CLOSE_INVENTORY_EVENT, self._inventory_closed_handler)
         self.event_dispatcher.receive(InventoryEvent.LOOT_EVENT, self._loot_event_handler)
 
+        self.event_dispatcher.receive(GameEvent.LEVEL_FINISH_EVENT, self._level_finish_event_handler)
+        self.event_dispatcher.receive(LevelEvent.NEXT_LEVEL_EVENT, self._next_level_event_handler)
+
         self.event_dispatcher.receive(GameEvent.QUIT_EVENT, self._quit_event_handler)
-        self.event_dispatcher.receive(GameEvent.GAME_FINISH_EVENT, self._game_finish_event_handler)
+
 
     def _unregister_receivers(self):
         pass
@@ -115,9 +123,9 @@ class GameManager(ManagerBase):
         data = { "previous_state": previous_state, "new_state": new_state, "event_data": event_data }
         self.event_dispatcher.dispatch(GameEvent(GameEvent.STATE_CHANGE_EVENT, data))
 
-    def _transition_to_movement(self):
+    def _transition_to_movement(self, level_number):
         self._set_state(State.STATE_MOVEMENT)
-        self._level_manager.set_level('level_one_data/level_1', 'symbols_dictionary') # FILE DEBUG
+        self._level_manager.set_level(f'level_data/level_{level_number}_data/level_{level_number}', 'symbols_dictionary') # FILE DEBUG
 
     def _increment_turn(self):
         if(self.game_state == State.STATE_MOVEMENT):
@@ -145,6 +153,12 @@ class GameManager(ManagerBase):
         self._line_formating()
         self._set_state(State.STATE_GAME_END, {})
 
+    def _level_finish_line(self):
+        self._line_formating()
+        print(f"\nWell Done {self.player.name}!\n\nYou survived the last level and escaped in {self._turns} turns!\n")
+        self._line_formating()
+        self._set_state(State.STATE_LEVEL_END, {})
+
     def _line_formating(self):
         # probably just need something like curses. but for now this helps.
         print("------------------------------------------------------------------------")
@@ -163,13 +177,23 @@ class GameManager(ManagerBase):
     def _start_loot(self, entity_loot_data):
         self._set_state(State.STATE_LOOT, entity_loot_data)
 
+    def _next_level(self):
+        # breakpoint()
+        self._level_number += 1
+        self._level_manager._level.entities = None
+
+    def _transition_to_level(self):
+        self._next_level()
+        self._set_state(State.STATE_MOVEMENT)
+        self._transition_to_movement(self.level_number)
+
     # event handlers
 
     def _battle_started_handler(self, event):
         self._start_battle(event.monster)
 
-    def _battle_ended_handler(self, _event):
-        self._set_state(State.STATE_MOVEMENT)
+    # def _battle_ended_handler(self, _event):
+    #     self._set_state(State.STATE_MOVEMENT)
 
     def _inventory_opened_handler(self, _event):
         self._set_state(State.STATE_INVENTORY)
@@ -188,6 +212,12 @@ class GameManager(ManagerBase):
 
     def _quit_event_handler(self, _event):
         self._quit()
+
+    def _level_finish_event_handler(self, event):
+        self._level_finish_line()
+
+    def _next_level_event_handler(self, event):
+        self._transition_to_level()
 
     def _game_finish_event_handler(self, event):
         self._game_finish_line()

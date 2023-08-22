@@ -4,6 +4,7 @@ class LevelEvent(EventBase):
     DRAW_LEVEL_EVENT = "draw_level_event"
     MOVEMENT_EVENT = "movement_event"
     UPDATE_PLAYER_LOCATION_EVENT = "update_player_location_event"
+    NEXT_LEVEL_EVENT = "next_level_event"
 
     def __init__(self, name, data = {}):
         EventBase.__init__(self, name, data)

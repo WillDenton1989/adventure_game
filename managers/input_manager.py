@@ -43,6 +43,8 @@ class InputManager(ManagerBase):
             return self._parse_inventory_input(player_input)
         elif(self.game_state == State.STATE_LOOT):
             return self._parse_loot_inventory_input(player_input)
+        elif(self.game_state == State.STATE_LEVEL_END):
+            return self._parse_level_end_input(player_input)
         else:
             raise Exception(f"Cannot parse input for your current game state: {self.game_state}")
 
@@ -59,6 +61,8 @@ class InputManager(ManagerBase):
             self._show_inventory_controls()
         elif(self.game_state == State.STATE_LOOT):
             self._show_loot_inventory_controls()
+        elif(self.game_state == State.STATE_LEVEL_END):
+            self._show_level_end_controls()
         else:
             exception_string = f"Cannot show controls for your current game state: {self.game_state}"
             raise Exception(exception_string)
@@ -79,7 +83,7 @@ class InputManager(ManagerBase):
         print("Type in your name and your adventure shall begin!\n")
 
     def _parse_player_creation(self, input):
-        if(input == "dood"):
+        if(input == "dood" or "Dude"):
             print(f"\nSup {input}.\n\nAlright then, lets go!\n")
         else:
             print(f"\nAlright {input}, lets go!\n")
@@ -162,9 +166,6 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
         else:
             self._parse_input()
 
-    def _show_loot_inventory_controls(self):
-        print("Select an item you wish to take. Press 'i' to close this event.")
-
     def _parse_loot_inventory_input(self, input):
         data = {}
         if(input == "quit" or input == "q"):
@@ -176,9 +177,6 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
         else:
             self._parse_input()
-
-    def _show_loot_inventory_controls(self):
-        print("Select an item you wish to take.")
 
     def _parse_loot_inventory_input(self, input):
         data = {}
@@ -203,6 +201,18 @@ Press 'i' to open your inventory. Press 'q' to exit the game.""")
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.LOOT_ITEM_IN_INVENTORY_EVENT, data))
         elif(input == "i" or input == "close"): # this will be c in the future but for now i is nicer.
             self.event_dispatcher.dispatch(InventoryEvent(InventoryEvent.CLOSE_INVENTORY_EVENT, data))
+        else:
+            self._parse_input()
+
+    def _show_level_end_controls(self):
+        print("Press 'c' to continue to the next level. Press 'q' to quit the game.")
+
+    def _parse_level_end_input(self, input):
+        data = {}
+        if(input == "quit" or input == "q"):
+            self.event_dispatcher.dispatch(GameEvent(GameEvent.QUIT_EVENT, data))
+        elif(input == "c" or input == "continue"):
+            self.event_dispatcher.dispatch(LevelEvent(LevelEvent.NEXT_LEVEL_EVENT, data))
         else:
             self._parse_input()
 
