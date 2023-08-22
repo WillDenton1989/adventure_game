@@ -63,9 +63,10 @@ loot_chest:
   symbol: loot_chest
   inventory:
     - gold_bar
+    - gold_bar
+    - red_potion
     - red_potion
     - torch
-    - the_last_word
 finish_line:
   entity_type: exit
   symbol: finish_line

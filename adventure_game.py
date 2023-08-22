@@ -2,12 +2,8 @@
 
 from managers.game_manager import GameManager
 
-# the cool running
-
-GameManager.game_intro_message()
+# Runs the game
 
 GAME_MANAGER = GameManager()
-
+GameManager.game_intro_message()
 GAME_MANAGER.start()
-
-# is this the end?

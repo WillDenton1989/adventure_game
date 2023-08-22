@@ -1,11 +1,11 @@
 ---
-TL: 9484
-BL: 9492
-TR: 9488
-BR: 9496
-HH: 9472
-VV: 9474
-EE: 8901
+TL: 9484 # top left corner
+BL: 9492 # bottom left corner
+TR: 9488 # top right corner
+BR: 9496 # bottom right corner
+HH: 9472 # horizontal line
+VV: 9474 # vertical line
+EE: 8901 # empty space
 
 # ENTITY SYMBOLS
 

@@ -80,6 +80,7 @@ class LevelManager(ManagerBase):
         self._level.update_entities(updated_entities)
 
     def _add_entities(self):
+        breakpoint()
         entity_templates = self._level.entity_templates
 
         for entity_template in entity_templates["templates"]:
